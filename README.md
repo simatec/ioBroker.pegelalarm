@@ -7,7 +7,7 @@
     ## __WORK IN PROGRESS__
 -->
 
-### __WORK IN PROGRESS__
+### 0.0.1-0 (2020-08-10)
 * (bazidibavaria) prerelease
 
 ## License
