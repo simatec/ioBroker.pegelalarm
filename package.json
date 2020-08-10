@@ -6,7 +6,7 @@
     "name": "bazidibavaria",
     "email": "bazidibavaria@users.noreply.github.com"
   },
-  "homepage": "https://github.com/bazidibavaria/ioBroker.Pegelalarm",
+  "homepage": "https://github.com/bazidibavaria/ioBroker.pegelalarm",
   "license": "MIT",
   "keywords": [
     "pegelalarm",
@@ -17,7 +17,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bazidibavaria/ioBroker.Pegelalarm.git"
+    "url": "git+https://github.com/bazidibavaria/ioBroker.pegelalarm.git"
   },
   "dependencies": {
     "@iobroker/adapter-core": "^2.4.0"
@@ -55,7 +55,7 @@
     "release": "release-script"
   },
   "bugs": {
-    "url": "https://github.com/bazidibavaria/ioBroker.Pegelalarm/issues"
+    "url": "https://github.com/bazidibavaria/ioBroker.pegelalarm/issues"
   },
   "readmeFilename": "README.md"
 }
