@@ -7,8 +7,8 @@
     ## __WORK IN PROGRESS__
 -->
 
-### 0.0.2-0 (2020-08-10)
-* intitial release
+### __WORK IN PROGRESS__
+* (bazidibavaria) prerelease on npm
 
 ### 0.0.1
 * (bazidibavaria) initial release
