@@ -2,7 +2,7 @@
   "name": "iobroker.pegelalarm",
   "version": "0.0.1",
   "description": "Provides data from Pegelalarm-API",
-  "bazidibavaria": {
+  "author": {
     "name": "bazidibavaria",
     "email": "bazidibavaria@users.noreply.github.com"
   },

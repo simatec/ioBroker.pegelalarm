@@ -18,20 +18,28 @@
         },
         "title": "Pegelalarm",
         "titleLang": {
-            "en": "Pegelalarm",
+            "en": "water level alarm",
             "de": "Pegelalarm",
-            "ru": "Pegelalarm",
-            "pt": "Pegelalarm",
-            "nl": "Pegelalarm",
-            "fr": "Pegelalarm",
-            "it": "Pegelalarm",
-            "es": "Pegelalarm",
-            "pl": "Pegelalarm",
-            "zh-cn": "Pegelalarm"
+            "ru": "сигнализация уровня воды",
+            "pt": "alarme de nível de água",
+            "nl": "waterpeil alarm",
+            "fr": "alarme de niveau d'eau",
+            "it": "allarme livello acqua",
+            "es": "alarma de nivel de agua",
+            "pl": "alarm poziomu wody",
+            "zh-cn": "水位报警"
         },
         "desc": {
             "en": "Provides data from Pegelalarm-API",
-            "de": "Stellt Daten der Pegelalarm-API bereit"
+            "de": "Stellt Daten von der Pegelalarm-API bereit",
+            "ru": "Предоставляет данные из Pegelalarm-API",
+            "pt": "Fornece dados do Pegelalarm-API",
+            "nl": "Biedt gegevens van Pegelalarm-API",
+            "fr": "Fournit des données de Pegelalarm-API",
+            "it": "Fornisce dati da Pegelalarm-API",
+            "es": "Proporciona datos de Pegelalarm-API",
+            "pl": "Udostępnia dane z Pegelalarm-API",
+            "zh-cn": "提供来自Pegelalarm-API的数据"
         },
         "authors": [
             "bazidibavaria <bazidibavaria@users.noreply.github.com>"
