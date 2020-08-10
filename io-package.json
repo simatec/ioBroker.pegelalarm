@@ -56,8 +56,7 @@
         "type": "weather",
         "compact": true,
         "materialize": true,
-        "dependencies": [
-            {
+        "dependencies": [{
                 "admin": ">=3.0.0"
             },
             {
@@ -66,15 +65,14 @@
         ]
     },
     "native": {
-        "country":"DE",
-        "region":"",
-        "water":"",
-        "stationname":"",
-        "configurated":0
+        "country": "DE",
+        "region": "",
+        "water": "",
+        "stationname": "",
+        "configurated": 0
     },
     "objects": [],
-    "instanceObjects": [
-        {
+    "instanceObjects": [{
             "_id": "stations",
             "type": "channel",
             "common": {
@@ -101,9 +99,9 @@
                 "role": "indicator",
                 "read": false,
                 "write": false,
-                "def": false,
+                "def": false
             },
-            "native": {},
+            "native": {}
         },
         {
             "_id": "warning.statepathes",
@@ -114,9 +112,9 @@
                 "role": "json",
                 "read": false,
                 "write": false,
-                "def": "[]",
+                "def": "[]"
             },
-            "native": {},
+            "native": {}
         },
         {
             "_id": "alert",
@@ -136,9 +134,9 @@
                 "role": "indicator",
                 "read": false,
                 "write": false,
-                "def": false,
+                "def": false
             },
-            "native": {},
+            "native": {}
         },
         {
             "_id": "alert.statepathes",
@@ -149,9 +147,9 @@
                 "role": "json",
                 "read": false,
                 "write": false,
-                "def": "[]",
+                "def": "[]"
             },
-            "native": {},
+            "native": {}
         }
     ]
 }
