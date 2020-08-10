@@ -18,7 +18,7 @@
     ### __WORK IN PROGRESS__
 -->
 
-## __WORK IN PROGRESS__
+### __WORK IN PROGRESS__
 * (bazidibavaria) added travis support
 * (bazidibavaria) add images to readme
 
