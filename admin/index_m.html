@@ -127,7 +127,7 @@
                     success: function(data) {
                         if(data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")){
                             if(data.status.code == '200'){
-                                $("#foundstations > b").text(data.payload.stations.length);
+                                $("#foundstations b").text(data.payload.stations.length);
                                 $("#stations").empty();
 
                                 regions = {};
