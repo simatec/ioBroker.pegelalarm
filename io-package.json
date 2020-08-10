@@ -1,0 +1,157 @@
+{
+    "common": {
+        "name": "pegelalarm",
+        "version": "0.0.1",
+        "news": {
+            "0.0.1": {
+                "en": "initial release",
+                "de": "Erstveröffentlichung",
+                "ru": "Начальная версия",
+                "pt": "lançamento inicial",
+                "nl": "Eerste uitgave",
+                "fr": "Première version",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Pierwsze wydanie",
+                "zh-cn": "首次出版"
+            }
+        },
+        "title": "Pegelalarm",
+        "titleLang": {
+            "en": "Pegelalarm",
+            "de": "Pegelalarm",
+            "ru": "Pegelalarm",
+            "pt": "Pegelalarm",
+            "nl": "Pegelalarm",
+            "fr": "Pegelalarm",
+            "it": "Pegelalarm",
+            "es": "Pegelalarm",
+            "pl": "Pegelalarm",
+            "zh-cn": "Pegelalarm"
+        },
+        "desc": {
+            "en": "Provides data from Pegelalarm-API",
+            "de": "Stellt Daten der Pegelalarm-API bereit"
+        },
+        "authors": [
+            "bazidibavaria <bazidibavaria@users.noreply.github.com>"
+        ],
+        "keywords": [
+            "pegelalarm",
+            "pegelstand",
+            "flussstand",
+            "wasserstand",
+            "hochwasser"
+        ],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "main.js",
+        "icon": "pegelalarm.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/bazidibavaria/ioBroker.pegelalarm/master/admin/pegelalarm.png",
+        "readme": "https://github.com/bazidibavaria/ioBroker.pegelalarm/blob/master/README.md",
+        "loglevel": "info",
+        "mode": "schedule",
+        "schedule": "*/15 * * * *",
+        "type": "weather",
+        "compact": true,
+        "materialize": true,
+        "dependencies": [
+            {
+                "admin": ">=3.0.0"
+            },
+            {
+                "js-controller": ">=1.4.2"
+            }
+        ]
+    },
+    "native": {
+        "country":"DE",
+        "region":"",
+        "water":"",
+        "stationname":"",
+        "configurated":0
+    },
+    "objects": [],
+    "instanceObjects": [
+        {
+            "_id": "stations",
+            "type": "channel",
+            "common": {
+                "role": "state",
+                "name": "stations"
+            },
+            "native": {}
+        },
+        {
+            "_id": "warning",
+            "type": "channel",
+            "common": {
+                "role": "state",
+                "name": "warning"
+            },
+            "native": {}
+        },
+        {
+            "_id": "warning.hasWarning",
+            "type": "state",
+            "common": {
+                "name": "hasWarning",
+                "type": "boolean",
+                "role": "indicator",
+                "read": false,
+                "write": false,
+                "def": false,
+            },
+            "native": {},
+        },
+        {
+            "_id": "warning.statepathes",
+            "type": "state",
+            "common": {
+                "name": "statepathes",
+                "type": "string",
+                "role": "json",
+                "read": false,
+                "write": false,
+                "def": "[]",
+            },
+            "native": {},
+        },
+        {
+            "_id": "alert",
+            "type": "channel",
+            "common": {
+                "role": "state",
+                "name": "alert"
+            },
+            "native": {}
+        },
+        {
+            "_id": "alert.hasAlert",
+            "type": "state",
+            "common": {
+                "name": "hasAlert",
+                "type": "boolean",
+                "role": "indicator",
+                "read": false,
+                "write": false,
+                "def": false,
+            },
+            "native": {},
+        },
+        {
+            "_id": "alert.statepathes",
+            "type": "state",
+            "common": {
+                "name": "statepathes",
+                "type": "string",
+                "role": "json",
+                "read": false,
+                "write": false,
+                "def": "[]",
+            },
+            "native": {},
+        }
+    ]
+}
