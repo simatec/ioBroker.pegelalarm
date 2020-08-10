@@ -1,6 +1,6 @@
 {
   "name": "iobroker.pegelalarm",
-  "version": "0.0.2-4",
+  "version": "0.0.0",
   "description": "Provides data from Pegelalarm-API",
   "author": {
     "name": "bazidibavaria",
