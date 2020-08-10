@@ -7,7 +7,7 @@
     ## __WORK IN PROGRESS__
 -->
 
-### __WORK IN PROGRESS__
+### 0.0.2-0 (2020-08-10)
 * intitial release
 
 ### 0.0.1

@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "pegelalarm",
-        "version": "0.0.1",
+        "version": "0.0.2-0",
         "news": {
+            "0.0.2-0": {
+                "en": "intitial release",
+                "de": "Erstveröffentlichung",
+                "ru": "первоначальный выпуск",
+                "pt": "liberação inicial",
+                "nl": "eerste release",
+                "fr": "version initiale",
+                "it": "rilascio iniziale",
+                "es": "lanzamiento inicial",
+                "pl": "wydanie wstępne",
+                "zh-cn": "最初的释放"
+            },
             "0.0.1": {
                 "en": "initial release",
                 "de": "Erstveröffentlichung",
@@ -64,7 +76,8 @@
         "type": "weather",
         "compact": true,
         "materialize": true,
-        "dependencies": [{
+        "dependencies": [
+            {
                 "admin": ">=3.0.0"
             },
             {
@@ -80,7 +93,8 @@
         "configurated": 0
     },
     "objects": [],
-    "instanceObjects": [{
+    "instanceObjects": [
+        {
             "_id": "stations",
             "type": "channel",
             "common": {
