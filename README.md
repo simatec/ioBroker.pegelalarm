@@ -10,7 +10,13 @@
 
 [![NPM](https://nodei.co/npm/iobroker.pegelalarm.png?downloads=true)](https://nodei.co/npm/iobroker.pegelalarm/)
 
-**Tests:**: [![Travis-CI](http://img.shields.io/travis/bazidibavaria/ioBroker.pegelalarm/master.svg)](https://travis-ci.org/bazidibavaria/ioBroker.pegelalarm)
+**Tests:** [![Travis-CI](http://img.shields.io/travis/bazidibavaria/ioBroker.pegelalarm/master.svg)](https://travis-ci.org/bazidibavaria/ioBroker.pegelalarm)
+
+## Pegelalarm adapter for ioBroker
+Provides data from Pegelalarm-API (v1.0)
+
+API-Documentation for API 1.1 can be found here
+https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc/wiki/Download-current-water-data
 
 ## Changelog
 <!--
