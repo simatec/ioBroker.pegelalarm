@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "pegelalarm",
-        "version": "0.0.2-1",
+        "version": "0.0.2-2",
         "news": {
+            "0.0.2-2": {
+                "en": "prerelease on npm",
+                "de": "Vorabversion auf npm",
+                "ru": "пререлиз на npm",
+                "pt": "pré-lançamento em npm",
+                "nl": "prerelease op npm",
+                "fr": "avant-première sur npm",
+                "it": "prerelease su npm",
+                "es": "presentación en npm",
+                "pl": "prerelease na npm",
+                "zh-cn": "在npm上预发行"
+            },
             "0.0.2-1": {
                 "en": "prerelease on npm",
                 "de": "Vorabversion auf npm",
