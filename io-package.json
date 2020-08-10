@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "pegelalarm",
-        "version": "0.0.1-1",
+        "version": "0.0.1-2",
         "news": {
+            "0.0.1-2": {
+                "en": "fix api-count in index_m.html",
+                "de": "Behebung der API-Anzahl in index_m.html",
+                "ru": "исправить api-count в index_m.html",
+                "pt": "corrigir api-count em index_m.html",
+                "nl": "repareer api-count in index_m.html",
+                "fr": "corriger le nombre d'api dans index_m.html",
+                "it": "correggere il conteggio API in index_m.html",
+                "es": "arreglar api-count en index_m.html",
+                "pl": "popraw liczbę api-count w index_m.html",
+                "zh-cn": "修复index_m.html中的api-count"
+            },
             "0.0.1-1": {
                 "en": "added travis support\nadd images to readme",
                 "de": "Travis-Unterstützung hinzugefügt\nBilder zur Readme hinzufügen",
