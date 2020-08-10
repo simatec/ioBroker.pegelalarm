@@ -18,7 +18,7 @@
     ### __WORK IN PROGRESS__
 -->
 
-### __WORK IN PROGRESS__
+### 0.0.1-1 (2020-08-10)
 * (bazidibavaria) added travis support
 * (bazidibavaria) add images to readme
 
