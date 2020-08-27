@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "pegelalarm",
-        "version": "0.0.1-2",
+        "version": "0.0.1",
         "news": {
+            "0.0.1": {
+                "en": "released",
+                "de": "veröffentlicht",
+                "ru": "выпущенный",
+                "pt": "liberado",
+                "nl": "vrijgelaten",
+                "fr": "libéré",
+                "it": "rilasciato",
+                "es": "publicado",
+                "pl": "wydany",
+                "zh-cn": "已发布"
+            },
             "0.0.1-2": {
                 "en": "fix api-count in index_m.html",
                 "de": "Behebung der API-Anzahl in index_m.html",
