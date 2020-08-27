@@ -23,6 +23,8 @@ https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc/wiki/Download-current-wa
     Placeholder for the next version (at the beginning of the line):
     ### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+* (bazidibavaria) released
 
 ### 0.0.1-2 (2020-08-10)
 * (bazidibavaria) fix api-count in index_m.html
