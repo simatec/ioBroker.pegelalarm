@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "pegelalarm",
-        "version": "0.0.1",
+        "version": "1.0.0",
         "news": {
+            "1.0.0": {
+                "en": "updated packages",
+                "de": "aktualisierte Pakete",
+                "ru": "обновленные пакеты",
+                "pt": "pacotes atualizados",
+                "nl": "bijgewerkte pakketten",
+                "fr": "packages mis à jour",
+                "it": "pacchetti aggiornati",
+                "es": "paquetes actualizados",
+                "pl": "zaktualizowane pakiety",
+                "zh-cn": "更新包"
+            },
             "0.0.1": {
                 "en": "released",
                 "de": "veröffentlicht",
