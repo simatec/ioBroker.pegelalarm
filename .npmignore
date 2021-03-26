@@ -1,14 +1,11 @@
-.git
+..git
 .idea
 node_modules/
 nbproject/
 .vs*/
-*.code-workspace
 Thumbs.db
 gulpfile.js
-.vscode
 
-# CI test files
 test/
 travis/
 .travis.yml
@@ -16,13 +13,10 @@ appveyor.yml
 .travis.yaml
 appveyor.yaml
 
-# Type checking configuration
-tsconfig.json
-tsconfig.*.json
-
-# ESLint configuration
+tslint.json
 .eslintrc.json
-.eslintrc.js
+tsconfig.json
+admin/tsconfig.json
 
 # npm package files
 iobroker.*.tgz
@@ -33,3 +27,12 @@ admin/i18n
 
 # maintenance scripts
 maintenance/**
+gulpfile.js
+admin/i18n
+tasks
+node_modules
+/node_modules
+test
+.vscode
+/package-lock.json
+.DS_Store
