@@ -1,0 +1,333 @@
+<html>
+
+<head>
+
+    <!-- Load ioBroker scripts and styles-->
+    <link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+
+    <script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+
+    <script type="text/javascript" src="../../js/translate.js"></script>
+    <script type="text/javascript" src="../../lib/js/materialize.js"></script>
+    <script type="text/javascript" src="../../js/adapter-settings.js"></script>
+
+    <!-- Load our own files -->
+    <script type="text/javascript" src="words.js"></script>
+
+    <style>
+        #foundstations .material-icons {
+            position: absolute;
+            margin-top: -2px;
+        }
+
+        .station {
+            margin-bottom: 10px;
+        }
+
+        .m .select-wrapper+label{
+            top: 0;
+        }
+
+        .preloader-background {
+            float: right;
+            padding: .5rem;
+        }
+    </style>
+    <script type="text/javascript">
+
+        // This will be called by the admin adapter when the settings page loads
+        function load(settings, onChange) {
+            // example: select elements with id=key and class=value and insert value
+            if (!settings) return;
+            $(".value").each(function () {
+                var $key = $(this);
+                var id = $key.attr('id');
+                if ($key.attr('type') === 'checkbox') {
+                    // do not call onChange direct, because onChange could expect some arguments
+                    $key.prop('checked', settings[id])
+                        .on('change', () => onChange())
+                        ;
+                } else {
+                    // do not call onChange direct, because onChange could expect some arguments
+                    $key.val(settings[id])
+                        .on('change', () => onChange())
+                        .on('keyup', () => onChange())
+                        ;
+                }
+            });
+
+            $("#country").on('change', function(){
+                loadData($("#country").val());
+                countStations();
+            });
+
+            $("#region").on('change', function(){
+                countStations();
+            });
+            $("#water").on('change', function(){
+                countStations();
+            });
+            $("#stationname").on('change', function(){
+                countStations();
+            });
+
+            var regions = {};
+            var waters = {};
+            var stationnames = {};
+
+            $("#region").mautocomplete({
+                minLength: 0,
+                data: {},
+                onAutocomplete: (val) => {
+                    $("#region").val(val);
+                }
+            });
+
+            $("#water").mautocomplete({
+                minLength: 0,
+                data: {},
+                onAutocomplete: (val) => {
+                    $("#water").val(val);
+                }
+            });
+
+            $("#stationname").mautocomplete({
+                minLength: 0,
+                data: {},
+                onAutocomplete: (val) => {
+                    $("#stationname").val(val);
+                }
+            });
+
+            loadData();
+
+            function countStations(){
+                $(".preloader-background").fadeIn();
+                var ajaxData = {
+                    countryCode: $("#country").val()
+                };
+
+                if($("#region").val() !== undefined && $("#region").val().trim().length){
+                    ajaxData["qRegion"] = $("#region").val().trim();
+                }
+                if($("#water").val() !== undefined && $("#water").val().trim().length){
+                    ajaxData["qWater"] = $("#water").val().trim();
+                }
+                if($("#stationname").val() !== undefined && $("#stationname").val().trim().length){
+                    ajaxData["qStationName"] = $("#stationname").val().trim();
+                }
+
+                $.ajax({
+                    url: 'https://api.pegelalarm.at/api/station/1.0/list',
+                    type: 'GET',
+                    data: ajaxData,
+                    dataType: 'json',
+                    success: function(data) {
+                        if(data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")){
+                            if(data.status.code == '200'){
+                                $("#foundstations b").text(data.payload.stations.length);
+                                $("#stations").empty();
+
+                                regions = {};
+                                waters = {};
+                                stationnames = {};
+
+                                for (var i = 0; i < data.payload.stations.length; i++) {
+                                    var station = data.payload.stations[i];
+
+                                    if(!regions.hasOwnProperty(station.region)) regions[station.region] = null;
+
+                                    if(!waters.hasOwnProperty(station.water)) waters[station.water] = null;
+
+                                    if(!stationnames.hasOwnProperty(station.stationName)) stationnames[station.stationName] = null;
+
+                                    $("#stations").append('<div class="station"><b>'+station.name+'</b><br> - stationname: '+station.stationName+'<br> - water: '+station.water+'<br> - region: '+station.region+'</div>');
+                                }
+
+                                if (M) M.Autocomplete.getInstance($("#region")).updateData(regions);
+
+                                if (M) M.Autocomplete.getInstance($("#water")).updateData(waters);
+
+                                if (M) M.Autocomplete.getInstance($("#stationname")).updateData(stationnames);
+
+                                $(".preloader-background").fadeOut();
+
+                            } else {
+                                $(".preloader-background").fadeOut();
+                                alert("Error: "+JSON.stringify(data));
+                            }
+                        } else {
+                            $(".preloader-background").fadeOut();
+                            alert("Error: "+JSON.stringify(data));
+                        }
+                    },
+                    error: function(request,error) {
+                        $(".preloader-background").fadeOut();
+                        alert("Request: "+JSON.stringify(request));
+                    }
+                });
+            }
+
+            function loadData(countryCode = settings.country){
+                var ajaxDataAC = {
+                    countryCode: countryCode
+                };
+
+                $.ajax({
+                    url: 'https://api.pegelalarm.at/api/station/1.0/list',
+                    type: 'GET',
+                    data: ajaxDataAC,
+                    dataType: 'json',
+                    success: function(data) {
+                        if(data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")){
+                            if(data.status.code == '200'){
+                                if(data.payload.stations.length){
+                                    regions = {};
+                                    waters = {};
+                                    stationnames = {};
+
+                                    for (var i = 0; i < data.payload.stations.length; i++) {
+                                        var station = data.payload.stations[i];
+
+                                        if(!regions.hasOwnProperty(station.region)) regions[station.region] = null;
+
+                                        if(!waters.hasOwnProperty(station.water)) waters[station.water] = null;
+
+                                        if(!stationnames.hasOwnProperty(station.stationName)) stationnames[station.stationName] = null;
+                                    }
+
+                                    if (M) M.Autocomplete.getInstance($("#region")).updateData(regions);
+
+                                    if (M) M.Autocomplete.getInstance($("#water")).updateData(waters);
+
+                                    if (M) M.Autocomplete.getInstance($("#stationname")).updateData(stationnames);
+                                }
+                            } else {
+                                alert("Error: "+JSON.stringify(data));
+                            }
+                        } else {
+                            alert("Error: "+JSON.stringify(data));
+                        }
+                    },
+                    error: function(request,error) {
+                        alert("Request: "+JSON.stringify(request));
+                    }
+                });
+            }
+
+            $("#foundstations").on("click", function(){
+                if($("#foundstations .material-icons").text().indexOf("up") >= 0){
+                    $("#foundstations .material-icons").text($("#foundstations .material-icons").text().replace("_up","_down"));
+                } else {
+                    $("#foundstations .material-icons").text($("#foundstations .material-icons").text().replace("_down","_up"));
+                }
+                $("#stations").slideToggle();
+            });
+
+            countStations();
+
+            onChange(false);
+            // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
+            if (M) M.updateTextFields();
+        }
+
+        // This will be called by the admin adapter when the user presses the save button
+        function save(callback) {
+            // example: select elements with class=value and build settings object
+            var obj = {};
+            $(".value").each(function () {
+                var $this = $(this);
+                if ($this.attr('type') === 'checkbox') {
+                    obj[$this.attr('id')] = $this.prop('checked');
+                } else {
+                    obj[$this.attr('id')] = $this.val();
+                }
+            });
+
+            obj['configurated'] = 1;
+
+            callback(obj);
+        }
+    </script>
+
+</head>
+
+<body>
+    <div class="m adapter-container">
+        <div class="row">
+            <div class="col s11 m4 l2">
+                <img src="pegelalarm.png" class="logo">
+                <div class="preloader-background" style="display: none;">
+                    <div class="preloader-wrapper active">
+                        <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="gap-patch">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s10 m4">
+                <select id="country" class="value">
+                    <option value="DE">Deutschland</option>
+                    <option value="AT">Österreich</option>
+                    <option value="CH">Schweiz</option>
+                    <option value="RS">Serbien</option>
+                    <option value="HR">Kroatien</option>
+                    <option value="HU">Ungarn</option>
+                    <option value="BG">Bulgarien</option>
+                    <option value="GU">Guam</option>
+                    <option value="PR">Puerto Rico</option>
+                    <option value="SI">Slowenien</option>
+                    <option value="SK">Slowakei</option>
+                    <option value="IT">Italien</option>
+                    <option value="RO">Rumänien</option>
+                    <option value="US">USA</option>
+                    <option value="UK">Vereinigtes Königreich</option>
+                    <option value="IE">Irland</option>
+                </select>
+                <label class="translate active" for="country">country</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s10 m4">
+                <input class="value autocomplete" id="region" type="text" autocomplete="off">
+                <label class="translate active">region</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s10 m4">
+                <input class="value autocomplete" id="water" type="text" autocomplete="off">
+                <label class="translate active">water</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s10 m4">
+                <input class="value autocomplete" id="stationname" type="text" autocomplete="off">
+                <label class="translate active">stationname</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s10 m4">
+                <p id="foundstations"><span class="translate active">response</span><span>: <b>0</b></span><i class="material-icons">keyboard_arrow_down</i></p>
+                <div id="stations" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

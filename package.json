@@ -1,0 +1,88 @@
+{
+  "_from": "github:simatec/ioBroker.pegelalarm#4a9556ee93a402341f9b4bd77f16b630d40e618d",
+  "_id": "iobroker.pegelalarm@1.0.0",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/iobroker.pegelalarm",
+  "_phantomChildren": {
+    "@types/node": "13.13.1",
+    "follow-redirects": "1.13.0"
+  },
+  "_requested": {
+    "type": "git",
+    "raw": "simatec/ioBroker.pegelalarm#4a9556ee93a402341f9b4bd77f16b630d40e618d",
+    "rawSpec": "simatec/ioBroker.pegelalarm#4a9556ee93a402341f9b4bd77f16b630d40e618d",
+    "saveSpec": "github:simatec/ioBroker.pegelalarm#4a9556ee93a402341f9b4bd77f16b630d40e618d",
+    "fetchSpec": null,
+    "gitCommittish": "4a9556ee93a402341f9b4bd77f16b630d40e618d"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "github:simatec/ioBroker.pegelalarm#4a9556ee93a402341f9b4bd77f16b630d40e618d",
+  "_spec": "simatec/ioBroker.pegelalarm#4a9556ee93a402341f9b4bd77f16b630d40e618d",
+  "_where": "/opt/iobroker",
+  "author": {
+    "name": "bazidibavaria",
+    "email": "bazidibavaria@users.noreply.github.com"
+  },
+  "bugs": {
+    "url": "https://github.com/bazidibavaria/ioBroker.pegelalarm/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "@iobroker/adapter-core": "^2.4.0",
+    "axios": "^0.20.0",
+    "request": "^2.88.2"
+  },
+  "deprecated": false,
+  "description": "Provides data from Pegelalarm-API",
+  "devDependencies": {
+    "@alcalzone/release-script": "^1.7.0",
+    "@iobroker/testing": "^2.3.0",
+    "@types/chai": "^4.2.11",
+    "@types/chai-as-promised": "^7.1.2",
+    "@types/gulp": "^4.0.6",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^14.6.1",
+    "@types/proxyquire": "^1.3.28",
+    "@types/sinon": "^9.0.5",
+    "@types/sinon-chai": "^3.2.4",
+    "axios": "^0.20.0",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^7.7.0",
+    "gulp": "^4.0.2",
+    "mocha": "^8.1.2",
+    "proxyquire": "^2.1.3",
+    "sinon": "^9.0.3",
+    "sinon-chai": "^3.5.0"
+  },
+  "homepage": "https://github.com/bazidibavaria/ioBroker.pegelalarm",
+  "keywords": [
+    "pegelalarm",
+    "pegelstand",
+    "flussstand",
+    "wasserstand",
+    "hochwasser"
+  ],
+  "license": "MIT",
+  "main": "main.js",
+  "name": "iobroker.pegelalarm",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bazidibavaria/ioBroker.pegelalarm.git"
+  },
+  "scripts": {
+    "lint": "npm run lint:js",
+    "lint:js": "eslint",
+    "release": "release-script",
+    "test": "npm run test:js && npm run test:package",
+    "test:integration": "mocha test/integration --exit",
+    "test:js": "mocha --opts test/mocha.custom.opts",
+    "test:package": "mocha test/package --exit",
+    "test:unit": "mocha test/unit --exit"
+  },
+  "version": "1.0.0"
+}
