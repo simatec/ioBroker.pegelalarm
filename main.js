@@ -117,7 +117,7 @@ function startAdapter(options) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(path+'.name', station.stationName);
+                            adapter.setState(path+'.name', station.stationName, true);
 
                             adapter.setObjectNotExists(path+'.country', {
                                 type: 'state',
@@ -130,7 +130,7 @@ function startAdapter(options) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(path+'.country', station.country);
+                            adapter.setState(path+'.country', station.country, true);
 
                             adapter.setObjectNotExists(path+'.water', {
                                 type: 'state',
@@ -143,7 +143,7 @@ function startAdapter(options) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(path+'.water', station.water);
+                            adapter.setState(path+'.water', station.water, true);
 
                             adapter.setObjectNotExists(path+'.region', {
                                 type: 'state',
@@ -156,7 +156,7 @@ function startAdapter(options) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(path+'.region', station.region);
+                            adapter.setState(path+'.region', station.region, true);
 
                             adapter.setObjectNotExists(path+'.situation', {
                                 type: 'channel',
@@ -177,7 +177,7 @@ function startAdapter(options) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(path+'.situation.text', decodeSituation(station.situation));
+                            adapter.setState(path+'.situation.text', decodeSituation(station.situation), true);
 
                             adapter.setObjectNotExists(path+'.situation.group', {
                                 type: 'state',
@@ -190,7 +190,7 @@ function startAdapter(options) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(path+'.situation.group', decodeSituation(station.situation, "group"));
+                            adapter.setState(path+'.situation.group', decodeSituation(station.situation, "group"), true);
 
                             adapter.setObjectNotExists(path+'.situation.code', {
                                 type: 'state',
@@ -203,7 +203,7 @@ function startAdapter(options) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(path+'.situation.code', station.situation);
+                            adapter.setState(path+'.situation.code', station.situation, true);
 
                             adapter.setObjectNotExists(path+'.trend', {
                                 type: 'channel',
@@ -224,7 +224,7 @@ function startAdapter(options) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(path+'.trend.text', decodeTrend(station.trend));
+                            adapter.setState(path+'.trend.text', decodeTrend(station.trend), true);
 
                             adapter.setObjectNotExists(path+'.trend.short', {
                                 type: 'state',
@@ -237,7 +237,7 @@ function startAdapter(options) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(path+'.trend.short', decodeTrend(station.trend, "short"));
+                            adapter.setState(path+'.trend.short', decodeTrend(station.trend, "short"), true);
 
                             adapter.setObjectNotExists(path+'.trend.code', {
                                 type: 'state',
@@ -250,7 +250,7 @@ function startAdapter(options) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(path+'.trend.code', station.trend);
+                            adapter.setState(path+'.trend.code', station.trend, true);
 
                             adapter.setObjectNotExists(path+'.state', {
                                 type: 'channel',
@@ -292,7 +292,7 @@ function startAdapter(options) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(path+'.state.normal', stateNormal);
+                            adapter.setState(path+'.state.normal', stateNormal, true);
 
                             adapter.setObjectNotExists(path+'.state.warning', {
                                 type: 'state',
@@ -305,7 +305,7 @@ function startAdapter(options) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(path+'.state.warning', stateWarning);
+                            adapter.setState(path+'.state.warning', stateWarning, true);
 
                             adapter.setObjectNotExists(path+'.state.alert', {
                                 type: 'state',
@@ -318,7 +318,7 @@ function startAdapter(options) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(path+'.state.alert', stateAlert);
+                            adapter.setState(path+'.state.alert', stateAlert, true);
 
                             adapter.setObjectNotExists(path+'.state.unknown', {
                                 type: 'state',
@@ -331,7 +331,7 @@ function startAdapter(options) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(path+'.state.unknown', stateUnknown);
+                            adapter.setState(path+'.state.unknown', stateUnknown, true);
 
                             adapter.setObjectNotExists(path+'.geo', {
                                 type: 'channel',
@@ -352,7 +352,7 @@ function startAdapter(options) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(path+'.geo.latitude', station.latitude);
+                            adapter.setState(path+'.geo.latitude', station.latitude, true);
 
                             adapter.setObjectNotExists(path+'.geo.longitude', {
                                 type: 'state',
@@ -365,7 +365,7 @@ function startAdapter(options) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(path+'.geo.longitude', station.longitude);
+                            adapter.setState(path+'.geo.longitude', station.longitude, true);
 
                             adapter.setObjectNotExists(path+'.geo.altitude', {
                                 type: 'state',
@@ -378,7 +378,7 @@ function startAdapter(options) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(path+'.geo.altitude', station.altitudeM);
+                            adapter.setState(path+'.geo.altitude', station.altitudeM, true);
 
                             for (let j = 0; j < station.data.length; j++) {
                                 let stationData = station.data[j];
@@ -397,7 +397,7 @@ function startAdapter(options) {
                                         },
                                         native: {},
                                     });
-                                    adapter.setState(path+'.height', stationData.value);
+                                    adapter.setState(path+'.height', stationData.value, true);
 
                                     adapter.setObjectNotExists(path+'.sourceDate', {
                                         type: 'state',
@@ -411,7 +411,7 @@ function startAdapter(options) {
                                         native: {},
                                     });
                                     let sourceDate = new Date(Date.parse(stationData.sourceDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, "$3-$2-$1$4"))).toUTCString();
-                                    adapter.setState(path+'.sourceDate', sourceDate);
+                                    adapter.setState(path+'.sourceDate', sourceDate, true);
 
                                     adapter.setObjectNotExists(path+'.requestDate', {
                                         type: 'state',
@@ -425,7 +425,7 @@ function startAdapter(options) {
                                         native: {},
                                     });
                                     let requestDate = new Date(Date.parse(stationData.requestDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, "$3-$2-$1$4"))).toUTCString();
-                                    adapter.setState(path+'.requestDate', requestDate);
+                                    adapter.setState(path+'.requestDate', requestDate, true);
                                 }
                             }
                         }
@@ -449,7 +449,7 @@ function startAdapter(options) {
                             },
                             native: {},
                         });
-                        adapter.setState('warning.hasWarning', (warnings.length>0));
+                        adapter.setState('warning.hasWarning', (warnings.length>0), true);
 
                         adapter.setObjectNotExists('warning.statepathes', {
                             type: 'state',
@@ -462,7 +462,7 @@ function startAdapter(options) {
                             },
                             native: {},
                         });
-                        adapter.setState('warning.statepathes', JSON.stringify(warnings));
+                        adapter.setState('warning.statepathes', JSON.stringify(warnings), true);
 
                         adapter.setObjectNotExists('alert', {
                             type: 'channel',
@@ -483,7 +483,7 @@ function startAdapter(options) {
                             },
                             native: {},
                         });
-                        adapter.setState('alert.hasAlert', (alerts.length>0));
+                        adapter.setState('alert.hasAlert', (alerts.length>0), true);
 
                         adapter.setObjectNotExists('alert.statepathes', {
                             type: 'state',
@@ -496,7 +496,7 @@ function startAdapter(options) {
                             },
                             native: {},
                         });
-                        adapter.setState('alert.statepathes', JSON.stringify(alerts));
+                        adapter.setState('alert.statepathes', JSON.stringify(alerts), true);
 
                         let lastRun = new Date().toUTCString();
                         adapter.setObjectNotExists('lastRun', {
@@ -510,7 +510,7 @@ function startAdapter(options) {
                             },
                             native: {},
                         });
-                        adapter.setState('lastRun', lastRun);
+                        adapter.setState('lastRun', lastRun, true);
                     } else {
                         adapter.log.error('API-Statuscode: ' + data.status.code);
                         killAdapter();

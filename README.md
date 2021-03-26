@@ -5,12 +5,12 @@
 [![Downloads](https://img.shields.io/npm/dm/iobroker.pegelalarm.svg)](https://www.npmjs.com/package/iobroker.pegelalarm)
 ![Number of Installations (latest)](http://iobroker.live/badges/pegelalarm-installed.svg)
 ![Number of Installations (stable)](http://iobroker.live/badges/pegelalarm-stable.svg)
-[![Dependency Status](https://img.shields.io/david/bazidibavaria/iobroker.pegelalarm.svg)](https://david-dm.org/bazidibavaria/iobroker.pegelalarm)
-[![Known Vulnerabilities](https://snyk.io/test/github/bazidibavaria/ioBroker.pegelalarm/badge.svg)](https://snyk.io/test/github/bazidibavaria/ioBroker.pegelalarm)
+[![Dependency Status](https://img.shields.io/david/simatec/iobroker.pegelalarm.svg)](https://david-dm.org/simatec/iobroker.pegelalarm)
+[![Known Vulnerabilities](https://snyk.io/test/github/simatec/ioBroker.pegelalarm/badge.svg)](https://snyk.io/test/github/simatec/ioBroker.pegelalarm)
 
 [![NPM](https://nodei.co/npm/iobroker.pegelalarm.png?downloads=true)](https://nodei.co/npm/iobroker.pegelalarm/)
 
-**Tests:** [![Travis-CI](http://img.shields.io/travis/bazidibavaria/ioBroker.pegelalarm/master.svg)](https://travis-ci.org/bazidibavaria/ioBroker.pegelalarm)
+**Tests:** [![Travis-CI](http://img.shields.io/travis/simatec/ioBroker.pegelalarm/master.svg)](https://travis-ci.org/simatec/ioBroker.pegelalarm)
 
 ## Pegelalarm adapter for ioBroker
 Provides data from Pegelalarm-API (v1.0)
@@ -42,7 +42,7 @@ https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc/wiki/Download-current-wa
 ## License
 MIT License
 
-Copyright (c) 2020 bazidibavaria <bazidibavaria@users.noreply.github.com>
+Copyright (c) 2021 simatec
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
