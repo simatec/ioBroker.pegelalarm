@@ -4,7 +4,7 @@
 [![NPM version](http://img.shields.io/npm/v/iobroker.pegelalarm.svg)](https://www.npmjs.com/package/iobroker.pegelalarm)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.pegelalarm.svg)](https://www.npmjs.com/package/iobroker.pegelalarm)
 ![Number of Installations (latest)](http://iobroker.live/badges/pegelalarm-installed.svg)
-![Number of Installations (stable)](http://iobroker.live/badges/pegelalarm-stable.svg)
+<!--![Number of Installations (stable)](http://iobroker.live/badges/pegelalarm-stable.svg)-->
 [![Dependency Status](https://img.shields.io/david/simatec/iobroker.pegelalarm.svg)](https://david-dm.org/simatec/iobroker.pegelalarm)
 [![Known Vulnerabilities](https://snyk.io/test/github/simatec/ioBroker.pegelalarm/badge.svg)](https://snyk.io/test/github/simatec/ioBroker.pegelalarm)
 
@@ -23,6 +23,14 @@ https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc/wiki/Download-current-wa
     Placeholder for the next version (at the beginning of the line):
     ### __WORK IN PROGRESS__
 -->
+### 1.1.0 (2021-03-27)
+* (simatec) fork from bazidibavaria
+* (simatec) code rewritten
+* (simatec) dependencies updated
+* (simatec) Bugfix setState
+* (simatec) Bugfix getState
+* (simatec) License updated
+
 ### 1.0.0 (2020-09-01)
 * (bazidibavaria) updated packages
 
@@ -42,7 +50,7 @@ https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc/wiki/Download-current-wa
 ## License
 MIT License
 
-Copyright (c) 2021 simatec
+Copyright (c) 2020 - 2021 simatec
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -57,7 +65,7 @@ copies or substantial portions of the Software.
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-bazidibavariaS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.

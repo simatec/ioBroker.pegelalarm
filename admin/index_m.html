@@ -102,7 +102,56 @@
             });
 
             loadData();
+            /*
+            function fillWater(id, str) {
+                var $sel = $('#water');
+                let result = [];
+                let arrCounties = [];
+                arrCounties = str;
+                arrCounties = arrCounties.sort((a, b) => (a > b) ? 1 : -1);
+                for (const i in arrCounties) {
+                    result.push(arrCounties[i]);
+                }
+                $sel.html('<option value="">' + _('no selection') + '</option>');
 
+                result.forEach(function (val) {
+                    $('#water').append('<option value="' + val + '"' + (id === val ? ' selected' : '') + '>' + val + '</option>');
+                });
+                $sel.select();
+            }
+            function fillStationname(id, str) {
+                var $sel = $('#stationname');
+                let result = [];
+                let arrCounties = [];
+                arrCounties = str;
+                arrCounties = arrCounties.sort((a, b) => (a > b) ? 1 : -1);
+                for (const i in arrCounties) {
+                    result.push(arrCounties[i]);
+                }
+                $sel.html('<option value="">' + _('no selection') + '</option>');
+
+                result.forEach(function (val) {
+                    $('#stationname').append('<option value="' + val + '"' + (id === val ? ' selected' : '') + '>' + val + '</option>');
+                });
+                $sel.select();
+            }
+            function fillRegion(id, str) {
+                var $sel = $('#region');
+                let result = [];
+                let arrCounties = [];
+                arrCounties = str;
+                arrCounties = arrCounties.sort((a, b) => (a > b) ? 1 : -1);
+                for (const i in arrCounties) {
+                    result.push(arrCounties[i]);
+                }
+                $sel.html('<option value="">' + _('no selection') + '</option>');
+
+                result.forEach(function (val) {
+                    $('#region').append('<option value="' + val + '"' + (id === val ? ' selected' : '') + '>' + val + '</option>');
+                });
+                $sel.select();
+            }
+            */
             function countStations(){
                 $(".preloader-background").fadeIn();
                 var ajaxData = {
@@ -110,12 +159,15 @@
                 };
 
                 if($("#region").val() !== undefined && $("#region").val().trim().length){
+                //if($("#region").val() !== undefined){
                     ajaxData["qRegion"] = $("#region").val().trim();
                 }
                 if($("#water").val() !== undefined && $("#water").val().trim().length){
+                //if($("#water").val() !== undefined){
                     ajaxData["qWater"] = $("#water").val().trim();
                 }
                 if($("#stationname").val() !== undefined && $("#stationname").val().trim().length){
+                //if($("#stationname").val() !== undefined){
                     ajaxData["qStationName"] = $("#stationname").val().trim();
                 }
 
@@ -124,53 +176,72 @@
                     type: 'GET',
                     data: ajaxData,
                     dataType: 'json',
-                    success: function(data) {
-                        if(data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")){
-                            if(data.status.code == '200'){
+                    success: function (data) {
+                        if (data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")) {
+                            if (data.status.code == '200') {
                                 $("#foundstations b").text(data.payload.stations.length);
                                 $("#stations").empty();
 
                                 regions = {};
                                 waters = {};
                                 stationnames = {};
-
+                                /*
+                                let waterfill = [];
+                                let regionfill = [];
+                                let stationnamefill = [];
+                                */
                                 for (var i = 0; i < data.payload.stations.length; i++) {
                                     var station = data.payload.stations[i];
 
-                                    if(!regions.hasOwnProperty(station.region)) regions[station.region] = null;
+                                    if (!regions.hasOwnProperty(station.region)) regions[station.region] = null;
 
-                                    if(!waters.hasOwnProperty(station.water)) waters[station.water] = null;
+                                    if (!waters.hasOwnProperty(station.water)) waters[station.water] = null;
 
-                                    if(!stationnames.hasOwnProperty(station.stationName)) stationnames[station.stationName] = null;
+                                    if (!stationnames.hasOwnProperty(station.stationName)) stationnames[station.stationName] = null;
 
-                                    $("#stations").append('<div class="station"><b>'+station.name+'</b><br> - stationname: '+station.stationName+'<br> - water: '+station.water+'<br> - region: '+station.region+'</div>');
+                                    $("#stations").append('<div class="station"><b>' + station.name + '</b><br> - stationname: ' + station.stationName + '<br> - water: ' + station.water + '<br> - region: ' + station.region + '</div>');
+                                    /*
+                                    if (waterfill.indexOf(station.water) === -1 && waters[station.water] == null) {
+                                        waterfill.push(station.water);
+                                    }
+                                    if (regionfill.indexOf(station.region) === -1 && regions[station.region] == null) {
+                                        regionfill.push(station.region);
+                                    }
+                                    if (stationnamefill.indexOf(station.stationName) === -1 && stationnames[station.stationName] == null) {
+                                        stationnamefill.push(station.stationName);
+                                    }
+                                    */
                                 }
 
                                 if (M) M.Autocomplete.getInstance($("#region")).updateData(regions);
+                                //fillRegion(settings['region'], regionfill);
 
                                 if (M) M.Autocomplete.getInstance($("#water")).updateData(waters);
+                                //fillWater(settings['water'], waterfill);
 
                                 if (M) M.Autocomplete.getInstance($("#stationname")).updateData(stationnames);
+                                //fillStationname(settings['stationname'], stationnamefill);
+
 
                                 $(".preloader-background").fadeOut();
 
                             } else {
                                 $(".preloader-background").fadeOut();
-                                alert("Error: "+JSON.stringify(data));
+                                alert("Error: " + JSON.stringify(data));
                             }
                         } else {
                             $(".preloader-background").fadeOut();
-                            alert("Error: "+JSON.stringify(data));
+                            alert("Error: " + JSON.stringify(data));
                         }
                     },
-                    error: function(request,error) {
+                    error: function (request, error) {
                         $(".preloader-background").fadeOut();
-                        alert("Request: "+JSON.stringify(request));
+                        alert("Request: " + JSON.stringify(request));
                     }
                 });
             }
 
-            function loadData(countryCode = settings.country){
+            function loadData(countryCode = settings.country) {
                 var ajaxDataAC = {
                     countryCode: countryCode
                 };
@@ -180,10 +251,10 @@
                     type: 'GET',
                     data: ajaxDataAC,
                     dataType: 'json',
-                    success: function(data) {
-                        if(data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")){
-                            if(data.status.code == '200'){
-                                if(data.payload.stations.length){
+                    success: function (data) {
+                        if (data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")) {
+                            if (data.status.code == '200') {
+                                if (data.payload.stations.length) {
                                     regions = {};
                                     waters = {};
                                     stationnames = {};
@@ -191,11 +262,11 @@
                                     for (var i = 0; i < data.payload.stations.length; i++) {
                                         var station = data.payload.stations[i];
 
-                                        if(!regions.hasOwnProperty(station.region)) regions[station.region] = null;
+                                        if (!regions.hasOwnProperty(station.region)) regions[station.region] = null;
 
-                                        if(!waters.hasOwnProperty(station.water)) waters[station.water] = null;
+                                        if (!waters.hasOwnProperty(station.water)) waters[station.water] = null;
 
-                                        if(!stationnames.hasOwnProperty(station.stationName)) stationnames[station.stationName] = null;
+                                        if (!stationnames.hasOwnProperty(station.stationName)) stationnames[station.stationName] = null;
                                     }
 
                                     if (M) M.Autocomplete.getInstance($("#region")).updateData(regions);
@@ -205,14 +276,14 @@
                                     if (M) M.Autocomplete.getInstance($("#stationname")).updateData(stationnames);
                                 }
                             } else {
-                                alert("Error: "+JSON.stringify(data));
+                                alert("Error: " + JSON.stringify(data));
                             }
                         } else {
-                            alert("Error: "+JSON.stringify(data));
+                            alert("Error: " + JSON.stringify(data));
                         }
                     },
-                    error: function(request,error) {
-                        alert("Request: "+JSON.stringify(request));
+                    error: function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
                     }
                 });
             }
@@ -300,28 +371,47 @@
                 <label class="translate active" for="country">country</label>
             </div>
         </div>
-
+        
         <div class="row">
             <div class="input-field col s10 m4">
                 <input class="value autocomplete" id="region" type="text" autocomplete="off">
                 <label class="translate active">region</label>
             </div>
         </div>
-
+        
         <div class="row">
             <div class="input-field col s10 m4">
                 <input class="value autocomplete" id="water" type="text" autocomplete="off">
                 <label class="translate active">water</label>
             </div>
         </div>
-
+        
         <div class="row">
             <div class="input-field col s10 m4">
                 <input class="value autocomplete" id="stationname" type="text" autocomplete="off">
                 <label class="translate active">stationname</label>
             </div>
         </div>
-
+        <!--
+        <div class="row">
+            <div class="input-field col s10 m4">
+                <select class="value autocomplete" id="region" autocomplete="off"></select>
+                <label class="translate" for="region">region</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s10 m4">
+                <select class="value autocomplete" id="water" autocomplete="off"></select>
+                <label class="translate" for="water">water</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s10 m4">
+                <select class="value autocomplete" id="stationname" autocomplete="off"></select>
+                <label class="translate" for="stationname">stationname</label>
+            </div>
+        </div>
+        -->
         <div class="row">
             <div class="input-field col s10 m4">
                 <p id="foundstations"><span class="translate active">response</span><span>: <b>0</b></span><i class="material-icons">keyboard_arrow_down</i></p>

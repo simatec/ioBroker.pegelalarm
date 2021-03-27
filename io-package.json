@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "pegelalarm",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "news": {
+      "1.1.0": {
+        "en": "fork from bazidibavaria, code rewritten, dependencies updated, Bugfix setState, Bugfix getState, License updated",
+        "de": "Fork von Bazidibavaria, Code neu geschrieben, Abhängigkeiten aktualisiert, Bugfix setState, Bugfix getState, Lizenz aktualisiert",
+        "ru": "вилка от bazidibavaria, код переписан, зависимости обновлены, исправление ошибки setState, исправление ошибки getState, лицензия обновлена",
+        "pt": "fork from bazidibavaria, código reescrito, dependências atualizadas, Bugfix setState, Bugfix getState, Licença atualizada",
+        "nl": "vork van Bazidibavaria, code herschreven, afhankelijkheden bijgewerkt, Bugfix setState, Bugfix getState, Licentie bijgewerkt",
+        "fr": "fork de bazidibavaria, code réécrit, dépendances mises à jour, Bugfix setState, Bugfix getState, Licence mise à jour",
+        "it": "fork da bazidibavaria, codice riscritto, dipendenze aggiornate, bugfix setState, bugfix getState, licenza aggiornata",
+        "es": "bifurcación de bazidibavaria, código reescrito, dependencias actualizadas, Bugfix setState, Bugfix getState, Licencia actualizada",
+        "pl": "fork z bazidibavaria, przepisany kod, zaktualizowane zależności, poprawka błędu setState, poprawka błędu getState, aktualizacja licencji",
+        "zh-cn": "来自bazidibavaria的fork，重写了代码，更新了依赖项，Bugfix setState，Bugfix getState，许可证已更新"
+      },
       "1.0.0": {
         "en": "updated packages",
         "de": "aktualisierte Pakete",
@@ -90,9 +102,15 @@
       "zh-cn": "提供来自Pegelalarm-API的数据"
     },
     "authors": [
-      "bazidibavaria <bazidibavaria@users.noreply.github.com>"
+      "bazidibavaria <bazidibavaria@users.noreply.github.com>",
+      "simatec <nais@gmx.net>"
     ],
     "keywords": [
+      "level alarm",
+      "level",
+      "river level",
+      "water level",
+      "flood",
       "pegelalarm",
       "pegelstand",
       "flussstand",
@@ -109,6 +127,7 @@
     "loglevel": "info",
     "mode": "schedule",
     "schedule": "*/15 * * * *",
+    "allowInit": true,
     "type": "weather",
     "compact": true,
     "materialize": true,
@@ -119,8 +138,7 @@
       {
         "js-controller": ">=1.4.2"
       }
-    ],
-    "installedFrom": "simatec/ioBroker.pegelalarm#4a9556ee93a402341f9b4bd77f16b630d40e618d"
+    ]
   },
   "native": {
     "country": "DE",
@@ -135,7 +153,6 @@
       "_id": "stations",
       "type": "channel",
       "common": {
-        "role": "state",
         "name": "stations"
       },
       "native": {}
@@ -144,7 +161,6 @@
       "_id": "warning",
       "type": "channel",
       "common": {
-        "role": "state",
         "name": "warning"
       },
       "native": {}
@@ -156,7 +172,7 @@
         "name": "hasWarning",
         "type": "boolean",
         "role": "indicator",
-        "read": false,
+        "read": true,
         "write": false,
         "def": false
       },
@@ -169,7 +185,7 @@
         "name": "statepathes",
         "type": "string",
         "role": "json",
-        "read": false,
+        "read": true,
         "write": false,
         "def": "[]"
       },
@@ -179,7 +195,6 @@
       "_id": "alert",
       "type": "channel",
       "common": {
-        "role": "state",
         "name": "alert"
       },
       "native": {}
@@ -191,7 +206,7 @@
         "name": "hasAlert",
         "type": "boolean",
         "role": "indicator",
-        "read": false,
+        "read": true,
         "write": false,
         "def": false
       },
@@ -204,9 +219,21 @@
         "name": "statepathes",
         "type": "string",
         "role": "json",
-        "read": false,
+        "read": true,
         "write": false,
         "def": "[]"
+      },
+      "native": {}
+    },
+    {
+      "_id": "lastRun",
+      "type": "state",
+      "common": {
+        "name": "lastRun",
+        "type": "string",
+        "role": "date",
+        "read": true,
+        "write": false
       },
       "native": {}
     }

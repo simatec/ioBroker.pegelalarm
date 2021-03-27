@@ -36,13 +36,10 @@
 
 'use strict';
 
-const utils       = require('@iobroker/adapter-core'); // Get common adapter utils
-const tools       = require('./lib/tools');
+const utils = require('@iobroker/adapter-core'); // Get common adapter utils
 const adapterName = require('./package.json').name.split('.').pop();
-const request     = require('request');
+const request = require('request');
 
-let channels = [];
-let iopkg;
 let isStopped = false;
 let adapter;
 
@@ -58,553 +55,321 @@ function startAdapter(options) {
         }
     });
     adapter = new utils.Adapter(options);
-
-    adapter.on('ready', () => {
-        adapter.log.debug("started");
-
-        if(!adapter.config.configurated){
-            adapter.log.error("Please configurate Adapter first!");
-            killAdapter();
-        }
-
-        let dataUrl = "https://api.pegelalarm.at/api/station/1.0/list";
-        dataUrl += "?countryCode=" + adapter.config.country;
-
-        if(adapter.config.region.trim().length){
-            dataUrl += "&qRegion="+adapter.config.region;
-        }
-        if(adapter.config.water.trim().length){
-            dataUrl += "&qWater="+adapter.config.water;
-        }
-        if(adapter.config.stationname.trim().length){
-            dataUrl += "&qStationName="+adapter.config.stationname;
-        }
-
-        adapter.log.debug(dataUrl);
-
-        request({
-            method: 'GET',
-            rejectUnauthorized: false,
-            url: dataUrl
-        }, (error, response, body) => {
-            if (!error && response.statusCode === 200) {
-                let data = JSON.parse(body);
-                if(typeof data == 'object' && data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")){
-                    if(data.status.code == '200'){
-                        let warnings = [];
-                        let alerts = [];
-
-                        for (let i = 0; i < data.payload.stations.length; i++) {
-                            let station = data.payload.stations[i];
-                            let path = 'stations.'+createVarName(station.stationName);
-
-                            adapter.setObjectNotExists('stations', {
-                                type: 'channel',
-                                common: {
-                                    name: 'stations',
-                                },
-                                native: {},
-                            });
-
-                            adapter.setObjectNotExists(path+'.name', {
-                                type: 'state',
-                                common: {
-                                    name: 'name',
-                                    type: 'string',
-                                    role: 'text',
-                                    read: false,
-                                    write: false,
-                                },
-                                native: {},
-                            });
-                            adapter.setState(path+'.name', station.stationName, true);
-
-                            adapter.setObjectNotExists(path+'.country', {
-                                type: 'state',
-                                common: {
-                                    name: 'country',
-                                    type: 'string',
-                                    role: 'text',
-                                    read: false,
-                                    write: false,
-                                },
-                                native: {},
-                            });
-                            adapter.setState(path+'.country', station.country, true);
-
-                            adapter.setObjectNotExists(path+'.water', {
-                                type: 'state',
-                                common: {
-                                    name: 'water',
-                                    type: 'string',
-                                    role: 'text',
-                                    read: false,
-                                    write: false,
-                                },
-                                native: {},
-                            });
-                            adapter.setState(path+'.water', station.water, true);
-
-                            adapter.setObjectNotExists(path+'.region', {
-                                type: 'state',
-                                common: {
-                                    name: 'region',
-                                    type: 'string',
-                                    role: 'text',
-                                    read: false,
-                                    write: false,
-                                },
-                                native: {},
-                            });
-                            adapter.setState(path+'.region', station.region, true);
-
-                            adapter.setObjectNotExists(path+'.situation', {
-                                type: 'channel',
-                                common: {
-                                    name: 'situation',
-                                },
-                                native: {},
-                            });
-
-                            adapter.setObjectNotExists(path+'.situation.text', {
-                                type: 'state',
-                                common: {
-                                    name: 'text',
-                                    type: 'string',
-                                    role: 'text',
-                                    read: false,
-                                    write: false,
-                                },
-                                native: {},
-                            });
-                            adapter.setState(path+'.situation.text', decodeSituation(station.situation), true);
-
-                            adapter.setObjectNotExists(path+'.situation.group', {
-                                type: 'state',
-                                common: {
-                                    name: 'group',
-                                    type: 'string',
-                                    role: 'text',
-                                    read: false,
-                                    write: false,
-                                },
-                                native: {},
-                            });
-                            adapter.setState(path+'.situation.group', decodeSituation(station.situation, "group"), true);
-
-                            adapter.setObjectNotExists(path+'.situation.code', {
-                                type: 'state',
-                                common: {
-                                    name: 'code',
-                                    type: 'number',
-                                    role: 'value',
-                                    read: false,
-                                    write: false,
-                                },
-                                native: {},
-                            });
-                            adapter.setState(path+'.situation.code', station.situation, true);
-
-                            adapter.setObjectNotExists(path+'.trend', {
-                                type: 'channel',
-                                common: {
-                                    name: 'trend',
-                                },
-                                native: {},
-                            });
-
-                            adapter.setObjectNotExists(path+'.trend.text', {
-                                type: 'state',
-                                common: {
-                                    name: 'text',
-                                    type: 'string',
-                                    role: 'text',
-                                    read: false,
-                                    write: false,
-                                },
-                                native: {},
-                            });
-                            adapter.setState(path+'.trend.text', decodeTrend(station.trend), true);
-
-                            adapter.setObjectNotExists(path+'.trend.short', {
-                                type: 'state',
-                                common: {
-                                    name: 'short',
-                                    type: 'string',
-                                    role: 'text',
-                                    read: false,
-                                    write: false,
-                                },
-                                native: {},
-                            });
-                            adapter.setState(path+'.trend.short', decodeTrend(station.trend, "short"), true);
-
-                            adapter.setObjectNotExists(path+'.trend.code', {
-                                type: 'state',
-                                common: {
-                                    name: 'code',
-                                    type: 'number',
-                                    role: 'value',
-                                    read: false,
-                                    write: false,
-                                },
-                                native: {},
-                            });
-                            adapter.setState(path+'.trend.code', station.trend, true);
-
-                            adapter.setObjectNotExists(path+'.state', {
-                                type: 'channel',
-                                common: {
-                                    name: 'state',
-                                },
-                                native: {},
-                            });
-
-                            let stateNormal = false;
-                            let stateWarning = false;
-                            let stateAlert = false;
-                            let stateUnknown = false;
-
-                            switch(decodeSituation(station.situation, "group")) {
-                                case 'normal':
-                                    stateNormal = true;
-                                    break;
-                                case 'warning':
-                                    stateWarning = true;
-                                    warnings.push(path);
-                                    break;
-                                case 'alert':
-                                    stateAlert = true;
-                                    alerts.push(path);
-                                    break;
-                                default:
-                                    stateUnknown = true;
-                            }
-
-                            adapter.setObjectNotExists(path+'.state.normal', {
-                                type: 'state',
-                                common: {
-                                    name: 'normal',
-                                    type: 'boolean',
-                                    role: 'indicator',
-                                    read: false,
-                                    write: false,
-                                },
-                                native: {},
-                            });
-                            adapter.setState(path+'.state.normal', stateNormal, true);
-
-                            adapter.setObjectNotExists(path+'.state.warning', {
-                                type: 'state',
-                                common: {
-                                    name: 'warning',
-                                    type: 'boolean',
-                                    role: 'indicator',
-                                    read: false,
-                                    write: false,
-                                },
-                                native: {},
-                            });
-                            adapter.setState(path+'.state.warning', stateWarning, true);
-
-                            adapter.setObjectNotExists(path+'.state.alert', {
-                                type: 'state',
-                                common: {
-                                    name: 'alert',
-                                    type: 'boolean',
-                                    role: 'indicator',
-                                    read: false,
-                                    write: false,
-                                },
-                                native: {},
-                            });
-                            adapter.setState(path+'.state.alert', stateAlert, true);
-
-                            adapter.setObjectNotExists(path+'.state.unknown', {
-                                type: 'state',
-                                common: {
-                                    name: 'unknown',
-                                    type: 'boolean',
-                                    role: 'indicator',
-                                    read: false,
-                                    write: false,
-                                },
-                                native: {},
-                            });
-                            adapter.setState(path+'.state.unknown', stateUnknown, true);
-
-                            adapter.setObjectNotExists(path+'.geo', {
-                                type: 'channel',
-                                common: {
-                                    name: 'geo',
-                                },
-                                native: {},
-                            });
-
-                            adapter.setObjectNotExists(path+'.geo.latitude', {
-                                type: 'state',
-                                common: {
-                                    name: 'latitude',
-                                    type: 'number',
-                                    role: 'value.gps.latitude',
-                                    read: false,
-                                    write: false,
-                                },
-                                native: {},
-                            });
-                            adapter.setState(path+'.geo.latitude', station.latitude, true);
-
-                            adapter.setObjectNotExists(path+'.geo.longitude', {
-                                type: 'state',
-                                common: {
-                                    name: 'longitude',
-                                    type: 'number',
-                                    role: 'value.gps.longitude',
-                                    read: false,
-                                    write: false,
-                                },
-                                native: {},
-                            });
-                            adapter.setState(path+'.geo.longitude', station.longitude, true);
-
-                            adapter.setObjectNotExists(path+'.geo.altitude', {
-                                type: 'state',
-                                common: {
-                                    name: 'altitude',
-                                    type: 'number',
-                                    role: 'value.gps.elevation',
-                                    read: false,
-                                    write: false,
-                                },
-                                native: {},
-                            });
-                            adapter.setState(path+'.geo.altitude', station.altitudeM, true);
-
-                            for (let j = 0; j < station.data.length; j++) {
-                                let stationData = station.data[j];
-                                if(stationData.type == "height in cm"){
-                                    j = station.data.length;
-
-                                    adapter.setObjectNotExists(path+'.height', {
-                                        type: 'state',
-                                        common: {
-                                            name: 'height',
-                                            type: 'number',
-                                            role: 'level',
-                                            unit: "cm",
-                                            read: false,
-                                            write: false,
-                                        },
-                                        native: {},
-                                    });
-                                    adapter.setState(path+'.height', stationData.value, true);
-
-                                    adapter.setObjectNotExists(path+'.sourceDate', {
-                                        type: 'state',
-                                        common: {
-                                            name: 'sourceDate',
-                                            type: 'string',
-                                            role: 'date',
-                                            read: false,
-                                            write: false,
-                                        },
-                                        native: {},
-                                    });
-                                    let sourceDate = new Date(Date.parse(stationData.sourceDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, "$3-$2-$1$4"))).toUTCString();
-                                    adapter.setState(path+'.sourceDate', sourceDate, true);
-
-                                    adapter.setObjectNotExists(path+'.requestDate', {
-                                        type: 'state',
-                                        common: {
-                                            name: 'requestDate',
-                                            type: 'string',
-                                            role: 'date',
-                                            read: false,
-                                            write: false,
-                                        },
-                                        native: {},
-                                    });
-                                    let requestDate = new Date(Date.parse(stationData.requestDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, "$3-$2-$1$4"))).toUTCString();
-                                    adapter.setState(path+'.requestDate', requestDate, true);
-                                }
-                            }
-                        }
-
-                        adapter.setObjectNotExists('warning', {
-                            type: 'channel',
-                            common: {
-                                name: 'warning',
-                            },
-                            native: {},
-                        });
-
-                        adapter.setObjectNotExists('warning.hasWarning', {
-                            type: 'state',
-                            common: {
-                                name: 'hasWarning',
-                                type: 'boolean',
-                                role: 'indicator',
-                                read: false,
-                                write: false,
-                            },
-                            native: {},
-                        });
-                        adapter.setState('warning.hasWarning', (warnings.length>0), true);
-
-                        adapter.setObjectNotExists('warning.statepathes', {
-                            type: 'state',
-                            common: {
-                                name: 'statepathes',
-                                type: 'string',
-                                role: 'json',
-                                read: false,
-                                write: false,
-                            },
-                            native: {},
-                        });
-                        adapter.setState('warning.statepathes', JSON.stringify(warnings), true);
-
-                        adapter.setObjectNotExists('alert', {
-                            type: 'channel',
-                            common: {
-                                name: 'alert',
-                            },
-                            native: {},
-                        });
-
-                        adapter.setObjectNotExists('alert.hasAlert', {
-                            type: 'state',
-                            common: {
-                                name: 'hasAlert',
-                                type: 'boolean',
-                                role: 'indicator',
-                                read: false,
-                                write: false,
-                            },
-                            native: {},
-                        });
-                        adapter.setState('alert.hasAlert', (alerts.length>0), true);
-
-                        adapter.setObjectNotExists('alert.statepathes', {
-                            type: 'state',
-                            common: {
-                                name: 'statepathes',
-                                type: 'string',
-                                role: 'json',
-                                read: false,
-                                write: false,
-                            },
-                            native: {},
-                        });
-                        adapter.setState('alert.statepathes', JSON.stringify(alerts), true);
-
-                        let lastRun = new Date().toUTCString();
-                        adapter.setObjectNotExists('lastRun', {
-                            type: 'state',
-                            common: {
-                                name: 'lastRun',
-                                type: 'string',
-                                role: 'date',
-                                read: false,
-                                write: false,
-                            },
-                            native: {},
-                        });
-                        adapter.setState('lastRun', lastRun, true);
-                    } else {
-                        adapter.log.error('API-Statuscode: ' + data.status.code);
-                        killAdapter();
-                    }
-                } else {
-                    adapter.log.error('Wrong JSON returned');
-                    killAdapter();
-                }
-            } else {
-                adapter.log.error('Cannot read JSON file: ' + error || response.statusCode);
-                killAdapter();
-            }
-            killAdapter();
-        });
-
-        adapter.log.debug("done");
-    });
+    
+    // start here!
+    adapter.on('ready', main); // Main method defined below for readability
 
     return adapter;
 }
 
-function decodeTrend(code, type = ""){
-    var text = "Unbekannte Wasserhöhe", shortText = "Unbekannt";
+// Request Data from API
+async function requestData() {
+    let dataUrl = "https://api.pegelalarm.at/api/station/1.0/list";
+    dataUrl += "?countryCode=" + adapter.config.country;
 
-    switch(code) {
-      case -10:
-        text = "Fallende Wasserhöhe";
-        shortText = "fallend";
-        break;
-      case 0:
-        text = "Konstante Wasserhöhe";
-        shortText = "konstant";
-        break;
-      case 10:
-        text = "Steigende Wasserhöhe";
-        shortText = "steigend";
-        break;
-      default:
-        text = "Unbekannte Wasserhöhe";
-        shortText = "Unbekannt";
+    if (adapter.config.region.trim().length) {
+        dataUrl += "&qRegion=" + adapter.config.region;
+    }
+    if (adapter.config.water.trim().length) {
+        dataUrl += "&qWater=" + adapter.config.water;
+    }
+    if (adapter.config.stationname.trim().length) {
+        dataUrl += "&qStationName=" + adapter.config.stationname;
+    }
+    const url = encodeURI(dataUrl);
+
+    adapter.log.debug(url);
+
+    request({
+        method: 'GET',
+        rejectUnauthorized: false,
+        url: url
+    }, async (error, response, body) => {
+        if (!error && response.statusCode === 200) {
+            let data = JSON.parse(body);
+
+            if (typeof data == 'object' && data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")) {
+                if (data.status.code == '200') {
+                    let warnings = [];
+                    let alerts = [];
+                    let currentStations = [];
+                    for (let i = 0; i < data.payload.stations.length; i++) {
+                        let station = data.payload.stations[i];
+                        let path = 'stations.' + createVarName(station.stationName);
+                        currentStations.push(createVarName(station.stationName));
+
+                        await createStations(path);
+
+                        await adapter.setState(path + '.name', station.stationName, true);
+                        await adapter.setState(path + '.country', station.country, true);
+                        await adapter.setState(path + '.water', station.water, true);
+                        await adapter.setState(path + '.region', station.region, true);
+                        await adapter.setState(path + '.situation.text', decodeSituation(station.situation), true);
+                        await adapter.setState(path + '.situation.group', decodeSituation(station.situation, "group"), true);
+                        await adapter.setState(path + '.situation.code', station.situation, true);
+                        await adapter.setState(path + '.trend.text', decodeTrend(station.trend), true);
+                        await adapter.setState(path + '.trend.short', decodeTrend(station.trend, "short"), true);
+                        await adapter.setState(path + '.trend.code', station.trend, true);
+
+                        let stateNormal = false;
+                        let stateWarning = false;
+                        let stateAlert = false;
+                        let stateUnknown = false;
+
+                        switch (decodeSituation(station.situation, "group")) {
+                            case 'normal':
+                                stateNormal = true;
+                                break;
+                            case 'warning':
+                                stateWarning = true;
+                                warnings.push(path);
+                                break;
+                            case 'alert':
+                                stateAlert = true;
+                                alerts.push(path);
+                                break;
+                            default:
+                                stateUnknown = true;
+                        }
+
+                        await adapter.setState(path + '.state.normal', stateNormal, true);
+                        await adapter.setState(path + '.state.warning', stateWarning, true);
+                        await adapter.setState(path + '.state.alert', stateAlert, true);
+                        await adapter.setState(path + '.state.unknown', stateUnknown, true);
+                        await adapter.setState(path + '.geo.latitude', station.latitude, true);
+                        await adapter.setState(path + '.geo.longitude', station.longitude, true);
+                        await adapter.setState(path + '.geo.altitude', station.altitudeM, true);
+
+                        for (let o = 0; o < station.data.length; o++) {
+                            let stationData = station.data[o];
+                            if (stationData.type == "height in cm") {
+                                o = station.data.length;
+
+                                await adapter.setState(path + '.height', stationData.value, true);
+
+                                let sourceDate = new Date(Date.parse(stationData.sourceDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, "$3-$2-$1$4"))).toUTCString();
+                                await adapter.setState(path + '.sourceDate', sourceDate, true);
+
+                                let requestDate = new Date(Date.parse(stationData.requestDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, "$3-$2-$1$4"))).toUTCString();
+                                await adapter.setState(path + '.requestDate', requestDate, true);
+                            }
+                        }
+                    }
+                    checkStation(currentStations);
+
+                    await adapter.setState('warning.hasWarning', (warnings.length > 0), true);
+                    await adapter.setState('warning.statepathes', JSON.stringify(warnings), true);
+                    await adapter.setState('alert.hasAlert', (alerts.length > 0), true);
+                    await adapter.setState('alert.statepathes', JSON.stringify(alerts), true);
+
+                    let lastRun = new Date().toUTCString();
+
+                    await adapter.setState('lastRun', lastRun, true);
+                } else {
+                    adapter.log.error('API-Statuscode: ' + data.status.code);
+                    killAdapter();
+                }
+            } else {
+                adapter.log.error('Wrong JSON returned');
+                killAdapter();
+            }
+        } else {
+            adapter.log.error('Cannot read JSON file: ' + error || response.statusCode);
+            killAdapter();
+        }
+        killAdapter();
+    });
+
+    adapter.log.debug("done");
+}
+
+function createStations(path) {
+    return new Promise((resolve, reject) => {
+        const stationsStatesString = [
+            'country',
+            'name',
+            'region',
+            'water',
+            'situation.group',
+            'situation.text',
+            'trend.short',
+            'trend.text'
+        ];
+        const stationsStatesNumber = [
+            'height',
+            'geo.altitude',
+            'geo.latitude',
+            'geo.longitude',
+            'situation.code',
+            'trend.code',
+        ];
+        const stationsStatesDate = [
+            'requestDate',
+            'sourceDate'
+        ]
+        const stationsStatesboolean = [
+            'state.alert',
+            'state.normal',
+            'state.unknown',
+            'state.warning',
+        ];
+        const stationsChannel = [
+            'state',
+            'geo',
+            'situation',
+            'trend',
+        ];
+
+        adapter.setObjectNotExists('stations', {
+            type: 'channel',
+            common: {
+                name: 'stations',
+            },
+            native: {},
+        });
+        for (const j in stationsChannel) {
+            adapter.setObjectNotExists(path + '.' + stationsChannel[j], {
+                type: 'channel',
+                common: {
+                    name: stationsChannel[j],
+                },
+                native: {},
+            });
+        }
+        for (const k in stationsStatesString) {
+            adapter.setObjectNotExists(path + '.' + stationsStatesString[k], {
+                type: 'state',
+                common: {
+                    name: stationsStatesString[k],
+                    type: 'string',
+                    role: 'text',
+                    read: true,
+                    write: false,
+                },
+                native: {},
+            });
+        }
+        for (const l in stationsStatesNumber) {
+            adapter.setObjectNotExists(path + '.' + stationsStatesNumber[l], {
+                type: 'state',
+                common: {
+                    name: stationsStatesNumber[l],
+                    type: 'number',
+                    role: 'value',
+                    read: true,
+                    write: false,
+                },
+                native: {},
+            });
+        }
+        for (const m in stationsStatesDate) {
+            adapter.setObjectNotExists(path + '.' + stationsStatesDate[m], {
+                type: 'state',
+                common: {
+                    name: stationsStatesDate[m],
+                    type: 'string',
+                    role: 'date',
+                    read: true,
+                    write: false,
+                },
+                native: {},
+            });
+        }
+        for (const n in stationsStatesboolean) {
+            adapter.setObjectNotExists(path + '.' + stationsStatesboolean[n], {
+                type: 'state',
+                common: {
+                    name: stationsStatesboolean[n],
+                    type: 'boolean',
+                    role: 'indicator',
+                    read: true,
+                    write: false,
+                },
+                native: {},
+            });
+        }
+        const timer = setTimeout(() => {
+            resolve();
+            clearTimeout(timer);
+        }, 2000);
+    });
+}
+
+function decodeTrend(code, type = "") {
+    let text = "Unknown water level";
+    let shortText = "unknown";
+
+    switch (code) {
+        case -10:
+            text = "Falling water level";
+            shortText = "falling";
+            break;
+        case 0:
+            text = "Constant water height";
+            shortText = "constant";
+            break;
+        case 10:
+            text = "Rising water level";
+            shortText = "rising";
+            break;
+        default:
+            text = "Unknown water level";
+            shortText = "unknown";
     }
 
-    if(type.length && type == "short"){
+    if (type.length && type == "short") {
         return shortText;
     }
 
     return text;
 }
 
-function decodeSituation(code, type = ""){
-    var text = "Unbekannte Wasserhöhe", group = "Unbekannt";
+function decodeSituation(code, type = "") {
+    let text = "Unknown water level";
+    let group = "unknown";
 
-    switch(code) {
-      case -10:
-        text = "Unter- oder Normalwasserstand";
-        group = "normal";
-        break;
-      case 10:
-        text = "Normal- oder leicht erhöhter Wasserstand";
-        group = "normal";
-        break;
-      case 20:
-        text = "Erhöhter Wasserstand";
-        group = "normal";
-        break;
-      case 30:
-        text = "Wasserstand hat Warngrenze erreicht";
-        group = "warning";
-        break;
-      case 40:
-        text = "Wasserstand verursacht ein regionales Hochwasser";
-        group = "alert";
-        break;
-      case 50:
-        text = "Wasserstand verursacht ein nationales Hochwasser";
-        group = "alert";
-        break;
-      default:
-        text = "Unknown situation";
-        group = "unknown";
+    switch (code) {
+        case -10:
+            text = "Under or normal water level";
+            group = "normal";
+            break;
+        case 10:
+            text = "Normal or slightly elevated water level";
+            group = "normal";
+            break;
+        case 20:
+            text = "Increased water level";
+            group = "normal";
+            break;
+        case 30:
+            text = "The water level has reached the warning limit";
+            group = "warning";
+            break;
+        case 40:
+            text = "The water level causes a regional flood";
+            group = "alert";
+            break;
+        case 50:
+            text = "Water level causes a national flood";
+            group = "alert";
+            break;
+        default:
+            text = "Unknown situation";
+            group = "unknown";
     }
 
-    if(type.length && type == "group"){
+    if (type.length && type == "group") {
         return group;
     }
 
     return text;
 }
 
-function createVarName(text){
+function createVarName(text) {
     return text.toLowerCase().replace(/\s/g, '_').replace(/[^\x20\x2D0-9A-Z\x5Fa-z\xC0-\xD6\xF8-\xFF]/g, '');
 }
 
-function killAdapter(){
+function killAdapter() {
     setImmediate(() => {
         killSwitchTimeout && clearTimeout(killSwitchTimeout);
         isStopped = true;
@@ -620,6 +385,73 @@ let killSwitchTimeout = setTimeout(() => {
     }
 }, 240000);
 
+function checkStation(currentStations) {
+    adapter.getForeignObjects(adapter.namespace + ".stations.*", 'state', /**
+         * @param {any} err
+         * @param {any[]} list
+         */
+        function (err, list) {
+            if (err) {
+                adapter.log.error(err);
+            } else {
+                for (const i in list) {
+                    const resID = list[i]._id;
+                    const objectID = resID.split('.');
+                    const resultID = objectID[3];
+
+                    if (currentStations.indexOf(resultID) === -1) {
+                        adapter.log.debug('DELETE: ' + resID);
+                        adapter.delObject(resID, /**
+                         * @param {any} err
+                         */
+                            function (err) {
+                                if (err) {
+                                    adapter.log.warn(err);
+                                }
+                            });
+                    }
+
+                }
+            }
+        });
+    adapter.getForeignObjects(adapter.namespace + ".stations.*", 'channel', /**
+         * @param {any} err
+         * @param {any[]} list
+         */
+        function (err, list) {
+            if (err) {
+                adapter.log.error(err);
+            } else {
+                for (const i in list) {
+                    const resID = list[i]._id;
+                    const objectID = resID.split('.');
+                    const resultID = objectID[3];
+
+                    if (currentStations.indexOf(resultID) === -1) {
+                        adapter.log.debug('DELETE: ' + resID);
+                        adapter.delObject(resID, /**
+                         * @param {any} err
+                         */
+                            function (err) {
+                                if (err) {
+                                    adapter.log.warn(err);
+                                }
+                            });
+                    }
+
+                }
+            }
+        });
+}
+function main() {
+    adapter.log.debug("started");
+
+    if (!adapter.config.configurated) {
+        adapter.log.error("Please configurate Adapter first!");
+        killAdapter();
+    }
+    requestData();
+}
 // If started as allInOne/compact mode => return function to create instance
 if (module && module.parent) {
     module.exports = startAdapter;

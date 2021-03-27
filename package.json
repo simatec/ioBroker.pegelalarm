@@ -1,11 +1,17 @@
 {
   "name": "iobroker.pegelalarm",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Provides data from Pegelalarm-API",
-  "author": {
-    "name": "bazidibavaria",
-    "email": "bazidibavaria@users.noreply.github.com"
-  },
+  "authors": [
+    {
+      "name": "bazidibavaria",
+      "email": "bazidibavaria@users.noreply.github.com"
+    },
+    {
+      "name": "simatec",
+      "email": "nais@gmx.net"
+    }
+  ],
   "contributors": [
     {
       "name": "simatec",
@@ -15,6 +21,11 @@
   "homepage": "https://github.com/simatec/ioBroker.pegelalarm",
   "license": "MIT",
   "keywords": [
+    "level alarm",
+    "level",
+    "river level",
+    "water level",
+    "flood",
     "pegelalarm",
     "pegelstand",
     "flussstand",
