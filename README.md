@@ -28,6 +28,7 @@ https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc/wiki/Download-current-wa
 * (simatec) Configuration menu redesigned
 * (simatec) unit added
 * (simatec) many small Bugfix
+* (simatec) Translations added
 
 ### 1.1.0 (2021-03-27)
 * (simatec) fork from bazidibavaria

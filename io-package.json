@@ -4,16 +4,16 @@
         "version": "1.1.1",
         "news": {
             "1.1.1": {
-                "en": "json state added, Configuration menu redesigned, unit added, many small Bugfix",
-                "de": "JSON-Status hinzugefügt, Konfigurationsmenü neu gestaltet, Einheit hinzugefügt, viele kleine Bugfix",
-                "ru": "добавлено состояние json, изменено меню конфигурации, добавлен модуль, много мелких исправлений",
-                "pt": "estado json adicionado, menu de configuração redesenhado, unidade adicionada, muitos pequenos Bugfix",
-                "nl": "json-status toegevoegd, configuratiemenu opnieuw ontworpen, eenheid toegevoegd, veel kleine bugfixes",
-                "fr": "json état ajouté, menu de configuration repensé, unité ajoutée, nombreux petits bugs",
-                "it": "stato aggiunto json, menu di configurazione ridisegnato, unità aggiunta, molti piccoli bug risolti",
-                "es": "json estado agregado, menú de configuración rediseñado, unidad agregada, muchos errores pequeños",
-                "pl": "Dodano stan json, przeprojektowano menu konfiguracji, dodano jednostkę, wiele małych poprawek błędów",
-                "zh-cn": "添加了json状态，重新设计了配置菜单，添加了单位，许多小错误修正"
+                "en": "json state added, Configuration menu redesigned, unit added, many small Bugfix, Translations added",
+                "de": "JSON-Status hinzugefügt, Konfigurationsmenü neu gestaltet, Einheit hinzugefügt, viele kleine Bugfixes, Übersetzungen hinzugefügt",
+                "ru": "добавлено состояние json, изменено меню конфигурации, добавлен модуль, много мелких исправлений, добавлены переводы",
+                "pt": "estado json adicionado, menu de configuração redesenhado, unidade adicionada, muitas pequenas correções de bug, traduções adicionadas",
+                "nl": "json-status toegevoegd, configuratiemenu opnieuw ontworpen, eenheid toegevoegd, veel kleine bugfixes, vertalingen toegevoegd",
+                "fr": "json état ajouté, menu de configuration repensé, unité ajoutée, nombreuses petites corrections de bogues, traductions ajoutées",
+                "it": "stato aggiunto json, menu di configurazione ridisegnato, unità aggiunta, molti piccoli bugfix, traduzioni aggiunte",
+                "es": "json estado agregado, menú de configuración rediseñado, unidad agregada, muchas pequeñas correcciones de errores, traducciones agregadas",
+                "pl": "Dodano stan json, przeprojektowano menu konfiguracji, dodano jednostkę, wiele drobnych poprawek błędów, dodano tłumaczenia",
+                "zh-cn": "添加了json状态，重新设计了配置菜单，添加了单元，添加了许多小错误修正，添加了翻译"
             },
             "1.1.0": {
                 "en": "fork from bazidibavaria, code rewritten, dependencies updated, Bugfix setState, Bugfix getState, License updated",
