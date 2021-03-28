@@ -16,11 +16,21 @@
     <!-- Load our own files -->
     <script type="text/javascript" src="words.js"></script>
 
-<style>
-    .m .col .select-wrapper+label {
-        top: -26px;
-    }
-    /*
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        .m {
+            /* Don't cut off dropdowns! */
+            overflow: initial;
+        }
+
+        .m .col .select-wrapper+label {
+            top: -26px;
+        }
+
+        /*
     #foundstations .material-icons {
         position: absolute;
         margin-top: -2px;
@@ -34,229 +44,219 @@
         top: 0;
     }
     */
-    .preloader-background {
-        float: right;
-        padding: .5rem;
-    }
-</style>
-<script type="text/javascript">
+        .preloader-background {
+            float: right;
+            padding: .5rem;
+        }
+    </style>
+    <script type="text/javascript">
 
-    let station;
-    let stationnameValue;
-    let regionValue;
-    let waterValue;
+        let station;
+        let stationnameValue;
+        let regionValue;
+        let waterValue;
 
-    // This will be called by the admin adapter when the settings page loads
-    function load(settings, onChange) {
-        // example: select elements with id=key and class=value and insert value
-        if (!settings) return;
-        $(".value").each(function () {
-            var $key = $(this);
-            var id = $key.attr('id');
-            if ($key.attr('type') === 'checkbox') {
-                // do not call onChange direct, because onChange could expect some arguments
-                $key.prop('checked', settings[id])
-                    .on('change', () => onChange())
-                    ;
-            } else {
-                // do not call onChange direct, because onChange could expect some arguments
-                $key.val(settings[id])
-                    .on('change', () => onChange())
-                    .on('keyup', () => onChange())
-                    ;
-            }
-        });
-        onChange(false);
-        // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
-        if (M) M.updateTextFields();
+        // This will be called by the admin adapter when the settings page loads
+        function load(settings, onChange) {
+            // example: select elements with id=key and class=value and insert value
+            if (!settings) return;
+            $(".value").each(function () {
+                var $key = $(this);
+                var id = $key.attr('id');
+                if ($key.attr('type') === 'checkbox') {
+                    // do not call onChange direct, because onChange could expect some arguments
+                    $key.prop('checked', settings[id])
+                        .on('change', () => onChange())
+                        ;
+                } else {
+                    // do not call onChange direct, because onChange could expect some arguments
+                    $key.val(settings[id])
+                        .on('change', () => onChange())
+                        .on('keyup', () => onChange())
+                        ;
+                }
+            });
+            onChange(false);
+            // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
+            if (M) M.updateTextFields();
 
-        $("#country").on('change', function () {
+            $("#country").on('change', function () {
+                countStations(settings);
+                fillCheck();
+            });
+
+            $("#region").on('change', function () {
+                fillStationname(settings['stationname'], station);
+                fillWater(settings['water'], station);
+                fillCheck();
+            });
+            $("#water").on('change', function () {
+                fillStationname(settings['stationname'], station);
+                fillCheck();
+            });
+            $("#stationname").on('change', function () {
+                fillCheck();
+            });
+            /*
+            onChange(false);
+            // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
+            if (M) M.updateTextFields();
+            */
             countStations(settings);
-            fillCheck();
-        });
 
-        $("#region").on('change', function () {
-            fillStationname(settings['stationname'], station);
-            fillWater(settings['water'], station);
-            fillCheck();
-        });
-        $("#water").on('change', function () {
-            fillStationname(settings['stationname'], station);
-            fillCheck();
-        });
-        $("#stationname").on('change', function () {
-            fillCheck();
-        });
-        /*
-        onChange(false);
-        // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
-        if (M) M.updateTextFields();
-        
-        
-        $("#foundstations").on("click", function(){
-            if($("#foundstations .material-icons").text().indexOf("up") >= 0){
-                $("#foundstations .material-icons").text($("#foundstations .material-icons").text().replace("_up","_down"));
+            onChange(false);
+            // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
+            if (M) M.updateTextFields();
+        }
+
+        function fillCheck() {
+            $('#foundstations').text(_('Stations :') + stationnameValue.length);
+            $('#foundregions').text(_('Regions :') + regionValue.length);
+            $('#foundwaters').text(_('Water :') + waterValue.length);
+
+            if ($('#stationname').val() !== '') {
+                $('#foundtotal').text(_('checked :') + '1');
+            } else if ($('#stationname').val() == '' && $('#water').val() !== '') {
+                $('#foundtotal').text(_('checked :') + stationnameValue.length);
+            } else if ($('#stationname').val() == '' && $('#water').val() == '' && $('#region').val() !== '') {
+                $('#foundtotal').text(_('checked :') + waterValue.length);
+            } else if ($('#stationname').val() == '' && $('#water').val() == '' && $('#region').val() == '') {
+                $('#foundtotal').text(_('checked :') + station.length);
+            }
+        }
+
+        function fillWater(id, str) {
+            var $sel = $('#water');
+            let result = [];
+            let arrCounties = [];
+
+            if ($('#region').val().trim() !== '') {
+                arrCounties = str.filter(d => d.region == $('#region').val().trim());
             } else {
-                $("#foundstations .material-icons").text($("#foundstations .material-icons").text().replace("_down","_up"));
+                arrCounties = str;
             }
-            $("#stations").slideToggle();
-        });
-        */
-        countStations(settings);
+            arrCounties = arrCounties.sort((a, b) => (a.water > b.water) ? 1 : -1);
 
-        onChange(false);
-        // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
-        if (M) M.updateTextFields();
-    }
-
-    function fillCheck() {
-        $('#foundstations').text(_('Stations :') + stationnameValue.length);
-        $('#foundregions').text(_('Regions :') + regionValue.length);
-        $('#foundwaters').text(_('Water :') + waterValue.length);
-
-        if ($('#stationname').val() !== '') {
-            $('#foundtotal').text(_('checked :') + '1');
-        } else if ($('#stationname').val() == '' && $('#water').val() !== '') {
-            $('#foundtotal').text(_('checked :') + stationnameValue.length);
-        } else if ($('#stationname').val() == '' && $('#water').val() == '' && $('#region').val() !== '') {
-            $('#foundtotal').text(_('checked :') + waterValue.length);
-        } else if ($('#stationname').val() == '' && $('#water').val() == '' && $('#region').val() == '') {
-            $('#foundtotal').text(_('checked :') + station.length);
-        }
-    }
-
-    function fillWater(id, str) {
-        var $sel = $('#water');
-        let result = [];
-        let arrCounties = [];
-
-        if ($('#region').val().trim() !== '') {
-            arrCounties = str.filter(d => d.region == $('#region').val().trim());
-        } else {
-            arrCounties = str;
-        }
-        arrCounties = arrCounties.sort((a, b) => (a.water > b.water) ? 1 : -1);
-
-        for (const i in arrCounties) {
-            if (result.indexOf(arrCounties[i].water) === -1) {
-                result.push(arrCounties[i].water);
+            for (const i in arrCounties) {
+                if (result.indexOf(arrCounties[i].water) === -1) {
+                    result.push(arrCounties[i].water);
+                }
             }
+            $sel.html('<option value="">' + _('no selection') + '</option>');
+
+            result.forEach(function (val) {
+                $('#water').append('<option value="' + val + '"' + (id === val ? ' selected' : '') + '>' + val + '</option>');
+            });
+            $sel.select();
+            waterValue = result;
         }
-        $sel.html('<option value="">' + _('no selection') + '</option>');
 
-        result.forEach(function (val) {
-            $('#water').append('<option value="' + val + '"' + (id === val ? ' selected' : '') + '>' + val + '</option>');
-        });
-        $sel.select();
-        waterValue = result;
-    }
+        function fillStationname(id, str) {
+            var $sel = $('#stationname');
+            let result = [];
+            let arrCounties = [];
 
-    function fillStationname(id, str) {
-        var $sel = $('#stationname');
-        let result = [];
-        let arrCounties = [];
-
-        arrCounties = str.filter(d => d.water === $('#water').val());
-
-        if ($('#water').val() !== '') {
             arrCounties = str.filter(d => d.water === $('#water').val());
-        } else if ($('#water').val() == '' && $('#region').val() !== '') {
-            arrCounties = str.filter(d => d.region === $('#region').val());
-        }
 
-        arrCounties = arrCounties.sort((a, b) => (a.stationName > b.stationName) ? 1 : -1);
-
-        for (const i in arrCounties) {
-            if (result.indexOf(arrCounties[i].stationName) === -1) {
-                result.push(arrCounties[i].stationName);
+            if ($('#water').val() !== '') {
+                arrCounties = str.filter(d => d.water === $('#water').val());
+            } else if ($('#water').val() == '' && $('#region').val() !== '') {
+                arrCounties = str.filter(d => d.region === $('#region').val());
             }
-        }
-        $sel.html('<option value="">' + _('no selection') + '</option>');
 
-        result.forEach(function (val) {
-            $('#stationname').append('<option value="' + val + '"' + (id === val ? ' selected' : '') + '>' + val + '</option>');
-        });
-        $sel.select();
-        stationnameValue = result;
-    }
+            arrCounties = arrCounties.sort((a, b) => (a.stationName > b.stationName) ? 1 : -1);
 
-    function fillRegion(id, str) {
-        var $sel = $('#region');
-        let result = [];
-        let arrCounties = [];
-        arrCounties = str.sort((a, b) => (a.region > b.region) ? 1 : -1);
-
-        for (const i in arrCounties) {
-            if (result.indexOf(arrCounties[i].region) === -1) {
-                result.push(arrCounties[i].region);
+            for (const i in arrCounties) {
+                if (result.indexOf(arrCounties[i].stationName) === -1) {
+                    result.push(arrCounties[i].stationName);
+                }
             }
+            $sel.html('<option value="">' + _('no selection') + '</option>');
+
+            result.forEach(function (val) {
+                $('#stationname').append('<option value="' + val + '"' + (id === val ? ' selected' : '') + '>' + val + '</option>');
+            });
+            $sel.select();
+            stationnameValue = result;
         }
-        $sel.html('<option value="">' + _('no selection') + '</option>');
 
-        result.forEach(function (val) {
-            $('#region').append('<option value="' + val + '"' + (id === val ? ' selected' : '') + '>' + val + '</option>');
-        });
-        $sel.select();
-        regionValue = result;
-    }
+        function fillRegion(id, str) {
+            var $sel = $('#region');
+            let result = [];
+            let arrCounties = [];
+            arrCounties = str.sort((a, b) => (a.region > b.region) ? 1 : -1);
 
-    function countStations(settings) {
-        $(".preloader-background").fadeIn();
-        var ajaxData = {
-            countryCode: $("#country").val()
-        };
+            for (const i in arrCounties) {
+                if (result.indexOf(arrCounties[i].region) === -1) {
+                    result.push(arrCounties[i].region);
+                }
+            }
+            $sel.html('<option value="">' + _('no selection') + '</option>');
 
-        $.ajax({
-            url: 'https://api.pegelalarm.at/api/station/1.0/list',
-            type: 'GET',
-            data: ajaxData,
-            dataType: 'json',
-            success: function (data) {
-                if (data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")) {
-                    if (data.status.code == '200') {
-                        station = data.payload.stations;
+            result.forEach(function (val) {
+                $('#region').append('<option value="' + val + '"' + (id === val ? ' selected' : '') + '>' + val + '</option>');
+            });
+            $sel.select();
+            regionValue = result;
+        }
 
-                        fillRegion(settings['region'], station);
-                        fillWater(settings['water'], station);
-                        fillStationname(settings['stationname'], station);
-                        fillCheck();
+        function countStations(settings) {
+            $(".preloader-background").fadeIn();
+            var ajaxData = {
+                countryCode: $("#country").val()
+            };
 
-                        $(".preloader-background").fadeOut();
+            $.ajax({
+                url: 'https://api.pegelalarm.at/api/station/1.0/list',
+                type: 'GET',
+                data: ajaxData,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")) {
+                        if (data.status.code == '200') {
+                            station = data.payload.stations;
 
+                            fillRegion(settings['region'], station);
+                            fillWater(settings['water'], station);
+                            fillStationname(settings['stationname'], station);
+                            fillCheck();
+
+                            $(".preloader-background").fadeOut();
+
+                        } else {
+                            $(".preloader-background").fadeOut();
+                            alert("Error: " + JSON.stringify(data));
+                        }
                     } else {
                         $(".preloader-background").fadeOut();
                         alert("Error: " + JSON.stringify(data));
                     }
-                } else {
+                },
+                error: function (request, error) {
                     $(".preloader-background").fadeOut();
-                    alert("Error: " + JSON.stringify(data));
+                    alert("Request: " + JSON.stringify(request));
                 }
-            },
-            error: function (request, error) {
-                $(".preloader-background").fadeOut();
-                alert("Request: " + JSON.stringify(request));
-            }
-        });
-    }
+            });
+        }
 
-    // This will be called by the admin adapter when the user presses the save button
-    function save(callback) {
-        // example: select elements with class=value and build settings object
-        var obj = {};
-        $(".value").each(function () {
-            var $this = $(this);
-            if ($this.attr('type') === 'checkbox') {
-                obj[$this.attr('id')] = $this.prop('checked');
-            } else {
-                obj[$this.attr('id')] = $this.val();
-            }
-        });
+        // This will be called by the admin adapter when the user presses the save button
+        function save(callback) {
+            // example: select elements with class=value and build settings object
+            var obj = {};
+            $(".value").each(function () {
+                var $this = $(this);
+                if ($this.attr('type') === 'checkbox') {
+                    obj[$this.attr('id')] = $this.prop('checked');
+                } else {
+                    obj[$this.attr('id')] = $this.val();
+                }
+            });
 
-        obj['configurated'] = 1;
+            obj['configurated'] = 1;
 
-        callback(obj);
-    }
-</script>
+            callback(obj);
+        }
+    </script>
 
 </head>
 
@@ -282,7 +282,6 @@
                 </div>
             </div>
         </div>
-        <div class="row"></div>
         <div class="row">
             <div class="col s6 l12">
                 <div class="chip" id="foundregions">
@@ -295,7 +294,6 @@
                 </div>
             </div>
         </div>
-        <div class="row"></div>
         <div class="row">
             <div class="input-field col s6 m4">
                 <select id="country" class="value">
@@ -336,4 +334,5 @@
         </div>
     </div>
 </body>
+
 </html>
