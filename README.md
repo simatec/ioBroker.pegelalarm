@@ -23,6 +23,12 @@ https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc/wiki/Download-current-wa
     Placeholder for the next version (at the beginning of the line):
     ### __WORK IN PROGRESS__
 -->
+### 1.1.1 (2021-03-28)
+* (simatec) json state added
+* (simatec) Configuration menu redesigned
+* (simatec) unit added
+* (simatec) many small Bugfix
+
 ### 1.1.0 (2021-03-27)
 * (simatec) fork from bazidibavaria
 * (simatec) code rewritten

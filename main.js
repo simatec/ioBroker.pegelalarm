@@ -140,12 +140,15 @@ async function requestData() {
                         await adapter.setState(path + '.geo.longitude', station.longitude, true);
                         await adapter.setState(path + '.geo.altitude', station.altitudeM, true);
 
+                        let height = 0; 
+
                         for (let o = 0; o < station.data.length; o++) {
                             let stationData = station.data[o];
                             if (stationData.type == "height in cm") {
                                 o = station.data.length;
 
-                                await adapter.setState(path + '.height', stationData.value, true);
+                                await adapter.setState(path + '.height', { val: stationData.value, ack: true });
+                                height = stationData.value;
 
                                 let sourceDate = new Date(Date.parse(stationData.sourceDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, "$3-$2-$1$4"))).toUTCString();
                                 await adapter.setState(path + '.sourceDate', sourceDate, true);
@@ -154,13 +157,27 @@ async function requestData() {
                                 await adapter.setState(path + '.requestDate', requestDate, true);
                             }
                         }
+                        // created json
+                        let json = ({
+                            "stationsname": station.stationName,
+                            "region": station.region,
+                            "country": station.country,
+                            "water": station.water,
+                            "height": height,
+                            "trend": decodeTrend(station.trend, "short"),
+                            "warning": stateWarning,
+                            "alert": stateAlert
+                        });
+
+                        await adapter.setState(path + '.json', { val: JSON.stringify(json), ack: true });
+
                     }
                     checkStation(currentStations);
 
                     await adapter.setState('warning.hasWarning', (warnings.length > 0), true);
                     await adapter.setState('warning.statepathes', JSON.stringify(warnings), true);
                     await adapter.setState('alert.hasAlert', (alerts.length > 0), true);
-                    await adapter.setState('alert.statepathes', JSON.stringify(alerts), true);
+                    await adapter.setState('alert.statepathes', JSON.stringify(alerts), true);                    
 
                     let lastRun = new Date().toUTCString();
 
@@ -190,6 +207,7 @@ function createStations(path) {
             'name',
             'region',
             'water',
+            'json',
             'situation.group',
             'situation.text',
             'trend.short',
@@ -242,7 +260,7 @@ function createStations(path) {
                 common: {
                     name: stationsStatesString[k],
                     type: 'string',
-                    role: 'text',
+                    role: stationsStatesString[k] == 'json' ? 'json' : 'text',
                     read: true,
                     write: false,
                 },
@@ -256,6 +274,7 @@ function createStations(path) {
                     name: stationsStatesNumber[l],
                     type: 'number',
                     role: 'value',
+                    unit: stationsStatesNumber[l] == 'height' ? 'cm' : '',
                     read: true,
                     write: false,
                 },

@@ -1,241 +1,253 @@
 {
-  "common": {
-    "name": "pegelalarm",
-    "version": "1.1.0",
-    "news": {
-      "1.1.0": {
-        "en": "fork from bazidibavaria, code rewritten, dependencies updated, Bugfix setState, Bugfix getState, License updated",
-        "de": "Fork von Bazidibavaria, Code neu geschrieben, Abhängigkeiten aktualisiert, Bugfix setState, Bugfix getState, Lizenz aktualisiert",
-        "ru": "вилка от bazidibavaria, код переписан, зависимости обновлены, исправление ошибки setState, исправление ошибки getState, лицензия обновлена",
-        "pt": "fork from bazidibavaria, código reescrito, dependências atualizadas, Bugfix setState, Bugfix getState, Licença atualizada",
-        "nl": "vork van Bazidibavaria, code herschreven, afhankelijkheden bijgewerkt, Bugfix setState, Bugfix getState, Licentie bijgewerkt",
-        "fr": "fork de bazidibavaria, code réécrit, dépendances mises à jour, Bugfix setState, Bugfix getState, Licence mise à jour",
-        "it": "fork da bazidibavaria, codice riscritto, dipendenze aggiornate, bugfix setState, bugfix getState, licenza aggiornata",
-        "es": "bifurcación de bazidibavaria, código reescrito, dependencias actualizadas, Bugfix setState, Bugfix getState, Licencia actualizada",
-        "pl": "fork z bazidibavaria, przepisany kod, zaktualizowane zależności, poprawka błędu setState, poprawka błędu getState, aktualizacja licencji",
-        "zh-cn": "来自bazidibavaria的fork，重写了代码，更新了依赖项，Bugfix setState，Bugfix getState，许可证已更新"
-      },
-      "1.0.0": {
-        "en": "updated packages",
-        "de": "aktualisierte Pakete",
-        "ru": "обновленные пакеты",
-        "pt": "pacotes atualizados",
-        "nl": "bijgewerkte pakketten",
-        "fr": "packages mis à jour",
-        "it": "pacchetti aggiornati",
-        "es": "paquetes actualizados",
-        "pl": "zaktualizowane pakiety",
-        "zh-cn": "更新包"
-      },
-      "0.0.1": {
-        "en": "released",
-        "de": "veröffentlicht",
-        "ru": "выпущенный",
-        "pt": "liberado",
-        "nl": "vrijgelaten",
-        "fr": "libéré",
-        "it": "rilasciato",
-        "es": "publicado",
-        "pl": "wydany",
-        "zh-cn": "已发布"
-      },
-      "0.0.1-2": {
-        "en": "fix api-count in index_m.html",
-        "de": "Behebung der API-Anzahl in index_m.html",
-        "ru": "исправить api-count в index_m.html",
-        "pt": "corrigir api-count em index_m.html",
-        "nl": "repareer api-count in index_m.html",
-        "fr": "corriger le nombre d'api dans index_m.html",
-        "it": "correggere il conteggio API in index_m.html",
-        "es": "arreglar api-count en index_m.html",
-        "pl": "popraw liczbę api-count w index_m.html",
-        "zh-cn": "修复index_m.html中的api-count"
-      },
-      "0.0.1-1": {
-        "en": "added travis support\nadd images to readme",
-        "de": "Travis-Unterstützung hinzugefügt\nBilder zur Readme hinzufügen",
-        "ru": "добавлена поддержка Travis\nдобавить изображения в ридми",
-        "pt": "adicionado suporte travis\nadicione imagens para ler-me",
-        "nl": "travis-ondersteuning toegevoegd\nvoeg afbeeldingen toe aan readme",
-        "fr": "Ajout du support de travis\najouter des images à readme",
-        "it": "aggiunto il supporto travis\naggiungi immagini al file readme",
-        "es": "soporte adicional de travis\nagregar imágenes al archivo Léame",
-        "pl": "dodano obsługę Travis\ndodaj obrazy do pliku readme",
-        "zh-cn": "添加了travis支持\n将图像添加到自述文件"
-      },
-      "0.0.1-0": {
-        "en": "* prerelease\n\n## License\nMIT License\n\nCopyright (c) 2020 bazidibavaria <bazidibavaria@users.noreply.github.com>\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nbazidibavariaS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
-        "de": "* Vorabversion\n\n## Lizenz\nMIT-Lizenz\n\nCopyright (c) 2020 bazidibavaria <bazidibavaria@users.noreply.github.com>\n\nHiermit wird jeder Person, die eine Kopie erhält, kostenlos die Erlaubnis erteilt\ndieser Software und der dazugehörigen Dokumentationsdateien (die \"Software\") zu behandeln\nin der Software ohne Einschränkung, einschließlich ohne Einschränkung der Rechte\nzu verwenden, zu kopieren, zu ändern, zusammenzuführen, zu veröffentlichen, zu verteilen, Unterlizenzen zu vergeben und / oder zu verkaufen\nKopien der Software und um Personen zuzulassen, für die die Software bestimmt ist\ndafür eingerichtet, unter folgenden Bedingungen:\n\nDer oben genannte Copyright-Hinweis und dieser Erlaubnishinweis sind in allen enthalten\nKopien oder wesentliche Teile der Software.\n\nDIE SOFTWARE WIRD \"WIE BESEHEN\" OHNE JEGLICHE AUSDRÜCKLICHE ODER AUSDRÜCKLICHE GEWÄHRLEISTUNG ZUR VERFÜGUNG GESTELLT\nSTILLSCHWEIGEND, EINSCHLIESSLICH, ABER NICHT BESCHRÄNKT AUF DIE GARANTIEN DER MARKTGÄNGIGKEIT,\nEIGNUNG FÜR EINEN BESTIMMTEN ZWECK UND NICHTVERLETZUNG. In keinem Fall wird das\nbazidibavariaS ODER COPYRIGHT-INHABER HAFTEN FÜR ANSPRÜCHE, SCHÄDEN ODER ANDERE\nHAFTUNG, OB BEI VERTRAGS-, TORT- ODER ANDERWEITIGEN MASSNAHMEN AUS,\nAUS ODER IM ZUSAMMENHANG MIT DER SOFTWARE ODER DER NUTZUNG ODER ANDEREN HANDELN IN DER\nSOFTWARE.",
-        "ru": "* пререлиз\n\n## Лицензия\nЛицензия MIT\n\nАвторские права (c) 2020 bazidibavaria <bazidibavaria@users.noreply.github.com>\n\nРазрешение предоставляется бесплатно любому лицу, получившему копию.\nэтого программного обеспечения и связанных файлов документации («Программное обеспечение») для работы с\nв Программном обеспечении без ограничений, включая, помимо прочего, права\nиспользовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и / или продавать\nкопии Программного обеспечения и разрешить лицам, которым\nпредоставлены для этого при соблюдении следующих условий:\n\nВышеупомянутое уведомление об авторских правах и это уведомление о разрешении должны быть включены во все\nкопии или существенные части Программного обеспечения.\n\nПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ «КАК ЕСТЬ», БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ, ЯВНЫХ ИЛИ\nПОДРАЗУМЕВАЕМЫЕ, ВКЛЮЧАЯ, НО НЕ ОГРАНИЧЕННАЯ, ГАРАНТИИ КОММЕРЧЕСКОЙ ЦЕННОСТИ,\nПРИГОДНОСТЬ ДЛЯ ОПРЕДЕЛЕННОЙ ЦЕЛИ И ЗАЩИТА ОТ ПРАВ. НИ В КОЕМ СЛУЧАЕ\nbazidibavaria ИЛИ ВЛАДЕЛЬЦА АВТОРСКИХ ПРАВ НЕСЕТ ОТВЕТСТВЕННОСТЬ ЗА ЛЮБЫЕ ПРЕТЕНЗИИ, УБЫТКИ ИЛИ ДРУГИЕ\nОТВЕТСТВЕННОСТЬ, ВЫЯВЛЯЮЩАЯСЯ ЛИ В РЕЗУЛЬТАТЕ ДОГОВОРА, ИЛИ ИНОСТРАННОМУ ИНОСТРАНСТВУ\nВНЕЗАПНО ИЛИ В СВЯЗИ С ПРОГРАММНЫМ ОБЕСПЕЧЕНИЕМ ИЛИ ИСПОЛЬЗОВАНИЕМ ИЛИ ДРУГИМИ ДЕЛАМИ\nПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ.",
-        "pt": "* pré-lançamento\n\n## Licença\nLicença MIT\n\nCopyright (c) 2020 bazidibavaria <bazidibavaria@users.noreply.github.com>\n\nA permissão é concedida, gratuitamente, a qualquer pessoa que obtenha uma cópia\ndeste software e arquivos de documentação associados (o \"Software\"), para lidar\nno Software sem restrição, incluindo, sem limitação, os direitos\npara usar, copiar, modificar, mesclar, publicar, distribuir, sublicenciar e / ou vender\ncópias do Software e para permitir que as pessoas a quem o Software é\nfornecido para fazê-lo, sujeito às seguintes condições:\n\nO aviso de direitos autorais acima e este aviso de permissão devem ser incluídos em todos\ncópias ou partes substanciais do Software.\n\nO SOFTWARE É FORNECIDO \"COMO ESTÁ\", SEM QUALQUER TIPO DE GARANTIA, EXPRESSA OU\nIMPLÍCITA, INCLUINDO, MAS NÃO SE LIMITANDO ÀS GARANTIAS DE COMERCIALIZAÇÃO,\nADEQUAÇÃO A UM DETERMINADO FIM E NÃO VIOLAÇÃO. EM NENHUMA HIPÓTESE O\nbazidibavariaS OU DETENTORES DE DIREITOS AUTORAIS SÃO RESPONSÁVEIS POR QUALQUER RECLAMAÇÃO, DANOS OU OUTROS\nRESPONSABILIDADE, SEJA EM AÇÃO DE CONTRATO, DELITO OU DE OUTRA FORMA, DECORRENTE DE,\nFORA DE OU EM CONEXÃO COM O SOFTWARE OU O USO OU OUTRAS NEGOCIAÇÕES NO\nPROGRAMAS.",
-        "nl": "* prerelease\n\n## Licentie\nMIT-licentie\n\nCopyright (c) 2020 bazidibavaria <bazidibavaria@users.noreply.github.com>\n\nToestemming wordt hierbij kosteloos verleend aan eenieder die een kopie verkrijgt\nvan deze software en bijbehorende documentatiebestanden (de \"Software\"), om te behandelen\nin de Software zonder beperking, inclusief maar niet beperkt tot de rechten\nte gebruiken, kopiëren, wijzigen, samenvoegen, publiceren, verspreiden, in sublicentie geven en / of verkopen\nkopieën van de Software, en om personen aan wie de Software is toe te staan\ndaartoe ingericht onder de volgende voorwaarden:\n\nDe bovenstaande copyrightkennisgeving en deze toestemmingskennisgeving zullen in alle worden opgenomen\nkopieën of substantiële delen van de Software.\n\nDE SOFTWARE WORDT \"AS IS\" GELEVERD, ZONDER ENIGE GARANTIE, EXPLICIET OF\nIMPLICIET, INCLUSIEF MAAR NIET BEPERKT TOT DE GARANTIES VAN VERKOOPBAARHEID,\nGESCHIKTHEID VOOR EEN BEPAALD DOEL EN NIET-INBREUK. IN GEEN GEVAL ZAL DE\nbazidibavariaS OF AUTEURSRECHTHOUDERS ZIJN AANSPRAKELIJK VOOR ENIGE CLAIM, SCHADE OF ANDERE\nAANSPRAKELIJKHEID, ONGEACHT IN EEN OVEREENKOMST, ONRECHTMIDDELEN OF ANDERSZINS, VOORTVLOEIEND UIT,\nBUITEN OF IN VERBAND MET DE SOFTWARE OF HET GEBRUIK OF ANDERE HANDELINGEN IN DE\nSOFTWARE.",
-        "fr": "* avant-première\n\n## Licence\nLicence MIT\n\nCopyright (c) 2020 bazidibavaria <bazidibavaria@users.noreply.github.com>\n\nL'autorisation est par la présente accordée, gratuitement, à toute personne obtenant une copie\nde ce logiciel et des fichiers de documentation associés (le «Logiciel»), pour traiter\ndans le Logiciel sans restriction, y compris sans limitation les droits\npour utiliser, copier, modifier, fusionner, publier, distribuer, sous-licencier et / ou vendre\ncopies du Logiciel, et pour permettre aux personnes auxquelles le Logiciel est\nfourni à cet effet, sous réserve des conditions suivantes:\n\nL'avis de droit d'auteur ci-dessus et cet avis d'autorisation doivent être inclus dans tous\ncopies ou parties substantielles du logiciel.\n\nLE LOGICIEL EST FOURNI \"EN L'ÉTAT\", SANS GARANTIE D'AUCUNE SORTE, EXPRESSE OU\nIMPLICITE, Y COMPRIS MAIS SANS S'Y LIMITER LES GARANTIES DE QUALITÉ MARCHANDE,\nADAPTATION À UN USAGE PARTICULIER ET NON-CONTREFAÇON. EN AUCUN CAS LE\nbazidibavariaS OU LES TITULAIRES DES DROITS D'AUTEUR SERONT RESPONSABLES DE TOUTE RÉCLAMATION, DOMMAGES OU\nRESPONSABILITÉ, QUE CE SOIT DANS UNE ACTION DE CONTRAT, DE TORT OU AUTRE, DÉCOULANT DE,\nHORS OU EN LIEN AVEC LE LOGICIEL OU L'UTILISATION OU D'AUTRES ACTIONS DANS LE\nLOGICIEL.",
-        "it": "* prerelease\n\n## Licenza\nLicenza MIT\n\nCopyright (c) 2020 bazidibavaria <bazidibavaria@users.noreply.github.com>\n\nL'autorizzazione è concessa, gratuitamente, a chiunque ne ottenga una copia\ndi questo software e dei file di documentazione associati (il \"Software\"), da trattare\nnel Software senza limitazioni, inclusi senza limitazione i diritti\nutilizzare, copiare, modificare, unire, pubblicare, distribuire, concedere in licenza e / o vendere\ncopie del Software e per consentire alle persone a cui è destinato il Software\nforniti a tal fine, alle seguenti condizioni:\n\nL'avviso di copyright di cui sopra e questo avviso di autorizzazione devono essere inclusi in tutto\ncopie o porzioni sostanziali del Software.\n\nIL SOFTWARE VIENE FORNITO \"COSÌ COM'È\", SENZA GARANZIA DI ALCUN TIPO, ESPRESSA O\nIMPLICITA, INCLUSE, MA NON LIMITATE, LE GARANZIE DI COMMERCIABILITÀ,\nIDONEITÀ PER UNO SCOPO PARTICOLARE E NON VIOLAZIONE. IN NESSUN CASO IL\nbazidibavaria I TITOLARI DEL COPYRIGHT SONO RESPONSABILI PER QUALSIASI RIVENDICAZIONE, DANNO O ALTRO\nRESPONSABILITÀ, SIA IN UN'AZIONE CONTRATTUALE, TORTO O ALTRO, DERIVANTE DA,\nFUORI O CONNESSI AL SOFTWARE O ALL'USO O ALTRI TRATTAMENTI IN\nSOFTWARE.",
-        "es": "* presentación\n\n## Licencia\nLicencia MIT\n\nCopyright (c) 2020 bazidibavaria <bazidibavaria@users.noreply.github.com>\n\nPor la presente se otorga permiso, sin cargo, a cualquier persona que obtenga una copia.\nde este software y los archivos de documentación asociados (el \"Software\"), para tratar\nen el Software sin restricciones, incluidos, entre otros, los derechos\nusar, copiar, modificar, fusionar, publicar, distribuir, sublicenciar y / o vender\ncopias del Software y para permitir a las personas a las que se\namueblado para ello, sujeto a las siguientes condiciones:\n\nEl aviso de derechos de autor anterior y este aviso de permiso se incluirán en todos\ncopias o partes sustanciales del Software.\n\nEL SOFTWARE SE PROPORCIONA \"TAL CUAL\", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O\nIMPLÍCITAS, INCLUIDAS PERO NO LIMITADAS A LAS GARANTÍAS DE COMERCIABILIDAD,\nAPTITUD PARA UN PROPÓSITO PARTICULAR Y NO INFRACCIÓN. EN NINGÚN CASO\nbazidibavariaS O LOS TITULARES DE LOS DERECHOS DE AUTOR SERÁN RESPONSABLES DE CUALQUIER RECLAMO, DAÑOS U OTROS\nRESPONSABILIDAD, YA SEA EN UNA ACCIÓN DE CONTRATO, AGRAVIO O DE OTRO MODO, QUE SURJA DE,\nFUERA DE O EN RELACIÓN CON EL SOFTWARE O EL USO U OTROS NEGOCIOS EN EL\nSOFTWARE.",
-        "pl": "* wersja wstępna\n\nLicencja ##\nLicencja MIT\n\nPrawa autorskie (c) 2020 bazidibavaria <bazidibavaria@users.noreply.github.com>\n\nNiniejszym udziela się bezpłatnej zgody każdej osobie otrzymującej kopię\ntego oprogramowania i powiązanych plików dokumentacji („Oprogramowanie”)\nw Oprogramowaniu bez ograniczeń, w tym bez ograniczeń praw\nużywać, kopiować, modyfikować, łączyć, publikować, rozpowszechniać, udzielać podlicencji i / lub sprzedawać\nkopie oprogramowania i zezwalanie osobom, dla których to oprogramowanie jest\nsą do tego przystosowane, z zastrzeżeniem następujących warunków:\n\nPowyższe powiadomienie o prawach autorskich i niniejsze pozwolenie będą zawarte we wszystkich\nkopie lub istotne części Oprogramowania.\n\nOPROGRAMOWANIE JEST DOSTARCZANE „TAKIE, JAKIE JEST”, BEZ JAKIEJKOLWIEK GWARANCJI, WYRAŹNEJ ANI\nDOROZUMIANE, W TYM, ALE BEZ OGRANICZENIA DO GWARANCJI HANDLOWYCH,\nPRZYDATNOŚĆ DO OKREŚLONEGO CELU I NIENARUSZANIE PRAW. W ŻADNYM WYPADKU\nbazidibavaria LUB POSIADACZE PRAW AUTORSKICH PONOSZĄ ODPOWIEDZIALNOŚĆ ZA WSZELKIE ROSZCZENIA, SZKODY LUB INNE\nODPOWIEDZIALNOŚĆ, CZYLI Z TYTUŁU UMOWY, TORTU CZY W INNY SPOSÓB, WYNIKAJĄCA Z:\nPOZA OPROGRAMOWANIEM LUB W ZWIĄZKU Z OPROGRAMOWANIEM LUB UŻYTKOWANIEM LUB INNYMI CZYNNOŚCIAMI W PROGRAMIE\nOPROGRAMOWANIE.",
-        "zh-cn": "*预发行\n\n＃＃ 执照\n麻省理工学院执照\n\n版权所有（c）2020 bazidibavaria <bazidibavaria@users.noreply.github.com>\n\n特此授予获得副本的任何人免费的许可\n软件和相关文档文件（以下简称“软件”）的交易\n在软件中不受限制，包括但不限于权利\n使用，复制，修改，合并，发布，分发，再许可和/或出售\n本软件的副本，并允许本软件所针对的人\n具备以下条件：\n\n以上版权声明和此许可声明应包含在所有\n复制本软件或本软件的实质部分。\n\n本软件按“原样”提供，没有任何形式的明示或明示担保。\n暗示（包括但不限于适销性的保证），\n适用于特定目的和非侵权。在任何情况下都不会\nbazidibavariaS或版权持有人应对任何索赔，损害或其他责任\n无论是由于合同，侵权或其他原因而引起的责任，\n与软件或软件中的使用或其他处理无关或与之有关\n软件。"
-      }
+    "common": {
+        "name": "pegelalarm",
+        "version": "1.1.1",
+        "news": {
+            "1.1.1": {
+                "en": "json state added, Configuration menu redesigned, unit added, many small Bugfix",
+                "de": "JSON-Status hinzugefügt, Konfigurationsmenü neu gestaltet, Einheit hinzugefügt, viele kleine Bugfix",
+                "ru": "добавлено состояние json, изменено меню конфигурации, добавлен модуль, много мелких исправлений",
+                "pt": "estado json adicionado, menu de configuração redesenhado, unidade adicionada, muitos pequenos Bugfix",
+                "nl": "json-status toegevoegd, configuratiemenu opnieuw ontworpen, eenheid toegevoegd, veel kleine bugfixes",
+                "fr": "json état ajouté, menu de configuration repensé, unité ajoutée, nombreux petits bugs",
+                "it": "stato aggiunto json, menu di configurazione ridisegnato, unità aggiunta, molti piccoli bug risolti",
+                "es": "json estado agregado, menú de configuración rediseñado, unidad agregada, muchos errores pequeños",
+                "pl": "Dodano stan json, przeprojektowano menu konfiguracji, dodano jednostkę, wiele małych poprawek błędów",
+                "zh-cn": "添加了json状态，重新设计了配置菜单，添加了单位，许多小错误修正"
+            },
+            "1.1.0": {
+                "en": "fork from bazidibavaria, code rewritten, dependencies updated, Bugfix setState, Bugfix getState, License updated",
+                "de": "Fork von Bazidibavaria, Code neu geschrieben, Abhängigkeiten aktualisiert, Bugfix setState, Bugfix getState, Lizenz aktualisiert",
+                "ru": "вилка от bazidibavaria, код переписан, зависимости обновлены, исправление ошибки setState, исправление ошибки getState, лицензия обновлена",
+                "pt": "fork from bazidibavaria, código reescrito, dependências atualizadas, Bugfix setState, Bugfix getState, Licença atualizada",
+                "nl": "vork van Bazidibavaria, code herschreven, afhankelijkheden bijgewerkt, Bugfix setState, Bugfix getState, Licentie bijgewerkt",
+                "fr": "fork de bazidibavaria, code réécrit, dépendances mises à jour, Bugfix setState, Bugfix getState, Licence mise à jour",
+                "it": "fork da bazidibavaria, codice riscritto, dipendenze aggiornate, bugfix setState, bugfix getState, licenza aggiornata",
+                "es": "bifurcación de bazidibavaria, código reescrito, dependencias actualizadas, Bugfix setState, Bugfix getState, Licencia actualizada",
+                "pl": "fork z bazidibavaria, przepisany kod, zaktualizowane zależności, poprawka błędu setState, poprawka błędu getState, aktualizacja licencji",
+                "zh-cn": "来自bazidibavaria的fork，重写了代码，更新了依赖项，Bugfix setState，Bugfix getState，许可证已更新"
+            },
+            "1.0.0": {
+                "en": "updated packages",
+                "de": "aktualisierte Pakete",
+                "ru": "обновленные пакеты",
+                "pt": "pacotes atualizados",
+                "nl": "bijgewerkte pakketten",
+                "fr": "packages mis à jour",
+                "it": "pacchetti aggiornati",
+                "es": "paquetes actualizados",
+                "pl": "zaktualizowane pakiety",
+                "zh-cn": "更新包"
+            },
+            "0.0.1": {
+                "en": "released",
+                "de": "veröffentlicht",
+                "ru": "выпущенный",
+                "pt": "liberado",
+                "nl": "vrijgelaten",
+                "fr": "libéré",
+                "it": "rilasciato",
+                "es": "publicado",
+                "pl": "wydany",
+                "zh-cn": "已发布"
+            },
+            "0.0.1-2": {
+                "en": "fix api-count in index_m.html",
+                "de": "Behebung der API-Anzahl in index_m.html",
+                "ru": "исправить api-count в index_m.html",
+                "pt": "corrigir api-count em index_m.html",
+                "nl": "repareer api-count in index_m.html",
+                "fr": "corriger le nombre d'api dans index_m.html",
+                "it": "correggere il conteggio API in index_m.html",
+                "es": "arreglar api-count en index_m.html",
+                "pl": "popraw liczbę api-count w index_m.html",
+                "zh-cn": "修复index_m.html中的api-count"
+            },
+            "0.0.1-1": {
+                "en": "added travis support\nadd images to readme",
+                "de": "Travis-Unterstützung hinzugefügt\nBilder zur Readme hinzufügen",
+                "ru": "добавлена поддержка Travis\nдобавить изображения в ридми",
+                "pt": "adicionado suporte travis\nadicione imagens para ler-me",
+                "nl": "travis-ondersteuning toegevoegd\nvoeg afbeeldingen toe aan readme",
+                "fr": "Ajout du support de travis\najouter des images à readme",
+                "it": "aggiunto il supporto travis\naggiungi immagini al file readme",
+                "es": "soporte adicional de travis\nagregar imágenes al archivo Léame",
+                "pl": "dodano obsługę Travis\ndodaj obrazy do pliku readme",
+                "zh-cn": "添加了travis支持\n将图像添加到自述文件"
+            },
+            "0.0.1-0": {
+                "en": "* prerelease\n\n## License\nMIT License\n\nCopyright (c) 2020 bazidibavaria <bazidibavaria@users.noreply.github.com>\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nbazidibavariaS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+                "de": "* Vorabversion\n\n## Lizenz\nMIT-Lizenz\n\nCopyright (c) 2020 bazidibavaria <bazidibavaria@users.noreply.github.com>\n\nHiermit wird jeder Person, die eine Kopie erhält, kostenlos die Erlaubnis erteilt\ndieser Software und der dazugehörigen Dokumentationsdateien (die \"Software\") zu behandeln\nin der Software ohne Einschränkung, einschließlich ohne Einschränkung der Rechte\nzu verwenden, zu kopieren, zu ändern, zusammenzuführen, zu veröffentlichen, zu verteilen, Unterlizenzen zu vergeben und / oder zu verkaufen\nKopien der Software und um Personen zuzulassen, für die die Software bestimmt ist\ndafür eingerichtet, unter folgenden Bedingungen:\n\nDer oben genannte Copyright-Hinweis und dieser Erlaubnishinweis sind in allen enthalten\nKopien oder wesentliche Teile der Software.\n\nDIE SOFTWARE WIRD \"WIE BESEHEN\" OHNE JEGLICHE AUSDRÜCKLICHE ODER AUSDRÜCKLICHE GEWÄHRLEISTUNG ZUR VERFÜGUNG GESTELLT\nSTILLSCHWEIGEND, EINSCHLIESSLICH, ABER NICHT BESCHRÄNKT AUF DIE GARANTIEN DER MARKTGÄNGIGKEIT,\nEIGNUNG FÜR EINEN BESTIMMTEN ZWECK UND NICHTVERLETZUNG. In keinem Fall wird das\nbazidibavariaS ODER COPYRIGHT-INHABER HAFTEN FÜR ANSPRÜCHE, SCHÄDEN ODER ANDERE\nHAFTUNG, OB BEI VERTRAGS-, TORT- ODER ANDERWEITIGEN MASSNAHMEN AUS,\nAUS ODER IM ZUSAMMENHANG MIT DER SOFTWARE ODER DER NUTZUNG ODER ANDEREN HANDELN IN DER\nSOFTWARE.",
+                "ru": "* пререлиз\n\n## Лицензия\nЛицензия MIT\n\nАвторские права (c) 2020 bazidibavaria <bazidibavaria@users.noreply.github.com>\n\nРазрешение предоставляется бесплатно любому лицу, получившему копию.\nэтого программного обеспечения и связанных файлов документации («Программное обеспечение») для работы с\nв Программном обеспечении без ограничений, включая, помимо прочего, права\nиспользовать, копировать, изменять, объединять, публиковать, распространять, сублицензировать и / или продавать\nкопии Программного обеспечения и разрешить лицам, которым\nпредоставлены для этого при соблюдении следующих условий:\n\nВышеупомянутое уведомление об авторских правах и это уведомление о разрешении должны быть включены во все\nкопии или существенные части Программного обеспечения.\n\nПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ «КАК ЕСТЬ», БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ, ЯВНЫХ ИЛИ\nПОДРАЗУМЕВАЕМЫЕ, ВКЛЮЧАЯ, НО НЕ ОГРАНИЧЕННАЯ, ГАРАНТИИ КОММЕРЧЕСКОЙ ЦЕННОСТИ,\nПРИГОДНОСТЬ ДЛЯ ОПРЕДЕЛЕННОЙ ЦЕЛИ И ЗАЩИТА ОТ ПРАВ. НИ В КОЕМ СЛУЧАЕ\nbazidibavaria ИЛИ ВЛАДЕЛЬЦА АВТОРСКИХ ПРАВ НЕСЕТ ОТВЕТСТВЕННОСТЬ ЗА ЛЮБЫЕ ПРЕТЕНЗИИ, УБЫТКИ ИЛИ ДРУГИЕ\nОТВЕТСТВЕННОСТЬ, ВЫЯВЛЯЮЩАЯСЯ ЛИ В РЕЗУЛЬТАТЕ ДОГОВОРА, ИЛИ ИНОСТРАННОМУ ИНОСТРАНСТВУ\nВНЕЗАПНО ИЛИ В СВЯЗИ С ПРОГРАММНЫМ ОБЕСПЕЧЕНИЕМ ИЛИ ИСПОЛЬЗОВАНИЕМ ИЛИ ДРУГИМИ ДЕЛАМИ\nПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ.",
+                "pt": "* pré-lançamento\n\n## Licença\nLicença MIT\n\nCopyright (c) 2020 bazidibavaria <bazidibavaria@users.noreply.github.com>\n\nA permissão é concedida, gratuitamente, a qualquer pessoa que obtenha uma cópia\ndeste software e arquivos de documentação associados (o \"Software\"), para lidar\nno Software sem restrição, incluindo, sem limitação, os direitos\npara usar, copiar, modificar, mesclar, publicar, distribuir, sublicenciar e / ou vender\ncópias do Software e para permitir que as pessoas a quem o Software é\nfornecido para fazê-lo, sujeito às seguintes condições:\n\nO aviso de direitos autorais acima e este aviso de permissão devem ser incluídos em todos\ncópias ou partes substanciais do Software.\n\nO SOFTWARE É FORNECIDO \"COMO ESTÁ\", SEM QUALQUER TIPO DE GARANTIA, EXPRESSA OU\nIMPLÍCITA, INCLUINDO, MAS NÃO SE LIMITANDO ÀS GARANTIAS DE COMERCIALIZAÇÃO,\nADEQUAÇÃO A UM DETERMINADO FIM E NÃO VIOLAÇÃO. EM NENHUMA HIPÓTESE O\nbazidibavariaS OU DETENTORES DE DIREITOS AUTORAIS SÃO RESPONSÁVEIS POR QUALQUER RECLAMAÇÃO, DANOS OU OUTROS\nRESPONSABILIDADE, SEJA EM AÇÃO DE CONTRATO, DELITO OU DE OUTRA FORMA, DECORRENTE DE,\nFORA DE OU EM CONEXÃO COM O SOFTWARE OU O USO OU OUTRAS NEGOCIAÇÕES NO\nPROGRAMAS.",
+                "nl": "* prerelease\n\n## Licentie\nMIT-licentie\n\nCopyright (c) 2020 bazidibavaria <bazidibavaria@users.noreply.github.com>\n\nToestemming wordt hierbij kosteloos verleend aan eenieder die een kopie verkrijgt\nvan deze software en bijbehorende documentatiebestanden (de \"Software\"), om te behandelen\nin de Software zonder beperking, inclusief maar niet beperkt tot de rechten\nte gebruiken, kopiëren, wijzigen, samenvoegen, publiceren, verspreiden, in sublicentie geven en / of verkopen\nkopieën van de Software, en om personen aan wie de Software is toe te staan\ndaartoe ingericht onder de volgende voorwaarden:\n\nDe bovenstaande copyrightkennisgeving en deze toestemmingskennisgeving zullen in alle worden opgenomen\nkopieën of substantiële delen van de Software.\n\nDE SOFTWARE WORDT \"AS IS\" GELEVERD, ZONDER ENIGE GARANTIE, EXPLICIET OF\nIMPLICIET, INCLUSIEF MAAR NIET BEPERKT TOT DE GARANTIES VAN VERKOOPBAARHEID,\nGESCHIKTHEID VOOR EEN BEPAALD DOEL EN NIET-INBREUK. IN GEEN GEVAL ZAL DE\nbazidibavariaS OF AUTEURSRECHTHOUDERS ZIJN AANSPRAKELIJK VOOR ENIGE CLAIM, SCHADE OF ANDERE\nAANSPRAKELIJKHEID, ONGEACHT IN EEN OVEREENKOMST, ONRECHTMIDDELEN OF ANDERSZINS, VOORTVLOEIEND UIT,\nBUITEN OF IN VERBAND MET DE SOFTWARE OF HET GEBRUIK OF ANDERE HANDELINGEN IN DE\nSOFTWARE.",
+                "fr": "* avant-première\n\n## Licence\nLicence MIT\n\nCopyright (c) 2020 bazidibavaria <bazidibavaria@users.noreply.github.com>\n\nL'autorisation est par la présente accordée, gratuitement, à toute personne obtenant une copie\nde ce logiciel et des fichiers de documentation associés (le «Logiciel»), pour traiter\ndans le Logiciel sans restriction, y compris sans limitation les droits\npour utiliser, copier, modifier, fusionner, publier, distribuer, sous-licencier et / ou vendre\ncopies du Logiciel, et pour permettre aux personnes auxquelles le Logiciel est\nfourni à cet effet, sous réserve des conditions suivantes:\n\nL'avis de droit d'auteur ci-dessus et cet avis d'autorisation doivent être inclus dans tous\ncopies ou parties substantielles du logiciel.\n\nLE LOGICIEL EST FOURNI \"EN L'ÉTAT\", SANS GARANTIE D'AUCUNE SORTE, EXPRESSE OU\nIMPLICITE, Y COMPRIS MAIS SANS S'Y LIMITER LES GARANTIES DE QUALITÉ MARCHANDE,\nADAPTATION À UN USAGE PARTICULIER ET NON-CONTREFAÇON. EN AUCUN CAS LE\nbazidibavariaS OU LES TITULAIRES DES DROITS D'AUTEUR SERONT RESPONSABLES DE TOUTE RÉCLAMATION, DOMMAGES OU\nRESPONSABILITÉ, QUE CE SOIT DANS UNE ACTION DE CONTRAT, DE TORT OU AUTRE, DÉCOULANT DE,\nHORS OU EN LIEN AVEC LE LOGICIEL OU L'UTILISATION OU D'AUTRES ACTIONS DANS LE\nLOGICIEL.",
+                "it": "* prerelease\n\n## Licenza\nLicenza MIT\n\nCopyright (c) 2020 bazidibavaria <bazidibavaria@users.noreply.github.com>\n\nL'autorizzazione è concessa, gratuitamente, a chiunque ne ottenga una copia\ndi questo software e dei file di documentazione associati (il \"Software\"), da trattare\nnel Software senza limitazioni, inclusi senza limitazione i diritti\nutilizzare, copiare, modificare, unire, pubblicare, distribuire, concedere in licenza e / o vendere\ncopie del Software e per consentire alle persone a cui è destinato il Software\nforniti a tal fine, alle seguenti condizioni:\n\nL'avviso di copyright di cui sopra e questo avviso di autorizzazione devono essere inclusi in tutto\ncopie o porzioni sostanziali del Software.\n\nIL SOFTWARE VIENE FORNITO \"COSÌ COM'È\", SENZA GARANZIA DI ALCUN TIPO, ESPRESSA O\nIMPLICITA, INCLUSE, MA NON LIMITATE, LE GARANZIE DI COMMERCIABILITÀ,\nIDONEITÀ PER UNO SCOPO PARTICOLARE E NON VIOLAZIONE. IN NESSUN CASO IL\nbazidibavaria I TITOLARI DEL COPYRIGHT SONO RESPONSABILI PER QUALSIASI RIVENDICAZIONE, DANNO O ALTRO\nRESPONSABILITÀ, SIA IN UN'AZIONE CONTRATTUALE, TORTO O ALTRO, DERIVANTE DA,\nFUORI O CONNESSI AL SOFTWARE O ALL'USO O ALTRI TRATTAMENTI IN\nSOFTWARE.",
+                "es": "* presentación\n\n## Licencia\nLicencia MIT\n\nCopyright (c) 2020 bazidibavaria <bazidibavaria@users.noreply.github.com>\n\nPor la presente se otorga permiso, sin cargo, a cualquier persona que obtenga una copia.\nde este software y los archivos de documentación asociados (el \"Software\"), para tratar\nen el Software sin restricciones, incluidos, entre otros, los derechos\nusar, copiar, modificar, fusionar, publicar, distribuir, sublicenciar y / o vender\ncopias del Software y para permitir a las personas a las que se\namueblado para ello, sujeto a las siguientes condiciones:\n\nEl aviso de derechos de autor anterior y este aviso de permiso se incluirán en todos\ncopias o partes sustanciales del Software.\n\nEL SOFTWARE SE PROPORCIONA \"TAL CUAL\", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O\nIMPLÍCITAS, INCLUIDAS PERO NO LIMITADAS A LAS GARANTÍAS DE COMERCIABILIDAD,\nAPTITUD PARA UN PROPÓSITO PARTICULAR Y NO INFRACCIÓN. EN NINGÚN CASO\nbazidibavariaS O LOS TITULARES DE LOS DERECHOS DE AUTOR SERÁN RESPONSABLES DE CUALQUIER RECLAMO, DAÑOS U OTROS\nRESPONSABILIDAD, YA SEA EN UNA ACCIÓN DE CONTRATO, AGRAVIO O DE OTRO MODO, QUE SURJA DE,\nFUERA DE O EN RELACIÓN CON EL SOFTWARE O EL USO U OTROS NEGOCIOS EN EL\nSOFTWARE.",
+                "pl": "* wersja wstępna\n\nLicencja ##\nLicencja MIT\n\nPrawa autorskie (c) 2020 bazidibavaria <bazidibavaria@users.noreply.github.com>\n\nNiniejszym udziela się bezpłatnej zgody każdej osobie otrzymującej kopię\ntego oprogramowania i powiązanych plików dokumentacji („Oprogramowanie”)\nw Oprogramowaniu bez ograniczeń, w tym bez ograniczeń praw\nużywać, kopiować, modyfikować, łączyć, publikować, rozpowszechniać, udzielać podlicencji i / lub sprzedawać\nkopie oprogramowania i zezwalanie osobom, dla których to oprogramowanie jest\nsą do tego przystosowane, z zastrzeżeniem następujących warunków:\n\nPowyższe powiadomienie o prawach autorskich i niniejsze pozwolenie będą zawarte we wszystkich\nkopie lub istotne części Oprogramowania.\n\nOPROGRAMOWANIE JEST DOSTARCZANE „TAKIE, JAKIE JEST”, BEZ JAKIEJKOLWIEK GWARANCJI, WYRAŹNEJ ANI\nDOROZUMIANE, W TYM, ALE BEZ OGRANICZENIA DO GWARANCJI HANDLOWYCH,\nPRZYDATNOŚĆ DO OKREŚLONEGO CELU I NIENARUSZANIE PRAW. W ŻADNYM WYPADKU\nbazidibavaria LUB POSIADACZE PRAW AUTORSKICH PONOSZĄ ODPOWIEDZIALNOŚĆ ZA WSZELKIE ROSZCZENIA, SZKODY LUB INNE\nODPOWIEDZIALNOŚĆ, CZYLI Z TYTUŁU UMOWY, TORTU CZY W INNY SPOSÓB, WYNIKAJĄCA Z:\nPOZA OPROGRAMOWANIEM LUB W ZWIĄZKU Z OPROGRAMOWANIEM LUB UŻYTKOWANIEM LUB INNYMI CZYNNOŚCIAMI W PROGRAMIE\nOPROGRAMOWANIE.",
+                "zh-cn": "*预发行\n\n＃＃ 执照\n麻省理工学院执照\n\n版权所有（c）2020 bazidibavaria <bazidibavaria@users.noreply.github.com>\n\n特此授予获得副本的任何人免费的许可\n软件和相关文档文件（以下简称“软件”）的交易\n在软件中不受限制，包括但不限于权利\n使用，复制，修改，合并，发布，分发，再许可和/或出售\n本软件的副本，并允许本软件所针对的人\n具备以下条件：\n\n以上版权声明和此许可声明应包含在所有\n复制本软件或本软件的实质部分。\n\n本软件按“原样”提供，没有任何形式的明示或明示担保。\n暗示（包括但不限于适销性的保证），\n适用于特定目的和非侵权。在任何情况下都不会\nbazidibavariaS或版权持有人应对任何索赔，损害或其他责任\n无论是由于合同，侵权或其他原因而引起的责任，\n与软件或软件中的使用或其他处理无关或与之有关\n软件。"
+            }
+        },
+        "title": "Pegelalarm",
+        "titleLang": {
+            "en": "water level alarm",
+            "de": "Pegelalarm",
+            "ru": "сигнализация уровня воды",
+            "pt": "alarme de nível de água",
+            "nl": "waterpeil alarm",
+            "fr": "alarme de niveau d'eau",
+            "it": "allarme livello acqua",
+            "es": "alarma de nivel de agua",
+            "pl": "alarm poziomu wody",
+            "zh-cn": "水位报警"
+        },
+        "desc": {
+            "en": "Provides data from Pegelalarm-API",
+            "de": "Stellt Daten von der Pegelalarm-API bereit",
+            "ru": "Предоставляет данные из Pegelalarm-API",
+            "pt": "Fornece dados do Pegelalarm-API",
+            "nl": "Biedt gegevens van Pegelalarm-API",
+            "fr": "Fournit des données de Pegelalarm-API",
+            "it": "Fornisce dati da Pegelalarm-API",
+            "es": "Proporciona datos de Pegelalarm-API",
+            "pl": "Udostępnia dane z Pegelalarm-API",
+            "zh-cn": "提供来自Pegelalarm-API的数据"
+        },
+        "authors": [
+            "bazidibavaria <bazidibavaria@users.noreply.github.com>",
+            "simatec <nais@gmx.net>"
+        ],
+        "keywords": [
+            "level alarm",
+            "level",
+            "river level",
+            "water level",
+            "flood",
+            "pegelalarm",
+            "pegelstand",
+            "flussstand",
+            "wasserstand",
+            "hochwasser"
+        ],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "main.js",
+        "icon": "pegelalarm.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/simatec/ioBroker.pegelalarm/master/admin/pegelalarm.png",
+        "readme": "https://github.com/simatec/ioBroker.pegelalarm/blob/master/README.md",
+        "loglevel": "info",
+        "mode": "schedule",
+        "schedule": "*/15 * * * *",
+        "allowInit": true,
+        "type": "weather",
+        "compact": true,
+        "materialize": true,
+        "dependencies": [
+            {
+                "admin": ">=3.0.0"
+            },
+            {
+                "js-controller": ">=1.4.2"
+            }
+        ]
     },
-    "title": "Pegelalarm",
-    "titleLang": {
-      "en": "water level alarm",
-      "de": "Pegelalarm",
-      "ru": "сигнализация уровня воды",
-      "pt": "alarme de nível de água",
-      "nl": "waterpeil alarm",
-      "fr": "alarme de niveau d'eau",
-      "it": "allarme livello acqua",
-      "es": "alarma de nivel de agua",
-      "pl": "alarm poziomu wody",
-      "zh-cn": "水位报警"
+    "native": {
+        "country": "DE",
+        "region": "",
+        "water": "",
+        "stationname": "",
+        "configurated": 0
     },
-    "desc": {
-      "en": "Provides data from Pegelalarm-API",
-      "de": "Stellt Daten von der Pegelalarm-API bereit",
-      "ru": "Предоставляет данные из Pegelalarm-API",
-      "pt": "Fornece dados do Pegelalarm-API",
-      "nl": "Biedt gegevens van Pegelalarm-API",
-      "fr": "Fournit des données de Pegelalarm-API",
-      "it": "Fornisce dati da Pegelalarm-API",
-      "es": "Proporciona datos de Pegelalarm-API",
-      "pl": "Udostępnia dane z Pegelalarm-API",
-      "zh-cn": "提供来自Pegelalarm-API的数据"
-    },
-    "authors": [
-      "bazidibavaria <bazidibavaria@users.noreply.github.com>",
-      "simatec <nais@gmx.net>"
-    ],
-    "keywords": [
-      "level alarm",
-      "level",
-      "river level",
-      "water level",
-      "flood",
-      "pegelalarm",
-      "pegelstand",
-      "flussstand",
-      "wasserstand",
-      "hochwasser"
-    ],
-    "license": "MIT",
-    "platform": "Javascript/Node.js",
-    "main": "main.js",
-    "icon": "pegelalarm.png",
-    "enabled": true,
-    "extIcon": "https://raw.githubusercontent.com/simatec/ioBroker.pegelalarm/master/admin/pegelalarm.png",
-    "readme": "https://github.com/simatec/ioBroker.pegelalarm/blob/master/README.md",
-    "loglevel": "info",
-    "mode": "schedule",
-    "schedule": "*/15 * * * *",
-    "allowInit": true,
-    "type": "weather",
-    "compact": true,
-    "materialize": true,
-    "dependencies": [
-      {
-        "admin": ">=3.0.0"
-      },
-      {
-        "js-controller": ">=1.4.2"
-      }
+    "objects": [],
+    "instanceObjects": [
+        {
+            "_id": "stations",
+            "type": "channel",
+            "common": {
+                "name": "stations"
+            },
+            "native": {}
+        },
+        {
+            "_id": "warning",
+            "type": "channel",
+            "common": {
+                "name": "warning"
+            },
+            "native": {}
+        },
+        {
+            "_id": "warning.hasWarning",
+            "type": "state",
+            "common": {
+                "name": "hasWarning",
+                "type": "boolean",
+                "role": "indicator",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "warning.statepathes",
+            "type": "state",
+            "common": {
+                "name": "statepathes",
+                "type": "string",
+                "role": "json",
+                "read": true,
+                "write": false,
+                "def": "[]"
+            },
+            "native": {}
+        },
+        {
+            "_id": "alert",
+            "type": "channel",
+            "common": {
+                "name": "alert"
+            },
+            "native": {}
+        },
+        {
+            "_id": "alert.hasAlert",
+            "type": "state",
+            "common": {
+                "name": "hasAlert",
+                "type": "boolean",
+                "role": "indicator",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "alert.statepathes",
+            "type": "state",
+            "common": {
+                "name": "statepathes",
+                "type": "string",
+                "role": "json",
+                "read": true,
+                "write": false,
+                "def": "[]"
+            },
+            "native": {}
+        },
+        {
+            "_id": "lastRun",
+            "type": "state",
+            "common": {
+                "name": "lastRun",
+                "type": "string",
+                "role": "date",
+                "read": true,
+                "write": false
+            },
+            "native": {}
+        }
     ]
-  },
-  "native": {
-    "country": "DE",
-    "region": "",
-    "water": "",
-    "stationname": "",
-    "configurated": 0
-  },
-  "objects": [],
-  "instanceObjects": [
-    {
-      "_id": "stations",
-      "type": "channel",
-      "common": {
-        "name": "stations"
-      },
-      "native": {}
-    },
-    {
-      "_id": "warning",
-      "type": "channel",
-      "common": {
-        "name": "warning"
-      },
-      "native": {}
-    },
-    {
-      "_id": "warning.hasWarning",
-      "type": "state",
-      "common": {
-        "name": "hasWarning",
-        "type": "boolean",
-        "role": "indicator",
-        "read": true,
-        "write": false,
-        "def": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "warning.statepathes",
-      "type": "state",
-      "common": {
-        "name": "statepathes",
-        "type": "string",
-        "role": "json",
-        "read": true,
-        "write": false,
-        "def": "[]"
-      },
-      "native": {}
-    },
-    {
-      "_id": "alert",
-      "type": "channel",
-      "common": {
-        "name": "alert"
-      },
-      "native": {}
-    },
-    {
-      "_id": "alert.hasAlert",
-      "type": "state",
-      "common": {
-        "name": "hasAlert",
-        "type": "boolean",
-        "role": "indicator",
-        "read": true,
-        "write": false,
-        "def": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "alert.statepathes",
-      "type": "state",
-      "common": {
-        "name": "statepathes",
-        "type": "string",
-        "role": "json",
-        "read": true,
-        "write": false,
-        "def": "[]"
-      },
-      "native": {}
-    },
-    {
-      "_id": "lastRun",
-      "type": "state",
-      "common": {
-        "name": "lastRun",
-        "type": "string",
-        "role": "date",
-        "read": true,
-        "write": false
-      },
-      "native": {}
-    }
-  ]
 }
