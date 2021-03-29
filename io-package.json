@@ -125,7 +125,7 @@
             "pl": "Udostępnia dane z Pegelalarm-API",
             "zh-cn": "提供来自Pegelalarm-API的数据"
         },
-        "author": "simatec <nais@gmx.net>",
+        "authors": "simatec <nais@gmx.net>",
         "keywords": [
             "level alarm",
             "level",
