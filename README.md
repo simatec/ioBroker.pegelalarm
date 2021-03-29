@@ -19,10 +19,13 @@ API-Documentation for API 1.1 can be found here
 https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc/wiki/Download-current-water-data
 
 ## Changelog
-<!--
-    Placeholder for the next version (at the beginning of the line):
-    ### __WORK IN PROGRESS__
--->
+
+### 1.1.2 (2021-03-29)
+* (simatec) allStationsJSON state added
+* (simatec) code rewritten
+* (simatec) small Bugfix
+* (simatec) axios added
+
 ### 1.1.1 (2021-03-28)
 * (simatec) json state added
 * (simatec) Configuration menu redesigned

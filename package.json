@@ -1,22 +1,14 @@
 {
   "name": "iobroker.pegelalarm",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Provides data from Pegelalarm-API",
-  "authors": [
+  "author": 
     {
-      "name": "bazidibavaria",
-      "email": "bazidibavaria@users.noreply.github.com"
+      "name": "simatec",
+      "email": "nais@gmx.net"
     },
-    {
-      "name": "simatec",
-      "email": "nais@gmx.net"
-    }
-  ],
   "contributors": [
-    {
-      "name": "simatec",
-      "email": "nais@gmx.net"
-    }
+    
   ],
   "homepage": "https://github.com/simatec/ioBroker.pegelalarm",
   "license": "MIT",

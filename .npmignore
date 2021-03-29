@@ -5,6 +5,7 @@ nbproject/
 .vs*/
 Thumbs.db
 gulpfile.js
+iob_npm.done
 
 test/
 travis/

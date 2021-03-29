@@ -38,26 +38,51 @@
 
 const utils = require('@iobroker/adapter-core'); // Get common adapter utils
 const adapterName = require('./package.json').name.split('.').pop();
-const request = require('request');
+const axios = require('axios').default;
 
 let isStopped = false;
 let adapter;
+let stopTimeout;
+
+/**
+ * Starts the adapter instance
+ * @param {Partial<ioBroker.AdapterOptions>} [options]
+ */
 
 function startAdapter(options) {
+
     options = options || {};
-    Object.assign(options, {
-        name: adapterName,
-        useFormatDate: true,
-        unload: cb => {
-            killSwitchTimeout && clearTimeout(killSwitchTimeout);
-            killSwitchTimeout = null;
-            cb && cb();
-        }
-    });
+    Object.assign(options, { name: adapterName, useFormatDate: true, });
+
     adapter = new utils.Adapter(options);
-    
+
     // start here!
     adapter.on('ready', main); // Main method defined below for readability
+
+    // is called when adapter shuts down - callback has to be called under any circumstances!
+    adapter.on('unload', (callback) => {
+        try {
+            adapter.log.debug('cleaned everything up...');
+            stopSwitchTimeout && clearTimeout(stopSwitchTimeout);
+            stopSwitchTimeout = null;
+            stopTimeout && clearTimeout(stopTimeout);
+            stopTimeout = null;
+            callback();
+        } catch (e) {
+            callback();
+        }
+    });
+
+    // is called if a subscribed state changes
+    adapter.on('stateChange', (id, state) => {
+        if (state) {
+            // The state was changed
+            adapter.log.debug(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
+        } else {
+            // The state was deleted
+            adapter.log.debug(`state ${id} deleted`);
+        }
+    });
 
     return adapter;
 }
@@ -80,124 +105,142 @@ async function requestData() {
 
     adapter.log.debug(url);
 
-    request({
-        method: 'GET',
-        rejectUnauthorized: false,
-        url: url
-    }, async (error, response, body) => {
-        if (!error && response.statusCode === 200) {
-            let data = JSON.parse(body);
+    let available;
+    try {
+        available = await axios({
+            method: 'get',
+            baseURL: url,
+            validateStatus: () => true
+        });
+    } catch (err) {
+        adapter.log.debug('Grafana is not available: ' + err)
+    }
+    if (available && available.status) {
+        adapter.log.debug('Pegelalarm API is available ... Status: ' + available.status)
 
-            if (typeof data == 'object' && data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")) {
-                if (data.status.code == '200') {
-                    let warnings = [];
-                    let alerts = [];
-                    let currentStations = [];
-                    for (let i = 0; i < data.payload.stations.length; i++) {
-                        let station = data.payload.stations[i];
-                        let path = 'stations.' + createVarName(station.stationName);
-                        currentStations.push(createVarName(station.stationName));
+        const dataRequest = await axios({
+            method: 'get',
+            baseURL: url,
+            responseType: 'json'
+        });
 
-                        await createStations(path);
+        let data = dataRequest.data;
 
-                        await adapter.setState(path + '.name', station.stationName, true);
-                        await adapter.setState(path + '.country', station.country, true);
-                        await adapter.setState(path + '.water', station.water, true);
-                        await adapter.setState(path + '.region', station.region, true);
-                        await adapter.setState(path + '.situation.text', decodeSituation(station.situation), true);
-                        await adapter.setState(path + '.situation.group', decodeSituation(station.situation, "group"), true);
-                        await adapter.setState(path + '.situation.code', station.situation, true);
-                        await adapter.setState(path + '.trend.text', decodeTrend(station.trend), true);
-                        await adapter.setState(path + '.trend.short', decodeTrend(station.trend, "short"), true);
-                        await adapter.setState(path + '.trend.code', station.trend, true);
+        if (typeof data == 'object' && data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")) {
+            if (data.status.code == '200') {
+                let warnings = [];
+                let alerts = [];
+                let currentStations = [];
+                let allStationsJSON = [];
 
-                        let stateNormal = false;
-                        let stateWarning = false;
-                        let stateAlert = false;
-                        let stateUnknown = false;
+                for (let i = 0; i < data.payload.stations.length; i++) {
+                    let station = data.payload.stations[i];
+                    let path = 'stations.' + createVarName(station.stationName);
+                    currentStations.push(createVarName(station.stationName));
 
-                        switch (decodeSituation(station.situation, "group")) {
-                            case 'normal':
-                                stateNormal = true;
-                                break;
-                            case 'warning':
-                                stateWarning = true;
-                                warnings.push(path);
-                                break;
-                            case 'alert':
-                                stateAlert = true;
-                                alerts.push(path);
-                                break;
-                            default:
-                                stateUnknown = true;
-                        }
+                    await createStations(path);
 
-                        await adapter.setState(path + '.state.normal', stateNormal, true);
-                        await adapter.setState(path + '.state.warning', stateWarning, true);
-                        await adapter.setState(path + '.state.alert', stateAlert, true);
-                        await adapter.setState(path + '.state.unknown', stateUnknown, true);
-                        await adapter.setState(path + '.geo.latitude', station.latitude, true);
-                        await adapter.setState(path + '.geo.longitude', station.longitude, true);
-                        await adapter.setState(path + '.geo.altitude', station.altitudeM, true);
+                    await adapter.setState(path + '.name', station.stationName, true);
+                    await adapter.setState(path + '.country', station.country, true);
+                    await adapter.setState(path + '.water', station.water, true);
+                    await adapter.setState(path + '.region', station.region, true);
+                    await adapter.setState(path + '.situation.text', decodeSituation(station.situation), true);
+                    await adapter.setState(path + '.situation.group', decodeSituation(station.situation, "group"), true);
+                    await adapter.setState(path + '.situation.code', station.situation, true);
+                    await adapter.setState(path + '.trend.text', decodeTrend(station.trend), true);
+                    await adapter.setState(path + '.trend.short', decodeTrend(station.trend, "short"), true);
+                    await adapter.setState(path + '.trend.code', station.trend, true);
 
-                        let height = 0; 
+                    let stateNormal = false;
+                    let stateWarning = false;
+                    let stateAlert = false;
+                    let stateUnknown = false;
 
-                        for (let o = 0; o < station.data.length; o++) {
-                            let stationData = station.data[o];
-                            if (stationData.type == "height in cm") {
-                                o = station.data.length;
-
-                                await adapter.setState(path + '.height', { val: stationData.value, ack: true });
-                                height = stationData.value;
-
-                                let sourceDate = new Date(Date.parse(stationData.sourceDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, "$3-$2-$1$4"))).toUTCString();
-                                await adapter.setState(path + '.sourceDate', sourceDate, true);
-
-                                let requestDate = new Date(Date.parse(stationData.requestDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, "$3-$2-$1$4"))).toUTCString();
-                                await adapter.setState(path + '.requestDate', requestDate, true);
-                            }
-                        }
-                        // created json
-                        let json = ({
-                            "stationsname": station.stationName,
-                            "region": station.region,
-                            "country": station.country,
-                            "water": station.water,
-                            "height": height,
-                            "trend": decodeTrend(station.trend, "short"),
-                            "warning": stateWarning,
-                            "alert": stateAlert
-                        });
-
-                        await adapter.setState(path + '.json', { val: JSON.stringify(json), ack: true });
-
+                    switch (decodeSituation(station.situation, "group")) {
+                        case 'normal':
+                            stateNormal = true;
+                            break;
+                        case 'warning':
+                            stateWarning = true;
+                            warnings.push(path);
+                            break;
+                        case 'alert':
+                            stateAlert = true;
+                            alerts.push(path);
+                            break;
+                        default:
+                            stateUnknown = true;
                     }
-                    checkStation(currentStations);
 
-                    await adapter.setState('warning.hasWarning', (warnings.length > 0), true);
-                    await adapter.setState('warning.statepathes', JSON.stringify(warnings), true);
-                    await adapter.setState('alert.hasAlert', (alerts.length > 0), true);
-                    await adapter.setState('alert.statepathes', JSON.stringify(alerts), true);                    
+                    await adapter.setState(path + '.state.normal', stateNormal, true);
+                    await adapter.setState(path + '.state.warning', stateWarning, true);
+                    await adapter.setState(path + '.state.alert', stateAlert, true);
+                    await adapter.setState(path + '.state.unknown', stateUnknown, true);
+                    await adapter.setState(path + '.geo.latitude', station.latitude, true);
+                    await adapter.setState(path + '.geo.longitude', station.longitude, true);
+                    await adapter.setState(path + '.geo.altitude', station.altitudeM, true);
 
-                    let lastRun = new Date().toUTCString();
+                    let height = 0;
 
-                    await adapter.setState('lastRun', lastRun, true);
-                } else {
-                    adapter.log.error('API-Statuscode: ' + data.status.code);
-                    killAdapter();
+                    for (let o = 0; o < station.data.length; o++) {
+                        let stationData = station.data[o];
+                        if (stationData.type == "height in cm") {
+                            o = station.data.length;
+
+                            await adapter.setState(path + '.height', { val: stationData.value, ack: true });
+                            height = stationData.value;
+
+                            let sourceDate = new Date(Date.parse(stationData.sourceDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, "$3-$2-$1$4"))).toUTCString();
+                            await adapter.setState(path + '.sourceDate', sourceDate, true);
+
+                            let requestDate = new Date(Date.parse(stationData.requestDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, "$3-$2-$1$4"))).toUTCString();
+                            await adapter.setState(path + '.requestDate', requestDate, true);
+                        }
+                    }
+
+                    // created json
+                    let json = ({
+                        "stationsname": station.stationName,
+                        "region": station.region,
+                        "country": station.country,
+                        "water": station.water,
+                        "height": height,
+                        "trend": decodeTrend(station.trend, "short"),
+                        "warning": stateWarning,
+                        "alert": stateAlert
+                    });
+                    allStationsJSON.push(json);
+
+                    await adapter.setState(path + '.json', { val: JSON.stringify(json), ack: true });
+
                 }
+                checkStation(currentStations);
+
+                await adapter.setState('allStationsJSON', { val: JSON.stringify(allStationsJSON), ack: true });
+
+                await adapter.setState('warning.hasWarning', (warnings.length > 0), true);
+                await adapter.setState('warning.statepathes', JSON.stringify(warnings), true);
+                await adapter.setState('alert.hasAlert', (alerts.length > 0), true);
+                await adapter.setState('alert.statepathes', JSON.stringify(alerts), true);
+
+                let lastRun = new Date().toUTCString();
+
+                await adapter.setState('lastRun', lastRun, true);
             } else {
-                adapter.log.error('Wrong JSON returned');
-                killAdapter();
+                adapter.log.error('API-Statuscode: ' + data.status.code);
+                stopAdapter();
             }
         } else {
-            adapter.log.error('Cannot read JSON file: ' + error || response.statusCode);
-            killAdapter();
+            adapter.log.error('Wrong JSON returned');
+            stopAdapter();
         }
-        killAdapter();
-    });
+    } else {
+        adapter.log.error('Cannot read JSON file: ' + error || response.statusCode);
+        stopAdapter();
+    }
+    stopAdapter();
 
-    adapter.log.debug("done");
+    adapter.log.debug("Pegelalarm request done");
 }
 
 function createStations(path) {
@@ -388,16 +431,18 @@ function createVarName(text) {
     return text.toLowerCase().replace(/\s/g, '_').replace(/[^\x20\x2D0-9A-Z\x5Fa-z\xC0-\xD6\xF8-\xFF]/g, '');
 }
 
-function killAdapter() {
+function stopAdapter() {
     setImmediate(() => {
-        killSwitchTimeout && clearTimeout(killSwitchTimeout);
+        stopSwitchTimeout && clearTimeout(stopSwitchTimeout);
         isStopped = true;
-        adapter.stop ? adapter.stop() : adapter.terminate();
+        stopTimeout = setTimeout(() => {
+            adapter.stop ? adapter.stop() : adapter.terminate();
+        }, 10000);
     });
 }
 
-let killSwitchTimeout = setTimeout(() => {
-    killSwitchTimeout = null;
+let stopSwitchTimeout = setTimeout(() => {
+    stopSwitchTimeout = null;
     if (!isStopped) {
         adapter && adapter.log && adapter.log.info('force terminating after 4 minutes');
         adapter && adapter.stop && adapter.stop();
@@ -463,13 +508,13 @@ function checkStation(currentStations) {
         });
 }
 function main() {
-    adapter.log.debug("started");
-
-    if (!adapter.config.configurated) {
-        adapter.log.error("Please configurate Adapter first!");
-        killAdapter();
+    if (adapter.config.configurated == 0 || (!adapter.config.stationname && !adapter.config.region && !adapter.config.water)) {
+        adapter.log.error('Please configurate Adapter first!');
+        stopAdapter();
+    } else {
+        adapter.log.debug('Pegelalarm request started ...');
+        requestData();
     }
-    requestData();
 }
 // If started as allInOne/compact mode => return function to create instance
 if (module && module.parent) {

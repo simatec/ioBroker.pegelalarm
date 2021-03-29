@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "pegelalarm",
-        "version": "1.1.1",
+        "version": "1.1.2",
         "news": {
+            "1.1.2": {
+                "en": "allStationsJSON state added, code rewritten, small Bugfix, axios added",
+                "de": "allStationsJSON State hinzugefügt, Code neu geschrieben, kleiner Bugfix, Axios hinzugefügt",
+                "ru": "Добавлено состояние allStationsJSON, переписан код, исправлено небольшое исправление, добавлены аксиомы",
+                "pt": "Estado allStationsJSON adicionado, código reescrito, pequena correção de bug, axios adicionados",
+                "nl": "allStationsJSON-status toegevoegd, code herschreven, kleine bugfix, axios toegevoegd",
+                "fr": "AllStationsJSON état ajouté, code réécrit, petit bugfix, axios ajouté",
+                "it": "stato aggiunto allStationsJSON, codice riscritto, piccolo bugfix, axios aggiunti",
+                "es": "Se agregó el estado allStationsJSON, se reescribió el código, se corrigió un pequeño error, se agregaron axios",
+                "pl": "Dodano stan allStationsJSON, przepisano kod, małe poprawki błędów, dodano axios",
+                "zh-cn": "allStationsJSON状态已添加，代码已重写，小错误修正，axios已添加"
+            },
             "1.1.1": {
                 "en": "json state added, Configuration menu redesigned, unit added, many small Bugfix, Translations added",
                 "de": "JSON-Status hinzugefügt, Konfigurationsmenü neu gestaltet, Einheit hinzugefügt, viele kleine Bugfixes, Übersetzungen hinzugefügt",
@@ -113,10 +125,7 @@
             "pl": "Udostępnia dane z Pegelalarm-API",
             "zh-cn": "提供来自Pegelalarm-API的数据"
         },
-        "authors": [
-            "bazidibavaria <bazidibavaria@users.noreply.github.com>",
-            "simatec <nais@gmx.net>"
-        ],
+        "author": "simatec <nais@gmx.net>",
         "keywords": [
             "level alarm",
             "level",
@@ -140,6 +149,8 @@
         "mode": "schedule",
         "schedule": "*/15 * * * *",
         "allowInit": true,
+        "connectionType": "cloud",
+        "dataSource": "poll",
         "type": "weather",
         "compact": true,
         "materialize": true,
@@ -244,6 +255,18 @@
                 "name": "lastRun",
                 "type": "string",
                 "role": "date",
+                "read": true,
+                "write": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "allStationsJSON",
+            "type": "state",
+            "common": {
+                "name": "allStationsJSON",
+                "type": "string",
+                "role": "json",
                 "read": true,
                 "write": false
             },
