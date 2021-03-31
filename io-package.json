@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "pegelalarm",
-        "version": "1.1.2",
+        "version": "1.1.3",
         "news": {
+            "1.1.3": {
+                "en": "Settings for 5 measuring station added, Bugfix",
+                "de": "Einstellungen für 5 Messstationen hinzugefügt, Bugfix",
+                "ru": "Добавлены настройки для 5 измерительных станций, исправлено.",
+                "pt": "Configurações para 5 estações de medição adicionadas, Bugfix",
+                "nl": "Instellingen voor 5 meetstations toegevoegd, Bugfix",
+                "fr": "Ajout des paramètres pour 5 stations de mesure, correction de bug",
+                "it": "Aggiunte impostazioni per 5 stazioni di misurazione, Bugfix",
+                "es": "Configuración para 5 estaciones de medición agregadas, corrección de errores",
+                "pl": "Dodano ustawienia dla 5 stacji pomiarowych, Bugfix",
+                "zh-cn": "添加了5个测量站的设置，错误修复"
+            },
             "1.1.2": {
                 "en": "allStationsJSON state added, code rewritten, small Bugfix, axios added",
                 "de": "allStationsJSON State hinzugefügt, Code neu geschrieben, kleiner Bugfix, Axios hinzugefügt",
@@ -167,9 +179,21 @@
     },
     "native": {
         "country": "DE",
-        "region": "",
-        "water": "",
-        "stationname": "",
+        "region0": "",
+        "water0": "",
+        "stationname0": "",
+        "region1": "",
+        "water1": "",
+        "stationname1": "",
+        "region2": "",
+        "water2": "",
+        "stationname2": "",
+        "region3": "",
+        "water3": "",
+        "stationname3": "",
+        "region4": "",
+        "water4": "",
+        "stationname4": "",
         "configurated": 0
     },
     "objects": [],

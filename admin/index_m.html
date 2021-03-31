@@ -3,6 +3,7 @@
 <head>
 
     <!-- Load ioBroker scripts and styles-->
+    <link rel="stylesheet" type="text/css" href="../../lib/css/fancytree/ui.fancytree.min.css" />
     <link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
     <link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
 
@@ -11,6 +12,8 @@
 
     <script type="text/javascript" src="../../js/translate.js"></script>
     <script type="text/javascript" src="../../lib/js/materialize.js"></script>
+    <script type="text/javascript" src="../../lib/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../../lib/js/jquery.fancytree-all.min.js"></script>
     <script type="text/javascript" src="../../js/adapter-settings.js"></script>
 
     <!-- Load our own files -->
@@ -30,20 +33,14 @@
             top: -26px;
         }
 
-        /*
-    #foundstations .material-icons {
-        position: absolute;
-        margin-top: -2px;
-    }
+        .m .collapsible-header {
+            padding: 0.4rem;
+        }
 
-    .station {
-        margin-bottom: 10px;
-    }
-
-    .m .select-wrapper+label {
-        top: 0;
-    }
-    */
+        .m h6 {
+            font-size: 1.0rem;
+        }
+        
         .preloader-background {
             float: right;
             padding: .5rem;
@@ -82,56 +79,105 @@
 
             $("#country").on('change', function () {
                 countStations(settings);
-                fillCheck();
+                for (var i = 0; i < 5; i++) {
+                    fillCheck(i);
+                }
+            });
+            $("#region0").on('change', function () {
+                fillStationname(settings['stationname0'], station, 0);
+                fillWater(settings['water0'], station, 0);
+                fillCheck(0);
+            });
+            $("#water0").on('change', function () {
+                fillStationname(settings['stationname0'], station, 0);
+                fillCheck(0);
+            });
+            $("#stationname0").on('change', function () {
+                fillCheck(0);
+            });
+            $("#region1").on('change', function () {
+                fillStationname(settings['stationname1'], station, 1);
+                fillWater(settings['water1'], station, 1);
+                fillCheck(1);
+            });
+            $("#water1").on('change', function () {
+                fillStationname(settings['stationname1'], station, 1);
+                fillCheck(1);
+            });
+            $("#stationname1").on('change', function () {
+                fillCheck(1);
+            });
+            $("#region2").on('change', function () {
+                fillStationname(settings['stationname2'], station, 2);
+                fillWater(settings['water2'], station, 2);
+                fillCheck(2);
+            });
+            $("#water2").on('change', function () {
+                fillStationname(settings['stationname2'], station, 2);
+                fillCheck(2);
+            });
+            $("#stationname2").on('change', function () {
+                fillCheck(2);
+            });
+            $("#region3").on('change', function () {
+                fillStationname(settings['stationname3'], station, 3);
+                fillWater(settings['water3'], station, 3);
+                fillCheck(3);
+            });
+            $("#water3").on('change', function () {
+                fillStationname(settings['stationname3'], station, 3);
+                fillCheck(3);
+            });
+            $("#stationname3").on('change', function () {
+                fillCheck(3);
+            });
+            $("#region4").on('change', function () {
+                fillStationname(settings['stationname4'], station, 4);
+                fillWater(settings['water4'], station, 4);
+                fillCheck(4);
+            });
+            $("#water4").on('change', function () {
+                fillStationname(settings['stationname4'], station, 4);
+                fillCheck(4);
+            });
+            $("#stationname4").on('change', function () {
+                fillCheck(4);
             });
 
-            $("#region").on('change', function () {
-                fillStationname(settings['stationname'], station);
-                fillWater(settings['water'], station);
-                fillCheck();
-            });
-            $("#water").on('change', function () {
-                fillStationname(settings['stationname'], station);
-                fillCheck();
-            });
-            $("#stationname").on('change', function () {
-                fillCheck();
-            });
-            /*
-            onChange(false);
-            // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
-            if (M) M.updateTextFields();
-            */
+            $('.collapsible').collapsible();
+            
             countStations(settings);
 
             onChange(false);
             // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
             if (M) M.updateTextFields();
+
+
         }
 
-        function fillCheck() {
-            $('#foundstations').text(_('Stations :') + stationnameValue.length);
-            $('#foundregions').text(_('Regions :') + regionValue.length);
-            $('#foundwaters').text(_('Water :') + waterValue.length);
+        function fillCheck(num) {
+            $('#foundstations' + num).text(_('Stations :') + stationnameValue.length);
+            $('#foundregions' + num).text(_('Regions :') + regionValue.length);
+            $('#foundwaters' + num).text(_('Water :') + waterValue.length);
 
-            if ($('#stationname').val() !== '') {
-                $('#foundtotal').text(_('checked :') + '1');
-            } else if ($('#stationname').val() == '' && $('#water').val() !== '') {
-                $('#foundtotal').text(_('checked :') + stationnameValue.length);
-            } else if ($('#stationname').val() == '' && $('#water').val() == '' && $('#region').val() !== '') {
-                $('#foundtotal').text(_('checked :') + waterValue.length);
-            } else if ($('#stationname').val() == '' && $('#water').val() == '' && $('#region').val() == '') {
-                $('#foundtotal').text(_('checked :') + station.length);
+            if ($('#stationname' + num).val() !== '') {
+                $('#foundtotal' + num).text(_('checked :') + '1');
+            } else if ($('#stationname' + num).val() == '' && $('#water' + num).val() !== '') {
+                $('#foundtotal' + num).text(_('checked :') + stationnameValue.length);
+            } else if ($('#stationname' + num).val() == '' && $('#water').val() == '' && $('#region' + num).val() !== '') {
+                $('#foundtotal' + num).text(_('checked :') + waterValue.length);
+            } else if ($('#stationname' + num).val() == '' && $('#water' + num).val() == '' && $('#region' + num).val() == '') {
+                $('#foundtotal' + num).text(_('checked :') + 0);
             }
         }
 
-        function fillWater(id, str) {
-            var $sel = $('#water');
+        function fillWater(id, str, i) {
             let result = [];
             let arrCounties = [];
+            var $sel = $('#water' + i);
 
-            if ($('#region').val().trim() !== '') {
-                arrCounties = str.filter(d => d.region == $('#region').val().trim());
+            if ($('#region' + i).val().trim() !== '') {
+                arrCounties = str.filter(d => d.region == $('#region' + i).val().trim());
             } else {
                 arrCounties = str;
             }
@@ -143,27 +189,25 @@
                 }
             }
             $sel.html('<option value="">' + _('no selection') + '</option>');
-
+            var _id = $('#water' + i).val();
             result.forEach(function (val) {
-                $('#water').append('<option value="' + val + '"' + (id === val ? ' selected' : '') + '>' + val + '</option>');
+                $('#water' + i).append('<option value="' + val + '"' + (id === val ? ' selected' : '') + '>' + val + '</option>');
             });
             $sel.select();
             waterValue = result;
         }
 
-        function fillStationname(id, str) {
-            var $sel = $('#stationname');
+        function fillStationname(id, str, i) {
             let result = [];
             let arrCounties = [];
+            var $sel = $('#stationname' + i);
+            //arrCounties = str;
 
-            arrCounties = str.filter(d => d.water === $('#water').val());
-
-            if ($('#water').val() !== '') {
-                arrCounties = str.filter(d => d.water === $('#water').val());
-            } else if ($('#water').val() == '' && $('#region').val() !== '') {
-                arrCounties = str.filter(d => d.region === $('#region').val());
+            if ($('#water' + i).val() !== '') {
+                arrCounties = str.filter(d => d.water === $('#water' + i).val());
+            } else if ($('#water' + i).val() == '' && $('#region' + i).val() !== '') {
+                arrCounties = str.filter(d => d.region === $('#region' + i).val());
             }
-
             arrCounties = arrCounties.sort((a, b) => (a.stationName > b.stationName) ? 1 : -1);
 
             for (const i in arrCounties) {
@@ -174,16 +218,17 @@
             $sel.html('<option value="">' + _('no selection') + '</option>');
 
             result.forEach(function (val) {
-                $('#stationname').append('<option value="' + val + '"' + (id === val ? ' selected' : '') + '>' + val + '</option>');
+                $('#stationname' + i).append('<option value="' + val + '"' + (id === val ? ' selected' : '') + '>' + val + '</option>');
             });
             $sel.select();
             stationnameValue = result;
         }
 
-        function fillRegion(id, str) {
-            var $sel = $('#region');
+        function fillRegion(id, str, i) {
             let result = [];
             let arrCounties = [];
+            var $sel = $('#region' + i);
+
             arrCounties = str.sort((a, b) => (a.region > b.region) ? 1 : -1);
 
             for (const i in arrCounties) {
@@ -194,7 +239,7 @@
             $sel.html('<option value="">' + _('no selection') + '</option>');
 
             result.forEach(function (val) {
-                $('#region').append('<option value="' + val + '"' + (id === val ? ' selected' : '') + '>' + val + '</option>');
+                $('#region' + i).append('<option value="' + val + '"' + (id === val ? ' selected' : '') + '>' + val + '</option>');
             });
             $sel.select();
             regionValue = result;
@@ -215,11 +260,17 @@
                     if (data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")) {
                         if (data.status.code == '200') {
                             station = data.payload.stations;
+                            for (var i = 0; i < 5; i++) {
+                                fillRegion(settings['region' + i], station, i);
+                            }
+                            for (var i = 0; i < 5; i++) {
+                                fillWater(settings['water' + i], station, i);
+                            }
+                            for (var i = 0; i < 5; i++) {
+                                fillStationname(settings['stationname' + i], station, i);
+                                fillCheck(i);
+                            }
 
-                            fillRegion(settings['region'], station);
-                            fillWater(settings['water'], station);
-                            fillStationname(settings['stationname'], station);
-                            fillCheck();
 
                             $(".preloader-background").fadeOut();
 
@@ -282,20 +333,9 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
-            <div class="col s6 l12">
-                <div class="chip" id="foundregions">
-                </div>
-                <div class="chip" id="foundwaters">
-                </div>
-                <div class="chip" id="foundstations">
-                </div>
-                <div class="chip" id="foundtotal">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s6 m4">
+            <div class="input-field col s6 m3">
                 <select id="country" class="value">
                     <option value="DE" class="translate">Germany</option>
                     <option value="AT" class="translate">Austria</option>
@@ -316,21 +356,184 @@
                 </select>
                 <label class="translate" for="country">country</label>
             </div>
-            <div class="input-field col s6 m4">
-                <select class="value" id="region"></select>
-                <label class="translate" for="region">region</label>
-            </div>
         </div>
-
         <div class="row">
-            <div class="input-field col s6 m4">
-                <select class="value" id="water"></select>
-                <label class="translate" for="water">water</label>
-            </div>
-            <div class="input-field col s6 m4">
-                <select class="value" id="stationname"></select>
-                <label class="translate" for="stationname">stationname</label>
-            </div>
+            <ul class="collapsible">
+                <!-- Settings for stations -->
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">expand_more</i>
+                        <h6 class="translate">Settings measuring station 1</h6>
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row">
+                            <div class="col s6 l12">
+                                <div class="chip" id="foundregions0">
+                                </div>
+                                <div class="chip" id="foundwaters0">
+                                </div>
+                                <div class="chip" id="foundstations0">
+                                </div>
+                                <div class="chip" id="foundtotal0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6 m4">
+                                <select class="value" id="region0"></select>
+                                <label class="translate" for="region0">region</label>
+                            </div>
+                            <div class="input-field col s6 m4">
+                                <select class="value" id="water0"></select>
+                                <label class="translate" for="water0">water</label>
+                            </div>
+                            <div class="input-field col s6 m4">
+                                <select class="value" id="stationname0"></select>
+                                <label class="translate" for="stationname0">stationname</label>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">expand_more</i>
+                        <h6 class="translate">Settings measuring station 2</h6>
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row">
+                            <div class="col s6 l12">
+                                <div class="chip" id="foundregions1">
+                                </div>
+                                <div class="chip" id="foundwaters1">
+                                </div>
+                                <div class="chip" id="foundstations1">
+                                </div>
+                                <div class="chip" id="foundtotal1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6 m4">
+                                <select class="value" id="region1"></select>
+                                <label class="translate" for="region1">region</label>
+                            </div>
+                            <div class="input-field col s6 m4">
+                                <select class="value" id="water1"></select>
+                                <label class="translate" for="water1">water</label>
+                            </div>
+                            <div class="input-field col s6 m4">
+                                <select class="value" id="stationname1"></select>
+                                <label class="translate" for="stationname1">stationname</label>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">expand_more</i>
+                        <h6 class="translate">Settings measuring station 3</h6>
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row">
+                            <div class="col s6 l12">
+                                <div class="chip" id="foundregions2">
+                                </div>
+                                <div class="chip" id="foundwaters2">
+                                </div>
+                                <div class="chip" id="foundstations2">
+                                </div>
+                                <div class="chip" id="foundtotal2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6 m4">
+                                <select class="value" id="region2"></select>
+                                <label class="translate" for="region2">region</label>
+                            </div>
+                            <div class="input-field col s6 m4">
+                                <select class="value" id="water2"></select>
+                                <label class="translate" for="water2">water</label>
+                            </div>
+                            <div class="input-field col s6 m4">
+                                <select class="value" id="stationname2"></select>
+                                <label class="translate" for="stationname2">stationname</label>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">expand_more</i>
+                        <h6 class="translate">Settings measuring station 4</h6>
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row">
+                            <div class="col s6 l12">
+                                <div class="chip" id="foundregions3">
+                                </div>
+                                <div class="chip" id="foundwaters3">
+                                </div>
+                                <div class="chip" id="foundstations3">
+                                </div>
+                                <div class="chip" id="foundtotal3">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6 m4">
+                                <select class="value" id="region3"></select>
+                                <label class="translate" for="region3">region</label>
+                            </div>
+                            <div class="input-field col s6 m4">
+                                <select class="value" id="water3"></select>
+                                <label class="translate" for="water3">water</label>
+                            </div>
+                            <div class="input-field col s6 m4">
+                                <select class="value" id="stationname3"></select>
+                                <label class="translate" for="stationname3">stationname</label>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">expand_more</i>
+                        <h6 class="translate">Settings measuring station 5</h6>
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row">
+                            <div class="col s6 l12">
+                                <div class="chip" id="foundregions4">
+                                </div>
+                                <div class="chip" id="foundwaters4">
+                                </div>
+                                <div class="chip" id="foundstations4">
+                                </div>
+                                <div class="chip" id="foundtotal4">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6 m4">
+                                <select class="value" id="region4"></select>
+                                <label class="translate" for="region4">region</label>
+                            </div>
+                            <div class="input-field col s6 m4">
+                                <select class="value" id="water4"></select>
+                                <label class="translate" for="water4">water</label>
+                            </div>
+                            <div class="input-field col s6 m4">
+                                <select class="value" id="stationname4"></select>
+                                <label class="translate" for="stationname4">stationname</label>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 </body>

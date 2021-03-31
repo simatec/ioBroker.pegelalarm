@@ -43,6 +43,8 @@ const axios = require('axios').default;
 let isStopped = false;
 let adapter;
 let stopTimeout;
+let currentStations = [];
+let allStationsJSON = [];
 
 /**
  * Starts the adapter instance
@@ -88,18 +90,18 @@ function startAdapter(options) {
 }
 
 // Request Data from API
-async function requestData() {
+async function requestData(_stationname, _region, _water, _num) {
     let dataUrl = "https://api.pegelalarm.at/api/station/1.0/list";
     dataUrl += "?countryCode=" + adapter.config.country;
 
-    if (adapter.config.region.trim().length) {
-        dataUrl += "&qRegion=" + adapter.config.region;
+    if (_region.trim().length) {
+        dataUrl += "&qRegion=" + _region;
     }
-    if (adapter.config.water.trim().length) {
-        dataUrl += "&qWater=" + adapter.config.water;
+    if (_water.trim().length) {
+        dataUrl += "&qWater=" + _water;
     }
-    if (adapter.config.stationname.trim().length) {
-        dataUrl += "&qStationName=" + adapter.config.stationname;
+    if (_stationname.trim().length) {
+        dataUrl += "&qStationName=" + _stationname;
     }
     const url = encodeURI(dataUrl);
 
@@ -130,8 +132,6 @@ async function requestData() {
             if (data.status.code == '200') {
                 let warnings = [];
                 let alerts = [];
-                let currentStations = [];
-                let allStationsJSON = [];
 
                 for (let i = 0; i < data.payload.stations.length; i++) {
                     let station = data.payload.stations[i];
@@ -214,7 +214,6 @@ async function requestData() {
                     await adapter.setState(path + '.json', { val: JSON.stringify(json), ack: true });
 
                 }
-                checkStation(currentStations);
 
                 await adapter.setState('allStationsJSON', { val: JSON.stringify(allStationsJSON), ack: true });
 
@@ -228,17 +227,17 @@ async function requestData() {
                 await adapter.setState('lastRun', lastRun, true);
             } else {
                 adapter.log.error('API-Statuscode: ' + data.status.code);
-                stopAdapter();
+                //stopAdapter();
             }
         } else {
             adapter.log.error('Wrong JSON returned');
-            stopAdapter();
+            //stopAdapter();
         }
     } else {
         adapter.log.error('Cannot read JSON file: ' + error || response.statusCode);
-        stopAdapter();
+        //stopAdapter();
     }
-    stopAdapter();
+    //stopAdapter();
 
     adapter.log.debug("Pegelalarm request done");
 }
@@ -437,7 +436,7 @@ function stopAdapter() {
         isStopped = true;
         stopTimeout = setTimeout(() => {
             adapter.stop ? adapter.stop() : adapter.terminate();
-        }, 10000);
+        }, 20000);
     });
 }
 
@@ -508,12 +507,27 @@ function checkStation(currentStations) {
         });
 }
 function main() {
-    if (adapter.config.configurated == 0 || (!adapter.config.stationname && !adapter.config.region && !adapter.config.water)) {
+    if (adapter.config.configurated !== 0) {
+        let num = 0
+        for (let i = 0; i < 5; i++) {
+            setTimeout(function () {
+                if (adapter.config[`stationname${num}`] || adapter.config[`region${num}`] || adapter.config[`water${num}`]) {
+                    adapter.log.debug(num + ' Pegelalarm request started ...');
+                    requestData(adapter.config[`stationname${num}`], adapter.config[`region${num}`], adapter.config[`water${num}`], num);
+                }
+
+                if (num === 4) {
+                    setTimeout(function () {
+                        checkStation(currentStations);
+                        stopAdapter();
+                    }, 10000);
+                }
+                num++;
+            }, 10000 * i, i);
+        }
+    } else {
         adapter.log.error('Please configurate Adapter first!');
         stopAdapter();
-    } else {
-        adapter.log.debug('Pegelalarm request started ...');
-        requestData();
     }
 }
 // If started as allInOne/compact mode => return function to create instance
