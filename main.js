@@ -128,6 +128,19 @@ async function requestData(_stationname, _region, _water, _num) {
 
         let data = dataRequest.data;
 
+        if (_stationname !== '' && data.payload['stations'].length > 1) {
+            try {
+                for (let d = 0; d < data.payload['stations'].length; d++) {
+                    if (data.payload.stations[d].stationName !== _stationname) {
+                        data.payload.stations.splice(d, 1);
+                        d--;
+                    }
+                }
+            } catch (err) {
+                adapter.log.warn('cannot filter stations')
+            } 
+        }
+
         if (typeof data == 'object' && data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")) {
             if (data.status.code == '200') {
                 let warnings = [];
