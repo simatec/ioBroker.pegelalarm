@@ -43,6 +43,8 @@ const axios = require('axios').default;
 let isStopped = false;
 let adapter;
 let stopTimeout;
+let timerRequestFinish;
+let timerRequestLoop;
 let currentStations = [];
 let allStationsJSON = [];
 
@@ -59,7 +61,14 @@ function startAdapter(options) {
     adapter = new utils.Adapter(options);
 
     // start here!
-    adapter.on('ready', main); // Main method defined below for readability
+    //adapter.on('ready', main); // Main method defined below for readability
+    adapter.on('ready', async () => {
+        try {
+            await main(adapter);
+        } catch (e) {
+            //ignore errors
+        }
+    });
 
     // is called when adapter shuts down - callback has to be called under any circumstances!
     adapter.on('unload', (callback) => {
@@ -69,6 +78,10 @@ function startAdapter(options) {
             stopSwitchTimeout = null;
             stopTimeout && clearTimeout(stopTimeout);
             stopTimeout = null;
+            timerRequestLoop && clearTimeout(timerRequestLoop);
+            timerRequestLoop = null;
+            timerRequestFinish && clearTimeout(timerRequestFinish);
+            timerRequestFinish = null;
             callback();
         } catch (e) {
             callback();
@@ -90,7 +103,7 @@ function startAdapter(options) {
 }
 
 // Request Data from API
-async function requestData(_stationname, _region, _water, _num) {
+async function requestData(_stationname, _region, _water) {
     let dataUrl = "https://api.pegelalarm.at/api/station/1.0/list";
     dataUrl += "?countryCode=" + adapter.config.country;
 
@@ -115,7 +128,7 @@ async function requestData(_stationname, _region, _water, _num) {
             validateStatus: () => true
         });
     } catch (err) {
-        adapter.log.debug('Grafana is not available: ' + err)
+        adapter.log.debug('Pegelalarm API is not available: ' + err)
     }
     if (available && available.status) {
         adapter.log.debug('Pegelalarm API is available ... Status: ' + available.status)
@@ -138,7 +151,7 @@ async function requestData(_stationname, _region, _water, _num) {
                 }
             } catch (err) {
                 adapter.log.warn('cannot filter stations')
-            } 
+            }
         }
 
         if (typeof data == 'object' && data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")) {
@@ -253,6 +266,7 @@ async function requestData(_stationname, _region, _water, _num) {
     //stopAdapter();
 
     adapter.log.debug("Pegelalarm request done");
+
 }
 
 function createStations(path) {
@@ -462,6 +476,7 @@ let stopSwitchTimeout = setTimeout(() => {
 }, 240000);
 
 function checkStation(currentStations) {
+    adapter.log.debug('Check for deleting old objects is started');
     adapter.getForeignObjects(adapter.namespace + ".stations.*", 'state', /**
          * @param {any} err
          * @param {any[]} list
@@ -519,30 +534,57 @@ function checkStation(currentStations) {
             }
         });
 }
-function main() {
-    if (adapter.config.configurated !== 0) {
-        let num = 0
-        for (let i = 0; i < 5; i++) {
-            setTimeout(function () {
-                if (adapter.config[`stationname${num}`] || adapter.config[`region${num}`] || adapter.config[`water${num}`]) {
-                    adapter.log.debug(num + ' Pegelalarm request started ...');
-                    requestData(adapter.config[`stationname${num}`], adapter.config[`region${num}`], adapter.config[`water${num}`], num);
-                }
 
-                if (num === 4) {
-                    setTimeout(function () {
+function requestLoop(index) {
+    let num = 0;
+    if (adapter.config[`stationname${index}`] || adapter.config[`region${index}`] || adapter.config[`water${index}`]) {
+        num = index + 1;
+        adapter.log.debug(`Pegelalarm request for measuring station ${num} is started ...`);
+        requestData(adapter.config[`stationname${index}`], adapter.config[`region${index}`], adapter.config[`water${index}`])
+            .then(() => {
+                num = index + 1;
+                adapter.log.debug(`Pegelalarm request for measuring station ${num} is finish ...`);
+                if (index < 4) {
+                    index++
+                    timerRequestLoop = setTimeout(function () {
+                        setImmediate(requestLoop, index);
+                        return;
+                    }, 1000);
+                } else {
+                    adapter.log.debug(`Pegelalarm Request is completed`);
+                    timerRequestFinish = setTimeout(function () {
                         checkStation(currentStations);
                         stopAdapter();
-                    }, 10000);
+                    }, 5000);
                 }
-                num++;
-            }, 10000 * i, i);
-        }
+            }).catch(err => {
+                adapter.log.error('Request is not completed: ' + err);
+            });
+    } else if (index < 4) {
+        index++
+        timerRequestLoop = setTimeout(function () {
+            setImmediate(requestLoop, index);
+            return;
+        }, 1000);
+    } else if (index === 4) {
+        adapter.log.debug(`Pegelalarm Request is completed`);
+        timerRequestFinish = setTimeout(function () {
+            checkStation(currentStations);
+            stopAdapter();
+        }, 5000);
+    }
+}
+
+async function main(adapter) {
+    if (adapter.config.configurated !== 0) {
+        // start request in Loop for Measuring stations 0-4
+        requestLoop(0);
     } else {
         adapter.log.error('Please configurate Adapter first!');
         stopAdapter();
     }
 }
+
 // If started as allInOne/compact mode => return function to create instance
 if (module && module.parent) {
     module.exports = startAdapter;

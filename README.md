@@ -20,6 +20,9 @@ https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc/wiki/Download-current-wa
 
 ## Changelog
 
+### 1.1.4 (2021-04-02)
+* (simatec) Improved code for request from measuring stations
+
 ### 1.1.3 (2021-03-31)
 * (simatec) Settings for 5 measuring station added
 * (simatec) Bugfix
