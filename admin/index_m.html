@@ -244,22 +244,21 @@
             $sel.select();
             regionValue = result;
         }
-
-        function countStations(settings) {
+        /*
+        async function countStations(settings) {
             $(".preloader-background").fadeIn();
-            var ajaxData = {
-                countryCode: $("#country").val()
-            };
+            let dataUrl = "https://api.pegelalarm.at/api/station/1.0/list";
+            dataUrl += "?countryCode=" + $("#country").val();
+            //const url = encodeURI(dataUrl);
+            try {
+                const data = await fetch(dataUrl);
+                console.log(JSON.stringify(data))
+                if (data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")) {
+                    if (data.status.code == '200') {
+                        station = data.payload.stations;
+                        showMessage(_('Load Configuration'));
 
-            $.ajax({
-                url: 'https://api.pegelalarm.at/api/station/1.0/list',
-                type: 'GET',
-                data: ajaxData,
-                dataType: 'json',
-                success: function (data) {
-                    if (data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")) {
-                        if (data.status.code == '200') {
-                            station = data.payload.stations;
+                        if (station) {
                             for (var i = 0; i < 5; i++) {
                                 fillRegion(settings['region' + i], station, i);
                             }
@@ -270,25 +269,62 @@
                                 fillStationname(settings['stationname' + i], station, i);
                                 fillCheck(i);
                             }
-
-
                             $(".preloader-background").fadeOut();
-
-                        } else {
-                            $(".preloader-background").fadeOut();
-                            alert("Error: " + JSON.stringify(data));
                         }
                     } else {
                         $(".preloader-background").fadeOut();
                         alert("Error: " + JSON.stringify(data));
                     }
-                },
-                error: function (request, error) {
+                } else {
                     $(".preloader-background").fadeOut();
-                    alert("Request: " + JSON.stringify(request));
+                    alert("Error: " + JSON.stringify(data));
                 }
-            });
+            } catch (err) {
+                console.error(err);
+            }
         }
+        */
+        async function countStations(settings) {
+                $(".preloader-background").fadeIn();
+                var ajaxData = {
+                    countryCode: $("#country").val()
+                };
+
+                $.ajax({
+                    url: 'https://api.pegelalarm.at/api/station/1.0/list',
+                    type: 'GET',
+                    data: ajaxData,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")) {
+                            if (data.status.code == '200') {
+                                station = data.payload.stations;
+                                for (var i = 0; i < 5; i++) {
+                                    fillRegion(settings['region' + i], station, i);
+                                }
+                                for (var i = 0; i < 5; i++) {
+                                    fillWater(settings['water' + i], station, i);
+                                }
+                                for (var i = 0; i < 5; i++) {
+                                    fillStationname(settings['stationname' + i], station, i);
+                                    fillCheck(i);
+                                }
+                                $(".preloader-background").fadeOut();
+                            } else {
+                                $(".preloader-background").fadeOut();
+                                showMessage("Error: " + JSON.stringify(data));
+                            }
+                        } else {
+                            $(".preloader-background").fadeOut();
+                            showMessage("Error: " + JSON.stringify(data));
+                        }
+                    },
+                    error: function (request, error) {
+                        $(".preloader-background").fadeOut();
+                        showMessage("Request: " + JSON.stringify(request));
+                    }
+                });
+            }
 
         // This will be called by the admin adapter when the user presses the save button
         function save(callback) {
