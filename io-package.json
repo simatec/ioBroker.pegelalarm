@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "pegelalarm",
-        "version": "1.1.4",
+        "version": "1.1.5",
         "news": {
+            "1.1.5": {
+                "en": "fetch added, sentry added",
+                "de": "fetch hinzugefügt, sentry hinzugefügt",
+                "ru": "выборка добавлена, часовой добавлен",
+                "pt": "busca adicionada, sentinela adicionada",
+                "nl": "halen toegevoegd, schildwacht toegevoegd",
+                "fr": "récupération ajoutée, sentinelle ajoutée",
+                "it": "recupero aggiunto, sentinella aggiunta",
+                "es": "buscar agregado, centinela agregado",
+                "pl": "dodano pobieranie, dodano wartownik",
+                "zh-cn": "已添加获取，已添加哨兵"
+            },
             "1.1.4": {
                 "en": "Improved code for request from measuring stations",
                 "de": "Verbesserter Code für Abfragen von Messstationen",
@@ -187,7 +199,12 @@
             {
                 "js-controller": ">=1.4.2"
             }
-        ]
+        ],
+        "plugins": {
+            "sentry": {
+                "dsn": "https://0e373af128cc4c90a6c0d7833329e484@sentry.iobroker.net/123"
+            }
+        }
     },
     "native": {
         "country": "DE",

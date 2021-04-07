@@ -244,19 +244,18 @@
             $sel.select();
             regionValue = result;
         }
-        /*
+        
         async function countStations(settings) {
             $(".preloader-background").fadeIn();
             let dataUrl = "https://api.pegelalarm.at/api/station/1.0/list";
             dataUrl += "?countryCode=" + $("#country").val();
-            //const url = encodeURI(dataUrl);
             try {
-                const data = await fetch(dataUrl);
-                console.log(JSON.stringify(data))
+                const response = await fetch(dataUrl);
+                let body = await response.text();
+                data = JSON.parse(body);
                 if (data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")) {
                     if (data.status.code == '200') {
                         station = data.payload.stations;
-                        showMessage(_('Load Configuration'));
 
                         if (station) {
                             for (var i = 0; i < 5; i++) {
@@ -273,17 +272,17 @@
                         }
                     } else {
                         $(".preloader-background").fadeOut();
-                        alert("Error: " + JSON.stringify(data));
+                        showMessage("Error: " + JSON.stringify(data));
                     }
                 } else {
                     $(".preloader-background").fadeOut();
-                    alert("Error: " + JSON.stringify(data));
+                    showMessage("Error: " + JSON.stringify(data));
                 }
             } catch (err) {
                 console.error(err);
             }
         }
-        */
+        /*
         async function countStations(settings) {
                 $(".preloader-background").fadeIn();
                 var ajaxData = {
@@ -325,7 +324,7 @@
                     }
                 });
             }
-
+            */
         // This will be called by the admin adapter when the user presses the save button
         function save(callback) {
             // example: select elements with class=value and build settings object
