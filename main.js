@@ -544,7 +544,8 @@ function main() {
         requestLoop(0);
     } else {
         adapter.log.error('Please configurate Adapter first!');
-        stopAdapter();
+        //stopAdapter();
+        setTimeout(() => stopAdapter(), 5000));
     }
 }
 
