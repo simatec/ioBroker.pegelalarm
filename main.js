@@ -40,9 +40,7 @@ const utils = require('@iobroker/adapter-core'); // Get common adapter utils
 const adapterName = require('./package.json').name.split('.').pop();
 const axios = require('axios').default;
 
-let isStopped = false;
 let adapter;
-let stopTimeout;
 let timerRequestFinish;
 let timerRequestLoop;
 let currentStations = [];
@@ -61,23 +59,12 @@ function startAdapter(options) {
     adapter = new utils.Adapter(options);
 
     // start here!
-    //adapter.on('ready', main); // Main method defined below for readability
-    adapter.on('ready', async () => {
-        try {
-            await main(adapter);
-        } catch (e) {
-            //ignore errors
-        }
-    });
+    adapter.on('ready', main); // Main method defined below for readability
 
     // is called when adapter shuts down - callback has to be called under any circumstances!
     adapter.on('unload', (callback) => {
         try {
             adapter.log.debug('cleaned everything up...');
-            stopSwitchTimeout && clearTimeout(stopSwitchTimeout);
-            stopSwitchTimeout = null;
-            stopTimeout && clearTimeout(stopTimeout);
-            stopTimeout = null;
             timerRequestLoop && clearTimeout(timerRequestLoop);
             timerRequestLoop = null;
             timerRequestFinish && clearTimeout(timerRequestFinish);
@@ -85,17 +72,6 @@ function startAdapter(options) {
             callback();
         } catch (e) {
             callback();
-        }
-    });
-
-    // is called if a subscribed state changes
-    adapter.on('stateChange', (id, state) => {
-        if (state) {
-            // The state was changed
-            adapter.log.debug(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
-        } else {
-            // The state was deleted
-            adapter.log.debug(`state ${id} deleted`);
         }
     });
 
@@ -132,14 +108,18 @@ async function requestData(_stationname, _region, _water) {
     }
     if (available && available.status) {
         adapter.log.debug('Pegelalarm API is available ... Status: ' + available.status)
+        let data = [];
+        try {
+            const dataRequest = await axios({
+                method: 'get',
+                baseURL: url,
+                responseType: 'json'
+            });
 
-        const dataRequest = await axios({
-            method: 'get',
-            baseURL: url,
-            responseType: 'json'
-        });
-
-        let data = dataRequest.data;
+            data = dataRequest.data;
+        } catch (err) {
+            adapter.log.warn('Pegelalarm Request is not available: ' + err);
+        }
 
         if (_stationname !== '' && data.payload['stations'].length > 1) {
             try {
@@ -253,17 +233,13 @@ async function requestData(_stationname, _region, _water) {
                 await adapter.setState('lastRun', lastRun, true);
             } else {
                 adapter.log.error('API-Statuscode: ' + data.status.code);
-                //stopAdapter();
             }
         } else {
             adapter.log.error('Wrong JSON returned');
-            //stopAdapter();
         }
     } else {
         adapter.log.error('Cannot read JSON file: ' + error || response.statusCode);
-        //stopAdapter();
     }
-    //stopAdapter();
 
     adapter.log.debug("Pegelalarm request done");
 
@@ -459,23 +435,11 @@ function createVarName(text) {
 
 function stopAdapter() {
     setImmediate(() => {
-        stopSwitchTimeout && clearTimeout(stopSwitchTimeout);
-        isStopped = true;
-        stopTimeout = setTimeout(() => {
-            adapter.stop ? adapter.stop() : adapter.terminate();
-        }, 20000);
+        adapter.stop ? adapter.stop() : adapter.terminate();
     });
 }
 
-let stopSwitchTimeout = setTimeout(() => {
-    stopSwitchTimeout = null;
-    if (!isStopped) {
-        adapter && adapter.log && adapter.log.info('force terminating after 4 minutes');
-        adapter && adapter.stop && adapter.stop();
-    }
-}, 240000);
-
-function checkStation(currentStations) {
+function checkStation(currentStations, callback) {
     adapter.log.debug('Check for deleting old objects is started');
     adapter.getForeignObjects(adapter.namespace + ".stations.*", 'state', /**
          * @param {any} err
@@ -529,10 +493,9 @@ function checkStation(currentStations) {
                                 }
                             });
                     }
-
                 }
             }
-        });
+        }, callback());
 }
 
 function requestLoop(index) {
@@ -552,9 +515,9 @@ function requestLoop(index) {
                     }, 1000);
                 } else {
                     adapter.log.debug(`Pegelalarm Request is completed`);
+
                     timerRequestFinish = setTimeout(function () {
-                        checkStation(currentStations);
-                        stopAdapter();
+                        checkStation(currentStations, () => setTimeout(() => stopAdapter(), 5000));
                     }, 5000);
                 }
             }).catch(err => {
@@ -568,14 +531,14 @@ function requestLoop(index) {
         }, 1000);
     } else if (index === 4) {
         adapter.log.debug(`Pegelalarm Request is completed`);
+
         timerRequestFinish = setTimeout(function () {
-            checkStation(currentStations);
-            stopAdapter();
+            checkStation(currentStations, () => setTimeout(() => stopAdapter(), 5000));
         }, 5000);
     }
 }
 
-async function main(adapter) {
+function main() {
     if (adapter.config.configurated !== 0) {
         // start request in Loop for Measuring stations 0-4
         requestLoop(0);

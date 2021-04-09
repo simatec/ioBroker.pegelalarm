@@ -20,6 +20,9 @@ https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc/wiki/Download-current-wa
 
 ## Changelog
 
+### 1.1.6 (2021-04-09)
+* (simatec) Bugfix for latest Repo
+
 ### 1.1.5 (2021-04-07)
 * (simatec) fetch added
 * (simatec) sentry added

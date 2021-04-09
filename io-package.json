@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "pegelalarm",
-        "version": "1.1.5",
+        "version": "1.1.6",
         "news": {
+            "1.1.6": {
+                "en": "Bugfix for latest Repo",
+                "de": "Bugfix für latest Repo",
+                "ru": "Исправление для последнего репо",
+                "pt": "Correção de bug para o Repo mais recente",
+                "nl": "Bugfix voor de nieuwste repo",
+                "fr": "Correction de bug pour le dernier repo",
+                "it": "Bugfix per l'ultimo Repo",
+                "es": "Corrección de errores para el último repositorio",
+                "pl": "Poprawka błędu dla najnowszego repozytorium",
+                "zh-cn": "最新回购的错误修正"
+            },
             "1.1.5": {
                 "en": "fetch added, sentry added",
                 "de": "fetch hinzugefügt, sentry hinzugefügt",
@@ -193,9 +205,6 @@
         "compact": true,
         "materialize": true,
         "dependencies": [
-            {
-                "admin": ">=3.0.0"
-            },
             {
                 "js-controller": ">=1.4.2"
             }
