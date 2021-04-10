@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "pegelalarm",
-        "version": "1.1.6",
+        "version": "1.1.7",
         "news": {
+            "1.1.7": {
+                "en": "Bugfix Adapter stop, Bugfix clean old stations",
+                "de": "Bugfix Adapter Stop, Bugfix alte Stationen bereinigen",
+                "ru": "Bugfix Остановка адаптера, исправление ошибок для очистки старых станций",
+                "pt": "Bugfix adaptador parar, Bugfix limpar estações antigas",
+                "nl": "Bugfix Adapter stop, Bugfix schone oude stations",
+                "fr": "Bugfix Adapter stop, Bugfix nettoyer les anciennes stations",
+                "it": "Bugfix Adapter stop, Bugfix pulisce vecchie stazioni",
+                "es": "Bugfix Adapter stop, Bugfix limpia estaciones viejas",
+                "pl": "Zatrzymanie adaptera Bugfix, Naprawianie błędów ze starych stacji",
+                "zh-cn": "Bugfix适配器停止，修正旧站的Bugfix"
+            },
             "1.1.6": {
                 "en": "Bugfix for latest Repo",
                 "de": "Bugfix für latest Repo",

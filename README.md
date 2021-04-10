@@ -20,6 +20,10 @@ https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc/wiki/Download-current-wa
 
 ## Changelog
 
+### 1.1.7 (2021-04-10)
+* (simatec) Bugfix Adapter stop
+* (simatec) Bugfix clean old stations
+
 ### 1.1.6 (2021-04-09)
 * (simatec) Bugfix for latest Repo
 

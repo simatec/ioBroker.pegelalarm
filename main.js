@@ -439,13 +439,10 @@ function stopAdapter() {
     });
 }
 
-function checkStation(currentStations, callback) {
-    adapter.log.debug('Check for deleting old objects is started');
-    adapter.getForeignObjects(adapter.namespace + ".stations.*", 'state', /**
-         * @param {any} err
-         * @param {any[]} list
-         */
-        function (err, list) {
+function checkStation(currentStations) {
+    return new Promise(async (resolve, reject) => {
+        adapter.log.debug('Check for deleting old objects is started');
+        await adapter.getForeignObjects(adapter.namespace + ".stations.*", 'state', async (err, list) => {
             if (err) {
                 adapter.log.error(err);
             } else {
@@ -456,49 +453,40 @@ function checkStation(currentStations, callback) {
 
                     if (currentStations.indexOf(resultID) === -1) {
                         adapter.log.debug('DELETE: ' + resID);
-                        adapter.delObject(resID, /**
-                         * @param {any} err
-                         */
-                            function (err) {
+                        await adapter.delObject(resID, async (err) => {
+                            if (err) {
+                                adapter.log.warn(err);
+                            }
+                        });
+                    }
+                }
+            }
+            await adapter.getForeignObjects(adapter.namespace + ".stations.*", 'channel', async (err, list) => {
+                if (err) {
+                    adapter.log.error(err);
+                } else {
+                    for (const i in list) {
+                        const resID = list[i]._id;
+                        const objectID = resID.split('.');
+                        const resultID = objectID[3];
+
+                        if (currentStations.indexOf(resultID) === -1) {
+                            adapter.log.debug('DELETE: ' + resID);
+                            await adapter.delObject(resID, async (err) => {
                                 if (err) {
                                     adapter.log.warn(err);
                                 }
                             });
+                        }
                     }
-
                 }
-            }
+                resolve();
+            });
         });
-    adapter.getForeignObjects(adapter.namespace + ".stations.*", 'channel', /**
-         * @param {any} err
-         * @param {any[]} list
-         */
-        function (err, list) {
-            if (err) {
-                adapter.log.error(err);
-            } else {
-                for (const i in list) {
-                    const resID = list[i]._id;
-                    const objectID = resID.split('.');
-                    const resultID = objectID[3];
-
-                    if (currentStations.indexOf(resultID) === -1) {
-                        adapter.log.debug('DELETE: ' + resID);
-                        adapter.delObject(resID, /**
-                         * @param {any} err
-                         */
-                            function (err) {
-                                if (err) {
-                                    adapter.log.warn(err);
-                                }
-                            });
-                    }
-                }
-            }
-        }, callback());
+    });
 }
 
-function requestLoop(index) {
+async function requestLoop(index) {
     let num = 0;
     if (adapter.config[`stationname${index}`] || adapter.config[`region${index}`] || adapter.config[`water${index}`]) {
         num = index + 1;
@@ -516,8 +504,9 @@ function requestLoop(index) {
                 } else {
                     adapter.log.debug(`Pegelalarm Request is completed`);
 
-                    timerRequestFinish = setTimeout(function () {
-                        checkStation(currentStations, () => setTimeout(() => stopAdapter(), 5000));
+                    timerRequestFinish = setTimeout(async () => {
+                        await checkStation(currentStations);
+                        setTimeout(() => stopAdapter(), 5000);
                     }, 5000);
                 }
             }).catch(err => {
@@ -532,8 +521,9 @@ function requestLoop(index) {
     } else if (index === 4) {
         adapter.log.debug(`Pegelalarm Request is completed`);
 
-        timerRequestFinish = setTimeout(function () {
-            checkStation(currentStations, () => setTimeout(() => stopAdapter(), 5000));
+        timerRequestFinish = setTimeout(async () => {
+            await checkStation(currentStations);
+            setTimeout(() => stopAdapter(), 5000);
         }, 5000);
     }
 }
@@ -543,8 +533,7 @@ function main() {
         // start request in Loop for Measuring stations 0-4
         requestLoop(0);
     } else {
-        adapter.log.error('Please configurate Adapter first!');
-        //stopAdapter();
+        adapter.log.warn('Please configure the adapter first!');
         setTimeout(() => stopAdapter(), 5000);
     }
 }
