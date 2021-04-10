@@ -7,10 +7,12 @@
 <!--![Number of Installations (stable)](http://iobroker.live/badges/pegelalarm-stable.svg)-->
 [![Dependency Status](https://img.shields.io/david/simatec/iobroker.pegelalarm.svg)](https://david-dm.org/simatec/iobroker.pegelalarm)
 [![Known Vulnerabilities](https://snyk.io/test/github/simatec/ioBroker.pegelalarm/badge.svg)](https://snyk.io/test/github/simatec/ioBroker.pegelalarm)
+[![Known Vulnerabilities](https://snyk.io/test/github/simatec/ioBroker.pegelalarm/badge.svg)](https://snyk.io/test/github/simatec/ioBroker.pegelalarm)
+![Test and Release](https://github.com/iobroker-community-adapters/ioBroker.mihome-vacuum/workflows/Test%20and%20Release/badge.svg)
+[![Travis-CI](http://img.shields.io/travis/simatec/ioBroker.pegelalarm/master.svg)](https://travis-ci.org/simatec/ioBroker.pegelalarm)
 
 [![NPM](https://nodei.co/npm/iobroker.pegelalarm.png?downloads=true)](https://nodei.co/npm/iobroker.pegelalarm/)
 
-**Tests:** [![Travis-CI](http://img.shields.io/travis/simatec/ioBroker.pegelalarm/master.svg)](https://travis-ci.org/simatec/ioBroker.pegelalarm)
 
 ## Pegelalarm adapter for ioBroker
 Provides data from Pegelalarm-API (v1.0)
