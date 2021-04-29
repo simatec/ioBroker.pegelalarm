@@ -25,8 +25,9 @@
         }
 
         .m {
-            /* Don't cut off dropdowns! */
-            overflow: initial;
+            /* Don't cut off dropdowns! 
+            overflow: initial;*/
+            overflow: hidden;
         }
 
         .m .col .select-wrapper+label {
@@ -39,11 +40,6 @@
 
         .m h6 {
             font-size: 1.0rem;
-        }
-        
-        .preloader-background {
-            float: right;
-            padding: .5rem;
         }
     </style>
     <script type="text/javascript">
@@ -201,7 +197,6 @@
             let result = [];
             let arrCounties = [];
             var $sel = $('#stationname' + i);
-            //arrCounties = str;
 
             if ($('#water' + i).val() !== '') {
                 arrCounties = str.filter(d => d.water === $('#water' + i).val());
@@ -246,7 +241,7 @@
         }
         
         async function countStations(settings) {
-            $(".preloader-background").fadeIn();
+            $(".preloader-background").show();
             let dataUrl = "https://api.pegelalarm.at/api/station/1.0/list";
             dataUrl += "?countryCode=" + $("#country").val();
             try {
@@ -268,63 +263,21 @@
                                 fillStationname(settings['stationname' + i], station, i);
                                 fillCheck(i);
                             }
-                            $(".preloader-background").fadeOut();
+                            $(".preloader-background").hide();
                         }
                     } else {
-                        $(".preloader-background").fadeOut();
+                        $(".preloader-background").hide();
                         showMessage("Error: " + JSON.stringify(data));
                     }
                 } else {
-                    $(".preloader-background").fadeOut();
+                    $(".preloader-background").hide();
                     showMessage("Error: " + JSON.stringify(data));
                 }
             } catch (err) {
                 console.error(err);
             }
         }
-        /*
-        async function countStations(settings) {
-                $(".preloader-background").fadeIn();
-                var ajaxData = {
-                    countryCode: $("#country").val()
-                };
 
-                $.ajax({
-                    url: 'https://api.pegelalarm.at/api/station/1.0/list',
-                    type: 'GET',
-                    data: ajaxData,
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")) {
-                            if (data.status.code == '200') {
-                                station = data.payload.stations;
-                                for (var i = 0; i < 5; i++) {
-                                    fillRegion(settings['region' + i], station, i);
-                                }
-                                for (var i = 0; i < 5; i++) {
-                                    fillWater(settings['water' + i], station, i);
-                                }
-                                for (var i = 0; i < 5; i++) {
-                                    fillStationname(settings['stationname' + i], station, i);
-                                    fillCheck(i);
-                                }
-                                $(".preloader-background").fadeOut();
-                            } else {
-                                $(".preloader-background").fadeOut();
-                                showMessage("Error: " + JSON.stringify(data));
-                            }
-                        } else {
-                            $(".preloader-background").fadeOut();
-                            showMessage("Error: " + JSON.stringify(data));
-                        }
-                    },
-                    error: function (request, error) {
-                        $(".preloader-background").fadeOut();
-                        showMessage("Request: " + JSON.stringify(request));
-                    }
-                });
-            }
-            */
         // This will be called by the admin adapter when the user presses the save button
         function save(callback) {
             // example: select elements with class=value and build settings object
@@ -351,21 +304,6 @@
         <div class="row">
             <div class="col s12 m4 l6">
                 <img src="pegelalarm.png" class="logo">
-                <div class="preloader-background" style="display: none;">
-                    <div class="preloader-wrapper active">
-                        <div class="spinner-layer spinner-blue-only">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div>
-                            <div class="gap-patch">
-                                <div class="circle"></div>
-                            </div>
-                            <div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -392,7 +330,7 @@
                 <label class="translate" for="country">country</label>
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="padding: 0.8rem;">
             <ul class="collapsible">
                 <!-- Settings for stations -->
                 <li>
@@ -569,6 +507,14 @@
                     </div>
                 </li>
             </ul>
+        </div>
+        <!-- Loader -->
+        <div class="row preloader-background">
+            <div class="col s12">
+                <div class="progress">
+                    <div class="indeterminate"></div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
