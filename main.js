@@ -439,29 +439,12 @@ function stopAdapter() {
     });
 }
 
-function checkStation(currentStations) {
-    return new Promise(async (resolve, reject) => {
-        adapter.log.debug('Check for deleting old objects is started');
-        await adapter.getForeignObjects(adapter.namespace + ".stations.*", 'state', async (err, list) => {
-            if (err) {
-                adapter.log.error(err);
-            } else {
-                for (const i in list) {
-                    const resID = list[i]._id;
-                    const objectID = resID.split('.');
-                    const resultID = objectID[3];
+async function checkStation(currentStations) {
+    return new Promise(async (resolve) => {
+        adapter.log.debug('Check for deleting old states is started');
 
-                    if (currentStations.indexOf(resultID) === -1) {
-                        adapter.log.debug('DELETE: ' + resID);
-                        await adapter.delObject(resID, async (err) => {
-                            if (err) {
-                                adapter.log.warn(err);
-                            }
-                        });
-                    }
-                }
-            }
-            await adapter.getForeignObjects(adapter.namespace + ".stations.*", 'channel', async (err, list) => {
+        try {
+            await adapter.getForeignObjects(adapter.namespace + ".stations.*", 'state', async (err, list) => {
                 if (err) {
                     adapter.log.error(err);
                 } else {
@@ -480,9 +463,43 @@ function checkStation(currentStations) {
                         }
                     }
                 }
-                resolve();
+                try {
+                    await adapter.getForeignObjects(adapter.namespace + ".stations.*", 'channel', async (err, list) => {
+                        if (err) {
+                            adapter.log.error(err);
+                        } else {
+                            for (const i in list) {
+                                const resID = list[i]._id;
+                                const objectID = resID.split('.');
+                                const resultID = objectID[3];
+
+                                if (currentStations.indexOf(resultID) === -1) {
+                                    adapter.log.debug('DELETE: ' + resID);
+                                    await adapter.delObject(resID, async (err) => {
+                                        if (err) {
+                                            adapter.log.warn(err);
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                        resolve();
+                    });
+                } catch (err) {
+                    adapter.log.error(err);
+                    resolve();
+                }
             });
-        });
+        } catch (err) {
+            adapter.log.error(err);
+            resolve();
+        }
+    });
+}
+
+function sleep(ms) {
+    return new Promise(async (resolve) => {
+        timerRequestFinish = setTimeout(() => resolve(), ms);
     });
 }
 
@@ -492,7 +509,7 @@ async function requestLoop(index) {
         num = index + 1;
         adapter.log.debug(`Pegelalarm request for measuring station ${num} is started ...`);
         requestData(adapter.config[`stationname${index}`], adapter.config[`region${index}`], adapter.config[`water${index}`])
-            .then(() => {
+            .then(async () => {
                 num = index + 1;
                 adapter.log.debug(`Pegelalarm request for measuring station ${num} is finish ...`);
                 if (index < 4) {
@@ -504,10 +521,10 @@ async function requestLoop(index) {
                 } else {
                     adapter.log.debug(`Pegelalarm Request is completed`);
 
-                    timerRequestFinish = setTimeout(async () => {
-                        await checkStation(currentStations);
-                        setTimeout(() => stopAdapter(), 5000);
-                    }, 5000);
+                    await sleep(5000);
+                    await checkStation(currentStations);
+                    await sleep(5000);
+                    stopAdapter();
                 }
             }).catch(err => {
                 adapter.log.error('Request is not completed: ' + err);
@@ -521,10 +538,10 @@ async function requestLoop(index) {
     } else if (index === 4) {
         adapter.log.debug(`Pegelalarm Request is completed`);
 
-        timerRequestFinish = setTimeout(async () => {
-            await checkStation(currentStations);
-            setTimeout(() => stopAdapter(), 5000);
-        }, 5000);
+        await sleep(5000);
+        await checkStation(currentStations);
+        await sleep(5000);
+        stopAdapter();
     }
 }
 
