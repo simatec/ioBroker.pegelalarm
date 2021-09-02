@@ -80,17 +80,17 @@ function startAdapter(options) {
 
 // Request Data from API
 async function requestData(_stationname, _region, _water) {
-    let dataUrl = "https://api.pegelalarm.at/api/station/1.0/list";
-    dataUrl += "?countryCode=" + adapter.config.country;
+    let dataUrl = 'https://api.pegelalarm.at/api/station/1.0/list';
+    dataUrl += `?countryCode=${adapter.config.country}`;
 
     if (_region.trim().length) {
-        dataUrl += "&qRegion=" + _region;
+        dataUrl += `&qRegion=${_region}`;
     }
     if (_water.trim().length) {
-        dataUrl += "&qWater=" + _water;
+        dataUrl += `&qWater=${_water}`;
     }
     if (_stationname.trim().length) {
-        dataUrl += "&qStationName=" + _stationname;
+        dataUrl += `&qStationName=${_stationname}`;
     }
     const url = encodeURI(dataUrl);
 
@@ -104,10 +104,10 @@ async function requestData(_stationname, _region, _water) {
             validateStatus: () => true
         });
     } catch (err) {
-        adapter.log.debug('Pegelalarm API is not available: ' + err)
+        adapter.log.debug(`Pegelalarm API is not available: ${err}`);
     }
     if (available && available.status == '200') {
-        adapter.log.debug('Pegelalarm API is available ... Status: ' + available.status)
+        adapter.log.debug(`Pegelalarm API is available ... Status: ${available.status}`);
         let data = [];
         try {
             const dataRequest = await axios({
@@ -118,7 +118,7 @@ async function requestData(_stationname, _region, _water) {
 
             data = dataRequest.data;
         } catch (err) {
-            adapter.log.warn('Pegelalarm Request is not available: ' + err);
+            adapter.log.warn(`Pegelalarm API is not available: ${err}`);
         }
 
         if (_stationname !== '' && data && data.payload && data.payload['stations'].length > 1) {
@@ -130,11 +130,11 @@ async function requestData(_stationname, _region, _water) {
                     }
                 }
             } catch (err) {
-                adapter.log.warn('cannot filter stations')
+                adapter.log.warn('cannot filter stations');
             }
         }
 
-        if (typeof data == 'object' && data.hasOwnProperty("status") && data.status.hasOwnProperty("code") && data.hasOwnProperty("payload") && data.payload.hasOwnProperty("stations")) {
+        if (typeof data == 'object' && data.hasOwnProperty('status') && data.status.hasOwnProperty('code') && data.hasOwnProperty('payload') && data.payload.hasOwnProperty('stations')) {
             if (data.status.code == '200') {
                 let warnings = [];
                 let alerts = [];
@@ -151,10 +151,10 @@ async function requestData(_stationname, _region, _water) {
                     await adapter.setState(path + '.water', station.water ? station.water : 'none', true);
                     await adapter.setState(path + '.region', station.region ? station.region : 'none', true);
                     await adapter.setState(path + '.situation.text', station.situation ? decodeSituation(station.situation) : 'none', true);
-                    await adapter.setState(path + '.situation.group', station.situation ? decodeSituation(station.situation, "group") : 'none', true);
+                    await adapter.setState(path + '.situation.group', station.situation ? decodeSituation(station.situation, 'group') : 'none', true);
                     await adapter.setState(path + '.situation.code', station.situation ? station.situation : 0, true);
                     await adapter.setState(path + '.trend.text', station.trend ? decodeTrend(station.trend) : 'none', true);
-                    await adapter.setState(path + '.trend.short', station.trend ? decodeTrend(station.trend, "short") : 'none', true);
+                    await adapter.setState(path + '.trend.short', station.trend ? decodeTrend(station.trend, 'short') : 'none', true);
                     await adapter.setState(path + '.trend.code', station.trend ? station.trend : 0, true);
 
                     let stateNormal = false;
@@ -162,7 +162,7 @@ async function requestData(_stationname, _region, _water) {
                     let stateAlert = false;
                     let stateUnknown = false;
 
-                    switch (decodeSituation(station.situation, "group")) {
+                    switch (decodeSituation(station.situation, 'group')) {
                         case 'normal':
                             stateNormal = true;
                             break;
@@ -190,16 +190,16 @@ async function requestData(_stationname, _region, _water) {
 
                     for (let o = 0; o < station.data.length; o++) {
                         let stationData = station.data[o];
-                        if (stationData.type == "height in cm") {
+                        if (stationData.type == 'height in cm') {
                             o = station.data.length;
 
                             await adapter.setState(path + '.height', { val: stationData.value ? stationData.value : 0, ack: true });
                             height = stationData.value;
 
-                            let sourceDate = new Date(Date.parse(stationData.sourceDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, "$3-$2-$1$4"))).toUTCString();
+                            let sourceDate = new Date(Date.parse(stationData.sourceDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, '$3-$2-$1$4'))).toUTCString();
                             await adapter.setState(path + '.sourceDate', sourceDate ? sourceDate : 'none', true);
 
-                            let requestDate = new Date(Date.parse(stationData.requestDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, "$3-$2-$1$4"))).toUTCString();
+                            let requestDate = new Date(Date.parse(stationData.requestDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, '$3-$2-$1$4'))).toUTCString();
                             await adapter.setState(path + '.requestDate', requestDate ? requestDate : 'none', true);
                         }
                     }
@@ -211,7 +211,7 @@ async function requestData(_stationname, _region, _water) {
                         "country": station.country,
                         "water": station.water,
                         "height": height,
-                        "trend": decodeTrend(station.trend, "short"),
+                        "trend": decodeTrend(station.trend, 'short'),
                         "warning": stateWarning,
                         "alert": stateAlert
                     });
@@ -231,7 +231,7 @@ async function requestData(_stationname, _region, _water) {
                 let lastRun = new Date().toUTCString();
 
                 lastRun && await adapter.setState('lastRun', lastRun, true);
-                adapter.log.debug("Pegelalarm request done");
+                adapter.log.debug('Pegelalarm request done');
             } else {
                 adapter.log.error(`Pegelalarm API cannot be reached at the moment. API-Statuscode: ${data.status.code}`);
             }
@@ -359,70 +359,70 @@ function createStations(path) {
     });
 }
 
-function decodeTrend(code, type = "") {
-    let text = "Unknown water level";
-    let shortText = "unknown";
+function decodeTrend(code, type = '') {
+    let text = 'Unknown water level';
+    let shortText = 'unknown';
 
     switch (code) {
         case -10:
-            text = "Falling water level";
-            shortText = "falling";
+            text = 'Falling water level';
+            shortText = 'falling';
             break;
         case 0:
-            text = "Constant water height";
-            shortText = "constant";
+            text = 'Constant water height';
+            shortText = 'constant';
             break;
         case 10:
-            text = "Rising water level";
-            shortText = "rising";
+            text = 'Rising water level';
+            shortText = 'rising';
             break;
         default:
-            text = "Unknown water level";
-            shortText = "unknown";
+            text = 'Unknown water level';
+            shortText = 'unknown';
     }
 
-    if (type.length && type == "short") {
+    if (type.length && type == 'short') {
         return shortText;
     }
 
     return text;
 }
 
-function decodeSituation(code, type = "") {
-    let text = "Unknown water level";
-    let group = "unknown";
+function decodeSituation(code, type = '') {
+    let text = 'Unknown water level';
+    let group = 'unknown';
 
     switch (code) {
         case -10:
-            text = "Under or normal water level";
-            group = "normal";
+            text = 'Under or normal water level';
+            group = 'normal';
             break;
         case 10:
-            text = "Normal or slightly elevated water level";
-            group = "normal";
+            text = 'Normal or slightly elevated water level';
+            group = 'normal';
             break;
         case 20:
-            text = "Increased water level";
-            group = "normal";
+            text = 'Increased water level';
+            group = 'normal';
             break;
         case 30:
-            text = "The water level has reached the warning limit";
-            group = "warning";
+            text = 'The water level has reached the warning limit';
+            group = 'warning';
             break;
         case 40:
-            text = "The water level causes a regional flood";
-            group = "alert";
+            text = 'The water level causes a regional flood';
+            group = 'alert';
             break;
         case 50:
-            text = "Water level causes a national flood";
-            group = "alert";
+            text = 'Water level causes a national flood';
+            group = 'alert';
             break;
         default:
-            text = "Unknown situation";
-            group = "unknown";
+            text = 'Unknown situation';
+            group = 'unknown';
     }
 
-    if (type.length && type == "group") {
+    if (type.length && type == 'group') {
         return group;
     }
 
@@ -444,7 +444,7 @@ async function checkStation(currentStations) {
         adapter.log.debug('Check for deleting old states is started');
 
         try {
-            await adapter.getForeignObjects(adapter.namespace + ".stations.*", 'state', async (err, list) => {
+            await adapter.getForeignObjects(adapter.namespace + '.stations.*', 'state', async (err, list) => {
                 if (err) {
                     adapter.log.error(err);
                 } else {
@@ -454,7 +454,7 @@ async function checkStation(currentStations) {
                         const resultID = objectID[3];
 
                         if (currentStations.indexOf(resultID) === -1) {
-                            adapter.log.debug('DELETE: ' + resID);
+                            adapter.log.debug(`DELETE: ${resID}`);
                             await adapter.delObject(resID, async (err) => {
                                 if (err) {
                                     adapter.log.warn(err);
@@ -464,7 +464,7 @@ async function checkStation(currentStations) {
                     }
                 }
                 try {
-                    await adapter.getForeignObjects(adapter.namespace + ".stations.*", 'channel', async (err, list) => {
+                    await adapter.getForeignObjects(adapter.namespace + '.stations.*', 'channel', async (err, list) => {
                         if (err) {
                             adapter.log.error(err);
                         } else {
@@ -474,7 +474,7 @@ async function checkStation(currentStations) {
                                 const resultID = objectID[3];
 
                                 if (currentStations.indexOf(resultID) === -1) {
-                                    adapter.log.debug('DELETE: ' + resID);
+                                    adapter.log.debug(`DELETE: ${resID}`);
                                     await adapter.delObject(resID, async (err) => {
                                         if (err) {
                                             adapter.log.warn(err);
@@ -519,7 +519,7 @@ async function requestLoop(index) {
                         return;
                     }, 1000);
                 } else {
-                    adapter.log.debug(`Pegelalarm Request is completed`);
+                    adapter.log.debug('Pegelalarm Request is completed');
 
                     await sleep(5000);
                     await checkStation(currentStations);
@@ -527,7 +527,7 @@ async function requestLoop(index) {
                     stopAdapter();
                 }
             }).catch(err => {
-                adapter.log.error('Request is not completed: ' + err);
+                adapter.log.error(`Request is not completed: ${err}`);
             });
     } else if (index < 4) {
         index++
@@ -536,7 +536,7 @@ async function requestLoop(index) {
             return;
         }, 1000);
     } else if (index === 4) {
-        adapter.log.debug(`Pegelalarm Request is completed`);
+        adapter.log.debug('Pegelalarm Request is completed');
 
         await sleep(5000);
         await checkStation(currentStations);
