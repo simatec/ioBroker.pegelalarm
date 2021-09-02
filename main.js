@@ -181,7 +181,7 @@ async function requestData(_stationname, _region, _water) {
                     await adapter.setState(path + '.state.normal', stateNormal ? stateNormal : false, true);
                     await adapter.setState(path + '.state.warning', stateWarning ? stateWarning : false, true);
                     await adapter.setState(path + '.state.alert', stateAlert ? stateAlert : false, true);
-                    await adapter.setState(path + '.state.unknown', stateUnknown ? stateUnknown : 'none', true);
+                    await adapter.setState(path + '.state.unknown', stateUnknown ? stateUnknown : false, true);
                     await adapter.setState(path + '.geo.latitude', station.latitude ? station.latitude : 0, true);
                     await adapter.setState(path + '.geo.longitude', station.longitude ? station.longitude : 0, true);
                     await adapter.setState(path + '.geo.altitude', station.altitudeM ? station.altitudeM : 0, true);
@@ -223,14 +223,14 @@ async function requestData(_stationname, _region, _water) {
 
                 await adapter.setState('allStationsJSON', { val: allStationsJSON ? JSON.stringify(allStationsJSON) : '', ack: true });
 
-                await adapter.setState('warning.hasWarning', (warnings.length > 0), true);
-                await adapter.setState('warning.statepathes', JSON.stringify(warnings), true);
-                await adapter.setState('alert.hasAlert', (alerts.length > 0), true);
-                await adapter.setState('alert.statepathes', JSON.stringify(alerts), true);
+                await adapter.setState('warning.hasWarning', warnings.length > 0 ? true : false, true);
+                await adapter.setState('warning.statepathes', warnings ? JSON.stringify(warnings) : '', true);
+                await adapter.setState('alert.hasAlert', alerts.length > 0 ? true : false, true);
+                await adapter.setState('alert.statepathes', alerts ? JSON.stringify(alerts) : '', true);
 
                 let lastRun = new Date().toUTCString();
 
-                await adapter.setState('lastRun', lastRun, true);
+                lastRun && await adapter.setState('lastRun', lastRun, true);
                 adapter.log.debug("Pegelalarm request done");
             } else {
                 adapter.log.error(`Pegelalarm API cannot be reached at the moment. API-Statuscode: ${data.status.code}`);
