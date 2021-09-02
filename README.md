@@ -36,6 +36,9 @@ When the adapter crashes or an other Code error happens, this error message that
 
 ## Changelog
 
+### 1.2.2 (2021-09-02)
+* (simatec) Bugfix States
+
 ### 1.2.1 (2021-09-02)
 * (simatec) Bugfix API-Request
 * (simatec) dependencies updated

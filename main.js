@@ -146,16 +146,16 @@ async function requestData(_stationname, _region, _water) {
 
                     await createStations(path);
 
-                    await adapter.setState(path + '.name', station.stationName, true);
-                    await adapter.setState(path + '.country', station.country, true);
-                    await adapter.setState(path + '.water', station.water, true);
-                    await adapter.setState(path + '.region', station.region, true);
-                    await adapter.setState(path + '.situation.text', decodeSituation(station.situation), true);
-                    await adapter.setState(path + '.situation.group', decodeSituation(station.situation, "group"), true);
-                    await adapter.setState(path + '.situation.code', station.situation, true);
-                    await adapter.setState(path + '.trend.text', decodeTrend(station.trend), true);
-                    await adapter.setState(path + '.trend.short', decodeTrend(station.trend, "short"), true);
-                    await adapter.setState(path + '.trend.code', station.trend, true);
+                    await adapter.setState(path + '.name', station.stationName ? station.stationName : 'none', true);
+                    await adapter.setState(path + '.country', station.country ? station.country : 'none', true);
+                    await adapter.setState(path + '.water', station.water ? station.water : 'none', true);
+                    await adapter.setState(path + '.region', station.region ? station.region : 'none', true);
+                    await adapter.setState(path + '.situation.text', station.situation ? decodeSituation(station.situation) : 'none', true);
+                    await adapter.setState(path + '.situation.group', station.situation ? decodeSituation(station.situation, "group") : 'none', true);
+                    await adapter.setState(path + '.situation.code', station.situation ? station.situation : 0, true);
+                    await adapter.setState(path + '.trend.text', station.trend ? decodeTrend(station.trend) : 'none', true);
+                    await adapter.setState(path + '.trend.short', station.trend ? decodeTrend(station.trend, "short") : 'none', true);
+                    await adapter.setState(path + '.trend.code', station.trend ? station.trend : 0, true);
 
                     let stateNormal = false;
                     let stateWarning = false;
@@ -178,13 +178,13 @@ async function requestData(_stationname, _region, _water) {
                             stateUnknown = true;
                     }
 
-                    await adapter.setState(path + '.state.normal', stateNormal, true);
-                    await adapter.setState(path + '.state.warning', stateWarning, true);
-                    await adapter.setState(path + '.state.alert', stateAlert, true);
-                    await adapter.setState(path + '.state.unknown', stateUnknown, true);
-                    await adapter.setState(path + '.geo.latitude', station.latitude, true);
-                    await adapter.setState(path + '.geo.longitude', station.longitude, true);
-                    await adapter.setState(path + '.geo.altitude', station.altitudeM, true);
+                    await adapter.setState(path + '.state.normal', stateNormal ? stateNormal : false, true);
+                    await adapter.setState(path + '.state.warning', stateWarning ? stateWarning : false, true);
+                    await adapter.setState(path + '.state.alert', stateAlert ? stateAlert : false, true);
+                    await adapter.setState(path + '.state.unknown', stateUnknown ? stateUnknown : 'none', true);
+                    await adapter.setState(path + '.geo.latitude', station.latitude ? station.latitude : 0, true);
+                    await adapter.setState(path + '.geo.longitude', station.longitude ? station.longitude : 0, true);
+                    await adapter.setState(path + '.geo.altitude', station.altitudeM ? station.altitudeM : 0, true);
 
                     let height = 0;
 
@@ -193,14 +193,14 @@ async function requestData(_stationname, _region, _water) {
                         if (stationData.type == "height in cm") {
                             o = station.data.length;
 
-                            await adapter.setState(path + '.height', { val: stationData.value, ack: true });
+                            await adapter.setState(path + '.height', { val: stationData.value ? stationData.value : 0, ack: true });
                             height = stationData.value;
 
                             let sourceDate = new Date(Date.parse(stationData.sourceDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, "$3-$2-$1$4"))).toUTCString();
-                            await adapter.setState(path + '.sourceDate', sourceDate, true);
+                            await adapter.setState(path + '.sourceDate', sourceDate ? sourceDate : 'none', true);
 
                             let requestDate = new Date(Date.parse(stationData.requestDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, "$3-$2-$1$4"))).toUTCString();
-                            await adapter.setState(path + '.requestDate', requestDate, true);
+                            await adapter.setState(path + '.requestDate', requestDate ? requestDate : 'none', true);
                         }
                     }
 
@@ -217,11 +217,11 @@ async function requestData(_stationname, _region, _water) {
                     });
                     allStationsJSON.push(json);
 
-                    await adapter.setState(path + '.json', { val: JSON.stringify(json), ack: true });
+                    await adapter.setState(path + '.json', { val: json ? JSON.stringify(json) : '', ack: true });
 
                 }
 
-                await adapter.setState('allStationsJSON', { val: JSON.stringify(allStationsJSON), ack: true });
+                await adapter.setState('allStationsJSON', { val: allStationsJSON ? JSON.stringify(allStationsJSON) : '', ack: true });
 
                 await adapter.setState('warning.hasWarning', (warnings.length > 0), true);
                 await adapter.setState('warning.statepathes', JSON.stringify(warnings), true);

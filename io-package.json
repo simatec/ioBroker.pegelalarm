@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "pegelalarm",
-        "version": "1.2.1",
+        "version": "1.2.2",
         "news": {
+            "1.2.2": {
+                "en": "Bugfix States",
+                "de": "Bugfix-Zustände",
+                "ru": "Состояния исправления",
+                "pt": "Estados de correção de bugs",
+                "nl": "Bugfix-statussen",
+                "fr": "États de correction de bogues",
+                "it": "Stati bugfix",
+                "es": "Estados de corrección de errores",
+                "pl": "Stany z poprawkami błędów",
+                "zh-cn": "错误修正状态"
+            },
             "1.2.1": {
                 "en": "Bugfix API-Request, dependencies updated, small Bugfixes",
                 "de": "Bugfix API-Request, Abhängigkeiten aktualisiert, kleine Bugfixes",
@@ -110,18 +122,6 @@
                 "es": "json estado agregado, menú de configuración rediseñado, unidad agregada, muchas pequeñas correcciones de errores, traducciones agregadas",
                 "pl": "Dodano stan json, przeprojektowano menu konfiguracji, dodano jednostkę, wiele drobnych poprawek błędów, dodano tłumaczenia",
                 "zh-cn": "添加了json状态，重新设计了配置菜单，添加了单元，添加了许多小错误修正，添加了翻译"
-            },
-            "1.1.0": {
-                "en": "fork from bazidibavaria, code rewritten, dependencies updated, Bugfix setState, Bugfix getState, License updated",
-                "de": "Fork von Bazidibavaria, Code neu geschrieben, Abhängigkeiten aktualisiert, Bugfix setState, Bugfix getState, Lizenz aktualisiert",
-                "ru": "вилка от bazidibavaria, код переписан, зависимости обновлены, исправление ошибки setState, исправление ошибки getState, лицензия обновлена",
-                "pt": "fork from bazidibavaria, código reescrito, dependências atualizadas, Bugfix setState, Bugfix getState, Licença atualizada",
-                "nl": "vork van Bazidibavaria, code herschreven, afhankelijkheden bijgewerkt, Bugfix setState, Bugfix getState, Licentie bijgewerkt",
-                "fr": "fork de bazidibavaria, code réécrit, dépendances mises à jour, Bugfix setState, Bugfix getState, Licence mise à jour",
-                "it": "fork da bazidibavaria, codice riscritto, dipendenze aggiornate, bugfix setState, bugfix getState, licenza aggiornata",
-                "es": "bifurcación de bazidibavaria, código reescrito, dependencias actualizadas, Bugfix setState, Bugfix getState, Licencia actualizada",
-                "pl": "fork z bazidibavaria, przepisany kod, zaktualizowane zależności, poprawka błędu setState, poprawka błędu getState, aktualizacja licencji",
-                "zh-cn": "来自bazidibavaria的fork，重写了代码，更新了依赖项，Bugfix setState，Bugfix getState，许可证已更新"
             }
         },
         "title": "Pegelalarm",
