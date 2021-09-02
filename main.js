@@ -106,7 +106,7 @@ async function requestData(_stationname, _region, _water) {
     } catch (err) {
         adapter.log.debug('Pegelalarm API is not available: ' + err)
     }
-    if (available && available.status) {
+    if (available && available.status == '200') {
         adapter.log.debug('Pegelalarm API is available ... Status: ' + available.status)
         let data = [];
         try {
@@ -121,7 +121,7 @@ async function requestData(_stationname, _region, _water) {
             adapter.log.warn('Pegelalarm Request is not available: ' + err);
         }
 
-        if (_stationname !== '' && data.payload['stations'].length > 1) {
+        if (_stationname !== '' && data && data.payload && data.payload['stations'].length > 1) {
             try {
                 for (let d = 0; d < data.payload['stations'].length; d++) {
                     if (data.payload.stations[d].stationName !== _stationname) {
@@ -231,17 +231,17 @@ async function requestData(_stationname, _region, _water) {
                 let lastRun = new Date().toUTCString();
 
                 await adapter.setState('lastRun', lastRun, true);
+                adapter.log.debug("Pegelalarm request done");
             } else {
-                adapter.log.error('API-Statuscode: ' + data.status.code);
+                adapter.log.error(`Pegelalarm API cannot be reached at the moment. API-Statuscode: ${data.status.code}`);
             }
+
         } else {
             adapter.log.error('Wrong JSON returned');
         }
     } else {
-        adapter.log.error('Cannot read JSON file: ' + error || response.statusCode);
+        adapter.log.error(`Pegelalarm API cannot be reached at the moment. API-Statuscode: ${available.status}`);
     }
-
-    adapter.log.debug("Pegelalarm request done");
 
 }
 
