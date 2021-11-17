@@ -1,321 +1,285 @@
 {
-    "common": {
-        "name": "pegelalarm",
-        "version": "1.2.3",
-        "news": {
-            "1.2.3": {
-                "en": "Bugfix States",
-                "de": "Bugfix-Zustände",
-                "ru": "Состояния исправления",
-                "pt": "Estados de correção de bugs",
-                "nl": "Bugfix-statussen",
-                "fr": "États de correction de bogues",
-                "it": "Stati bugfix",
-                "es": "Estados de corrección de errores",
-                "pl": "Stany z poprawkami błędów",
-                "zh-cn": "错误修正状态"
-            },
-            "1.2.2": {
-                "en": "Bugfix States",
-                "de": "Bugfix-Zustände",
-                "ru": "Состояния исправления",
-                "pt": "Estados de correção de bugs",
-                "nl": "Bugfix-statussen",
-                "fr": "États de correction de bogues",
-                "it": "Stati bugfix",
-                "es": "Estados de corrección de errores",
-                "pl": "Stany z poprawkami błędów",
-                "zh-cn": "错误修正状态"
-            },
-            "1.2.1": {
-                "en": "Bugfix API-Request, dependencies updated, small Bugfixes",
-                "de": "Bugfix API-Request, Abhängigkeiten aktualisiert, kleine Bugfixes",
-                "ru": "Bugfix API-Request, зависимости обновлены, небольшие исправления",
-                "pt": "Solicitação de API de correção de bugs, dependências atualizadas, pequenas correções de bugs",
-                "nl": "Bugfix API-verzoek, afhankelijkheden bijgewerkt, kleine bugfixes",
-                "fr": "Bugfix API-Request, dépendances mises à jour, petites corrections de bugs",
-                "it": "Bugfix API-Request, dipendenze aggiornate, piccole correzioni di bug",
-                "es": "Solicitud de API de corrección de errores, dependencias actualizadas, pequeñas correcciones de errores",
-                "pl": "Bugfix API-Request, zaktualizowane zależności, małe poprawki błędów",
-                "zh-cn": "错误修正 API 请求，更新依赖项，小错误修正"
-            },
-            "1.2.0": {
-                "en": "Redesign Gui",
-                "de": "Gui neu gestaltet",
-                "ru": "Редизайн графического интерфейса",
-                "pt": "Redesenhar o Gui",
-                "nl": "Herontwerp Gui",
-                "fr": "Refonte de l'interface graphique",
-                "it": "Redesign Gui",
-                "es": "Rediseñar la interfaz gráfica de usuario",
-                "pl": "Przeprojektowanie Gui",
-                "zh-cn": "重新设计桂"
-            },
-            "1.1.7": {
-                "en": "Bugfix Adapter stop, Bugfix clean old stations",
-                "de": "Bugfix Adapter Stop, Bugfix alte Stationen bereinigen",
-                "ru": "Bugfix Остановка адаптера, исправление ошибок для очистки старых станций",
-                "pt": "Bugfix adaptador parar, Bugfix limpar estações antigas",
-                "nl": "Bugfix Adapter stop, Bugfix schone oude stations",
-                "fr": "Bugfix Adapter stop, Bugfix nettoyer les anciennes stations",
-                "it": "Bugfix Adapter stop, Bugfix pulisce vecchie stazioni",
-                "es": "Bugfix Adapter stop, Bugfix limpia estaciones viejas",
-                "pl": "Zatrzymanie adaptera Bugfix, Naprawianie błędów ze starych stacji",
-                "zh-cn": "Bugfix适配器停止，修正旧站的Bugfix"
-            },
-            "1.1.6": {
-                "en": "Bugfix for latest Repo",
-                "de": "Bugfix für latest Repo",
-                "ru": "Исправление для последнего репо",
-                "pt": "Correção de bug para o Repo mais recente",
-                "nl": "Bugfix voor de nieuwste repo",
-                "fr": "Correction de bug pour le dernier repo",
-                "it": "Bugfix per l'ultimo Repo",
-                "es": "Corrección de errores para el último repositorio",
-                "pl": "Poprawka błędu dla najnowszego repozytorium",
-                "zh-cn": "最新回购的错误修正"
-            },
-            "1.1.5": {
-                "en": "fetch added, sentry added",
-                "de": "fetch hinzugefügt, sentry hinzugefügt",
-                "ru": "выборка добавлена, часовой добавлен",
-                "pt": "busca adicionada, sentinela adicionada",
-                "nl": "halen toegevoegd, schildwacht toegevoegd",
-                "fr": "récupération ajoutée, sentinelle ajoutée",
-                "it": "recupero aggiunto, sentinella aggiunta",
-                "es": "buscar agregado, centinela agregado",
-                "pl": "dodano pobieranie, dodano wartownik",
-                "zh-cn": "已添加获取，已添加哨兵"
-            },
-            "1.1.4": {
-                "en": "Improved code for request from measuring stations",
-                "de": "Verbesserter Code für Abfragen von Messstationen",
-                "ru": "Доработан код запроса от измерительных станций.",
-                "pt": "Código aprimorado para solicitação de estações de medição",
-                "nl": "Verbeterde code voor aanvraag van meetstations",
-                "fr": "Code amélioré pour la demande des stations de mesure",
-                "it": "Codice migliorato per la richiesta dalle stazioni di misurazione",
-                "es": "Código mejorado para solicitud de estaciones de medición",
-                "pl": "Ulepszony kod na żądanie ze stacji pomiarowych",
-                "zh-cn": "改进的代码，可满足测量站的要求"
-            },
-            "1.1.3": {
-                "en": "Settings for 5 measuring station added, Bugfix",
-                "de": "Einstellungen für 5 Messstationen hinzugefügt, Bugfix",
-                "ru": "Добавлены настройки для 5 измерительных станций, исправлено.",
-                "pt": "Configurações para 5 estações de medição adicionadas, Bugfix",
-                "nl": "Instellingen voor 5 meetstations toegevoegd, Bugfix",
-                "fr": "Ajout des paramètres pour 5 stations de mesure, correction de bug",
-                "it": "Aggiunte impostazioni per 5 stazioni di misurazione, Bugfix",
-                "es": "Configuración para 5 estaciones de medición agregadas, corrección de errores",
-                "pl": "Dodano ustawienia dla 5 stacji pomiarowych, Bugfix",
-                "zh-cn": "添加了5个测量站的设置，错误修复"
-            },
-            "1.1.2": {
-                "en": "allStationsJSON state added, code rewritten, small Bugfix, axios added",
-                "de": "allStationsJSON State hinzugefügt, Code neu geschrieben, kleiner Bugfix, Axios hinzugefügt",
-                "ru": "Добавлено состояние allStationsJSON, переписан код, исправлено небольшое исправление, добавлены аксиомы",
-                "pt": "Estado allStationsJSON adicionado, código reescrito, pequena correção de bug, axios adicionados",
-                "nl": "allStationsJSON-status toegevoegd, code herschreven, kleine bugfix, axios toegevoegd",
-                "fr": "AllStationsJSON état ajouté, code réécrit, petit bugfix, axios ajouté",
-                "it": "stato aggiunto allStationsJSON, codice riscritto, piccolo bugfix, axios aggiunti",
-                "es": "Se agregó el estado allStationsJSON, se reescribió el código, se corrigió un pequeño error, se agregaron axios",
-                "pl": "Dodano stan allStationsJSON, przepisano kod, małe poprawki błędów, dodano axios",
-                "zh-cn": "allStationsJSON状态已添加，代码已重写，小错误修正，axios已添加"
-            }
-        },
-        "title": "Pegelalarm",
-        "titleLang": {
-            "en": "water level alarm",
-            "de": "Pegelalarm",
-            "ru": "сигнализация уровня воды",
-            "pt": "alarme de nível de água",
-            "nl": "waterpeil alarm",
-            "fr": "alarme de niveau d'eau",
-            "it": "allarme livello acqua",
-            "es": "alarma de nivel de agua",
-            "pl": "alarm poziomu wody",
-            "zh-cn": "水位报警"
-        },
-        "desc": {
-            "en": "Provides data from Pegelalarm-API",
-            "de": "Stellt Daten von der Pegelalarm-API bereit",
-            "ru": "Предоставляет данные из Pegelalarm-API",
-            "pt": "Fornece dados do Pegelalarm-API",
-            "nl": "Biedt gegevens van Pegelalarm-API",
-            "fr": "Fournit des données de Pegelalarm-API",
-            "it": "Fornisce dati da Pegelalarm-API",
-            "es": "Proporciona datos de Pegelalarm-API",
-            "pl": "Udostępnia dane z Pegelalarm-API",
-            "zh-cn": "提供来自Pegelalarm-API的数据"
-        },
-        "authors": [
-            "simatec <nais@gmx.net>"
-        ],
-        "keywords": [
-            "level alarm",
-            "level",
-            "river level",
-            "water level",
-            "flood",
-            "pegelalarm",
-            "pegelstand",
-            "flussstand",
-            "wasserstand",
-            "hochwasser"
-        ],
-        "license": "MIT",
-        "platform": "Javascript/Node.js",
-        "main": "main.js",
-        "icon": "pegelalarm.png",
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/simatec/ioBroker.pegelalarm/master/admin/pegelalarm.png",
-        "readme": "https://github.com/simatec/ioBroker.pegelalarm/blob/master/README.md",
-        "loglevel": "info",
-        "mode": "schedule",
-        "schedule": "*/15 * * * *",
-        "allowInit": true,
-        "connectionType": "cloud",
-        "dataSource": "poll",
-        "type": "weather",
-        "compact": true,
-        "materialize": true,
-        "dependencies": [
-            {
-                "js-controller": ">=3.0.0"
-            }
-        ],
-        "globalDependencies": [
-            {
-                "admin": ">=4.0.9"
-            }
-        ],
-        "plugins": {
-            "sentry": {
-                "dsn": "https://0e373af128cc4c90a6c0d7833329e484@sentry.iobroker.net/123"
-            }
-        }
+  "common": {
+    "name": "pegelalarm",
+    "version": "1.2.4",
+    "news": {
+      "1.2.4": {
+        "en": "Dependencies updated\ntest and release updated",
+        "de": "Abhängigkeiten aktualisiert\nTest und Release aktualisiert",
+        "ru": "Зависимости обновлены\nтест и выпуск обновлены",
+        "pt": "Dependências atualizadas\nteste e lançamento atualizados",
+        "nl": "Afhankelijkheden bijgewerkt\ntest en release bijgewerkt",
+        "fr": "Dépendances mises à jour\ntest et version mis à jour",
+        "it": "Dipendenze aggiornate\ntest e rilascio aggiornati",
+        "es": "Dependencias actualizadas\nprueba y lanzamiento actualizado",
+        "pl": "Zaktualizowano zależności\nzaktualizowano test i wydanie",
+        "zh-cn": "更新了依赖项\n测试和发布更新"
+      },
+      "1.2.3": {
+        "en": "Bugfix States",
+        "de": "Bugfix-Zustände",
+        "ru": "Состояния исправления",
+        "pt": "Estados de correção de bugs",
+        "nl": "Bugfix-statussen",
+        "fr": "États de correction de bogues",
+        "it": "Stati bugfix",
+        "es": "Estados de corrección de errores",
+        "pl": "Stany z poprawkami błędów",
+        "zh-cn": "错误修正状态"
+      },
+      "1.2.2": {
+        "en": "Bugfix States",
+        "de": "Bugfix-Zustände",
+        "ru": "Состояния исправления",
+        "pt": "Estados de correção de bugs",
+        "nl": "Bugfix-statussen",
+        "fr": "États de correction de bogues",
+        "it": "Stati bugfix",
+        "es": "Estados de corrección de errores",
+        "pl": "Stany z poprawkami błędów",
+        "zh-cn": "错误修正状态"
+      },
+      "1.2.1": {
+        "en": "Bugfix API-Request, dependencies updated, small Bugfixes",
+        "de": "Bugfix API-Request, Abhängigkeiten aktualisiert, kleine Bugfixes",
+        "ru": "Bugfix API-Request, зависимости обновлены, небольшие исправления",
+        "pt": "Solicitação de API de correção de bugs, dependências atualizadas, pequenas correções de bugs",
+        "nl": "Bugfix API-verzoek, afhankelijkheden bijgewerkt, kleine bugfixes",
+        "fr": "Bugfix API-Request, dépendances mises à jour, petites corrections de bugs",
+        "it": "Bugfix API-Request, dipendenze aggiornate, piccole correzioni di bug",
+        "es": "Solicitud de API de corrección de errores, dependencias actualizadas, pequeñas correcciones de errores",
+        "pl": "Bugfix API-Request, zaktualizowane zależności, małe poprawki błędów",
+        "zh-cn": "错误修正 API 请求，更新依赖项，小错误修正"
+      },
+      "1.2.0": {
+        "en": "Redesign Gui",
+        "de": "Gui neu gestaltet",
+        "ru": "Редизайн графического интерфейса",
+        "pt": "Redesenhar o Gui",
+        "nl": "Herontwerp Gui",
+        "fr": "Refonte de l'interface graphique",
+        "it": "Redesign Gui",
+        "es": "Rediseñar la interfaz gráfica de usuario",
+        "pl": "Przeprojektowanie Gui",
+        "zh-cn": "重新设计桂"
+      },
+      "1.1.7": {
+        "en": "Bugfix Adapter stop, Bugfix clean old stations",
+        "de": "Bugfix Adapter Stop, Bugfix alte Stationen bereinigen",
+        "ru": "Bugfix Остановка адаптера, исправление ошибок для очистки старых станций",
+        "pt": "Bugfix adaptador parar, Bugfix limpar estações antigas",
+        "nl": "Bugfix Adapter stop, Bugfix schone oude stations",
+        "fr": "Bugfix Adapter stop, Bugfix nettoyer les anciennes stations",
+        "it": "Bugfix Adapter stop, Bugfix pulisce vecchie stazioni",
+        "es": "Bugfix Adapter stop, Bugfix limpia estaciones viejas",
+        "pl": "Zatrzymanie adaptera Bugfix, Naprawianie błędów ze starych stacji",
+        "zh-cn": "Bugfix适配器停止，修正旧站的Bugfix"
+      },
+      "1.1.6": {
+        "en": "Bugfix for latest Repo",
+        "de": "Bugfix für latest Repo",
+        "ru": "Исправление для последнего репо",
+        "pt": "Correção de bug para o Repo mais recente",
+        "nl": "Bugfix voor de nieuwste repo",
+        "fr": "Correction de bug pour le dernier repo",
+        "it": "Bugfix per l'ultimo Repo",
+        "es": "Corrección de errores para el último repositorio",
+        "pl": "Poprawka błędu dla najnowszego repozytorium",
+        "zh-cn": "最新回购的错误修正"
+      }
     },
-    "native": {
-        "country": "DE",
-        "region0": "",
-        "water0": "",
-        "stationname0": "",
-        "region1": "",
-        "water1": "",
-        "stationname1": "",
-        "region2": "",
-        "water2": "",
-        "stationname2": "",
-        "region3": "",
-        "water3": "",
-        "stationname3": "",
-        "region4": "",
-        "water4": "",
-        "stationname4": "",
-        "configurated": 0
+    "title": "Pegelalarm",
+    "titleLang": {
+      "en": "water level alarm",
+      "de": "Pegelalarm",
+      "ru": "сигнализация уровня воды",
+      "pt": "alarme de nível de água",
+      "nl": "waterpeil alarm",
+      "fr": "alarme de niveau d'eau",
+      "it": "allarme livello acqua",
+      "es": "alarma de nivel de agua",
+      "pl": "alarm poziomu wody",
+      "zh-cn": "水位报警"
     },
-    "objects": [],
-    "instanceObjects": [
-        {
-            "_id": "stations",
-            "type": "channel",
-            "common": {
-                "name": "stations"
-            },
-            "native": {}
-        },
-        {
-            "_id": "warning",
-            "type": "channel",
-            "common": {
-                "name": "warning"
-            },
-            "native": {}
-        },
-        {
-            "_id": "warning.hasWarning",
-            "type": "state",
-            "common": {
-                "name": "hasWarning",
-                "type": "boolean",
-                "role": "indicator",
-                "read": true,
-                "write": false,
-                "def": false
-            },
-            "native": {}
-        },
-        {
-            "_id": "warning.statepathes",
-            "type": "state",
-            "common": {
-                "name": "statepathes",
-                "type": "string",
-                "role": "json",
-                "read": true,
-                "write": false,
-                "def": "[]"
-            },
-            "native": {}
-        },
-        {
-            "_id": "alert",
-            "type": "channel",
-            "common": {
-                "name": "alert"
-            },
-            "native": {}
-        },
-        {
-            "_id": "alert.hasAlert",
-            "type": "state",
-            "common": {
-                "name": "hasAlert",
-                "type": "boolean",
-                "role": "indicator",
-                "read": true,
-                "write": false,
-                "def": false
-            },
-            "native": {}
-        },
-        {
-            "_id": "alert.statepathes",
-            "type": "state",
-            "common": {
-                "name": "statepathes",
-                "type": "string",
-                "role": "json",
-                "read": true,
-                "write": false,
-                "def": "[]"
-            },
-            "native": {}
-        },
-        {
-            "_id": "lastRun",
-            "type": "state",
-            "common": {
-                "name": "lastRun",
-                "type": "string",
-                "role": "date",
-                "read": true,
-                "write": false
-            },
-            "native": {}
-        },
-        {
-            "_id": "allStationsJSON",
-            "type": "state",
-            "common": {
-                "name": "allStationsJSON",
-                "type": "string",
-                "role": "json",
-                "read": true,
-                "write": false
-            },
-            "native": {}
-        }
-    ]
+    "desc": {
+      "en": "Provides data from Pegelalarm-API",
+      "de": "Stellt Daten von der Pegelalarm-API bereit",
+      "ru": "Предоставляет данные из Pegelalarm-API",
+      "pt": "Fornece dados do Pegelalarm-API",
+      "nl": "Biedt gegevens van Pegelalarm-API",
+      "fr": "Fournit des données de Pegelalarm-API",
+      "it": "Fornisce dati da Pegelalarm-API",
+      "es": "Proporciona datos de Pegelalarm-API",
+      "pl": "Udostępnia dane z Pegelalarm-API",
+      "zh-cn": "提供来自Pegelalarm-API的数据"
+    },
+    "authors": [
+      "simatec <nais@gmx.net>"
+    ],
+    "keywords": [
+      "level alarm",
+      "level",
+      "river level",
+      "water level",
+      "flood",
+      "pegelalarm",
+      "pegelstand",
+      "flussstand",
+      "wasserstand",
+      "hochwasser"
+    ],
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "main": "main.js",
+    "icon": "pegelalarm.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/simatec/ioBroker.pegelalarm/master/admin/pegelalarm.png",
+    "readme": "https://github.com/simatec/ioBroker.pegelalarm/blob/master/README.md",
+    "loglevel": "info",
+    "mode": "schedule",
+    "schedule": "*/15 * * * *",
+    "allowInit": true,
+    "connectionType": "cloud",
+    "dataSource": "poll",
+    "type": "weather",
+    "compact": true,
+    "materialize": true,
+    "dependencies": [
+      {
+        "js-controller": ">=3.0.0"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=4.0.9"
+      }
+    ],
+    "plugins": {
+      "sentry": {
+        "dsn": "https://0e373af128cc4c90a6c0d7833329e484@sentry.iobroker.net/123"
+      }
+    }
+  },
+  "native": {
+    "country": "DE",
+    "region0": "",
+    "water0": "",
+    "stationname0": "",
+    "region1": "",
+    "water1": "",
+    "stationname1": "",
+    "region2": "",
+    "water2": "",
+    "stationname2": "",
+    "region3": "",
+    "water3": "",
+    "stationname3": "",
+    "region4": "",
+    "water4": "",
+    "stationname4": "",
+    "configurated": 0
+  },
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "stations",
+      "type": "channel",
+      "common": {
+        "name": "stations"
+      },
+      "native": {}
+    },
+    {
+      "_id": "warning",
+      "type": "channel",
+      "common": {
+        "name": "warning"
+      },
+      "native": {}
+    },
+    {
+      "_id": "warning.hasWarning",
+      "type": "state",
+      "common": {
+        "name": "hasWarning",
+        "type": "boolean",
+        "role": "indicator",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    },
+    {
+      "_id": "warning.statepathes",
+      "type": "state",
+      "common": {
+        "name": "statepathes",
+        "type": "string",
+        "role": "json",
+        "read": true,
+        "write": false,
+        "def": "[]"
+      },
+      "native": {}
+    },
+    {
+      "_id": "alert",
+      "type": "channel",
+      "common": {
+        "name": "alert"
+      },
+      "native": {}
+    },
+    {
+      "_id": "alert.hasAlert",
+      "type": "state",
+      "common": {
+        "name": "hasAlert",
+        "type": "boolean",
+        "role": "indicator",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    },
+    {
+      "_id": "alert.statepathes",
+      "type": "state",
+      "common": {
+        "name": "statepathes",
+        "type": "string",
+        "role": "json",
+        "read": true,
+        "write": false,
+        "def": "[]"
+      },
+      "native": {}
+    },
+    {
+      "_id": "lastRun",
+      "type": "state",
+      "common": {
+        "name": "lastRun",
+        "type": "string",
+        "role": "date",
+        "read": true,
+        "write": false
+      },
+      "native": {}
+    },
+    {
+      "_id": "allStationsJSON",
+      "type": "state",
+      "common": {
+        "name": "allStationsJSON",
+        "type": "string",
+        "role": "json",
+        "read": true,
+        "write": false
+      },
+      "native": {}
+    }
+  ]
 }
