@@ -35,6 +35,11 @@ When the adapter crashes or an other Code error happens, this error message that
 **************************************************************************************************************
 
 ## Changelog
+<!--### __WORK IN PROGRESS__-->
+
+### __WORK IN PROGRESS__
+* (simatec) Dependencies updated
+* (simatec) test and release updated
 
 ### 1.2.3 (2021-09-02)
 * (simatec) Bugfix States
