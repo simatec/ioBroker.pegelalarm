@@ -3,48 +3,49 @@
 /* jslint node: true */
 
 // trend
-// ---------------------------------------------
-// | Code | Description           | Short text |
-// ---------------------------------------------
-// | -10  | Fallende Wasserhöhe   | Falling    |
-// ---------------------------------------------
-// | 0    | Konstante Wasserhöhe  | Constant   |
-// ---------------------------------------------
-// | 10   | Steigende Wasserhöhe  | Rising     |
-// ---------------------------------------------
-// | 100  | Unbekannte Wasserhöhe | Unknown    |
-// ---------------------------------------------
+// -------------------------------------------------------------------------------
+// | Code | Description                                             | Short text |
+// -------------------------------------------------------------------------------
+// | -10  | Falling water level                                     | Falling    |
+// -------------------------------------------------------------------------------
+// | 0    | Constant water height                                   | Constant   |
+// -------------------------------------------------------------------------------
+// | 10   | Rising water level                                      | Rising     |
+// -------------------------------------------------------------------------------
+// | 100  | Unknown water level                                     | Unknown    |
+// -------------------------------------------------------------------------------
 
 // situation
-// ------------------------------------------------------------------------------
-// | Code | Description                                      | Group   | Color  |
-// ------------------------------------------------------------------------------
-// | -10  | Unter- oder Normalwasserstand                    | normal  | green  |
-// ------------------------------------------------------------------------------
-// | 10   | Normal- oder leicht erhöhter Wasserstand         | normal  | green  |
-// ------------------------------------------------------------------------------
-// | 20   | Erhöhter Wasserstand                             | normal  | green  |
-// ------------------------------------------------------------------------------
-// | 30   | Wasserstand hat Warngrenze erreicht              | warning | yellow |
-// ------------------------------------------------------------------------------
-// | 40   | Wasserstand verursacht ein regionales Hochwasser | alert   | red    |
-// ------------------------------------------------------------------------------
-// | 50   | Wasserstand verursacht ein nationales Hochwasser | alert   | red    |
-// ------------------------------------------------------------------------------
-// | 100  | Unknown situation                                | unknown | blue   |
-// ------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------
+// | Code | Description                                       | Group   | Color  |
+// -------------------------------------------------------------------------------
+// | -10  | Under or normal water level                       | normal  | green  |
+// -------------------------------------------------------------------------------
+// | 10   | Normal or slightly elevated water level           | normal  | green  |
+// -------------------------------------------------------------------------------
+// | 20   | Increased water level                             | normal  | green  |
+// -------------------------------------------------------------------------------
+// | 30   | The water level has reached the warning limit     | warning | yellow |
+// -------------------------------------------------------------------------------
+// | 40   | The water level causes a regional flood | alert             | red    |
+// -------------------------------------------------------------------------------
+// | 50   | Water level causes a national flood | alert                 | red    |
+// -------------------------------------------------------------------------------
+// | 100  | Unknown situation                                 | unknown | blue   |
+// -------------------------------------------------------------------------------
 
 'use strict';
 
-const utils = require('@iobroker/adapter-core'); // Get common adapter utils
+const utils = require('@iobroker/adapter-core');
 const adapterName = require('./package.json').name.split('.').pop();
 const axios = require('axios').default;
 
 let adapter;
-let timerRequestFinish;
-let timerRequestLoop;
+
 let currentStations = [];
 let allStationsJSON = [];
+
+let timerRequest, timerMain, timerStop; // timer variables
 
 /**
  * Starts the adapter instance
@@ -58,17 +59,17 @@ function startAdapter(options) {
 
     adapter = new utils.Adapter(options);
 
-    // start here!
-    adapter.on('ready', main); // Main method defined below for readability
+    adapter.on('ready', main);
 
-    // is called when adapter shuts down - callback has to be called under any circumstances!
     adapter.on('unload', (callback) => {
         try {
             adapter.log.debug('cleaned everything up...');
-            timerRequestLoop && clearTimeout(timerRequestLoop);
-            timerRequestLoop = null;
-            timerRequestFinish && clearTimeout(timerRequestFinish);
-            timerRequestFinish = null;
+            timerRequest && clearTimeout(timerRequest);
+            timerRequest = null;
+            timerMain && clearTimeout(timerMain);
+            timerMain = null;
+            timerStop && clearTimeout(timerStop);
+            timerStop = null;
             callback();
         } catch (e) {
             callback();
@@ -146,16 +147,16 @@ async function requestData(_stationname, _region, _water) {
 
                     await createStations(path);
 
-                    await adapter.setState(path + '.name', station.stationName ? station.stationName : 'none', true);
-                    await adapter.setState(path + '.country', station.country ? station.country : 'none', true);
-                    await adapter.setState(path + '.water', station.water ? station.water : 'none', true);
-                    await adapter.setState(path + '.region', station.region ? station.region : 'none', true);
-                    await adapter.setState(path + '.situation.text', station.situation ? decodeSituation(station.situation) : 'none', true);
-                    await adapter.setState(path + '.situation.group', station.situation ? decodeSituation(station.situation, 'group') : 'none', true);
-                    await adapter.setState(path + '.situation.code', station.situation ? station.situation : 0, true);
-                    await adapter.setState(path + '.trend.text', station.trend ? decodeTrend(station.trend) : 'none', true);
-                    await adapter.setState(path + '.trend.short', station.trend ? decodeTrend(station.trend, 'short') : 'none', true);
-                    await adapter.setState(path + '.trend.code', station.trend ? station.trend : 0, true);
+                    await adapter.setStateAsync(path + '.name', station.stationName ? station.stationName : 'none', true);
+                    await adapter.setStateAsync(path + '.country', station.country ? station.country : 'none', true);
+                    await adapter.setStateAsync(path + '.water', station.water ? station.water : 'none', true);
+                    await adapter.setStateAsync(path + '.region', station.region ? station.region : 'none', true);
+                    await adapter.setStateAsync(path + '.situation.text', station.situation ? decodeSituation(station.situation) : 'none', true);
+                    await adapter.setStateAsync(path + '.situation.group', station.situation ? decodeSituation(station.situation, 'group') : 'none', true);
+                    await adapter.setStateAsync(path + '.situation.code', station.situation ? station.situation : 0, true);
+                    await adapter.setStateAsync(path + '.trend.text', station.trend ? decodeTrend(station.trend) : 'none', true);
+                    await adapter.setStateAsync(path + '.trend.short', station.trend ? decodeTrend(station.trend, 'short') : 'none', true);
+                    await adapter.setStateAsync(path + '.trend.code', station.trend ? station.trend : 0, true);
 
                     let stateNormal = false;
                     let stateWarning = false;
@@ -178,13 +179,13 @@ async function requestData(_stationname, _region, _water) {
                             stateUnknown = true;
                     }
 
-                    await adapter.setState(path + '.state.normal', stateNormal ? stateNormal : false, true);
-                    await adapter.setState(path + '.state.warning', stateWarning ? stateWarning : false, true);
-                    await adapter.setState(path + '.state.alert', stateAlert ? stateAlert : false, true);
-                    await adapter.setState(path + '.state.unknown', stateUnknown ? stateUnknown : false, true);
-                    await adapter.setState(path + '.geo.latitude', station.latitude ? station.latitude : 0, true);
-                    await adapter.setState(path + '.geo.longitude', station.longitude ? station.longitude : 0, true);
-                    await adapter.setState(path + '.geo.altitude', station.altitudeM ? station.altitudeM : 0, true);
+                    await adapter.setStateAsync(path + '.state.normal', stateNormal ? stateNormal : false, true);
+                    await adapter.setStateAsync(path + '.state.warning', stateWarning ? stateWarning : false, true);
+                    await adapter.setStateAsync(path + '.state.alert', stateAlert ? stateAlert : false, true);
+                    await adapter.setStateAsync(path + '.state.unknown', stateUnknown ? stateUnknown : false, true);
+                    await adapter.setStateAsync(path + '.geo.latitude', station.latitude ? station.latitude : 0, true);
+                    await adapter.setStateAsync(path + '.geo.longitude', station.longitude ? station.longitude : 0, true);
+                    await adapter.setStateAsync(path + '.geo.altitude', station.altitudeM ? station.altitudeM : 0, true);
 
                     let height = 0;
 
@@ -193,14 +194,14 @@ async function requestData(_stationname, _region, _water) {
                         if (stationData.type == 'height in cm') {
                             o = station.data.length;
 
-                            await adapter.setState(path + '.height', { val: stationData.value ? stationData.value : 0, ack: true });
+                            await adapter.setStateAsync(path + '.height', { val: stationData.value ? stationData.value : 0, ack: true });
                             height = stationData.value;
 
                             let sourceDate = new Date(Date.parse(stationData.sourceDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, '$3-$2-$1$4'))).toUTCString();
-                            await adapter.setState(path + '.sourceDate', sourceDate ? sourceDate : 'none', true);
+                            await adapter.setStateAsync(path + '.sourceDate', sourceDate ? sourceDate : 'none', true);
 
                             let requestDate = new Date(Date.parse(stationData.requestDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, '$3-$2-$1$4'))).toUTCString();
-                            await adapter.setState(path + '.requestDate', requestDate ? requestDate : 'none', true);
+                            await adapter.setStateAsync(path + '.requestDate', requestDate ? requestDate : 'none', true);
                         }
                     }
 
@@ -217,32 +218,31 @@ async function requestData(_stationname, _region, _water) {
                     });
                     allStationsJSON.push(json);
 
-                    await adapter.setState(path + '.json', { val: json ? JSON.stringify(json) : '', ack: true });
+                    await adapter.setStateAsync(path + '.json', { val: json ? JSON.stringify(json) : '', ack: true });
 
                 }
 
-                await adapter.setState('allStationsJSON', { val: allStationsJSON ? JSON.stringify(allStationsJSON) : '', ack: true });
+                await adapter.setStateAsync('allStationsJSON', { val: allStationsJSON ? JSON.stringify(allStationsJSON) : '', ack: true });
 
-                await adapter.setState('warning.hasWarning', warnings.length > 0 ? true : false, true);
-                await adapter.setState('warning.statepathes', warnings ? JSON.stringify(warnings) : '', true);
-                await adapter.setState('alert.hasAlert', alerts.length > 0 ? true : false, true);
-                await adapter.setState('alert.statepathes', alerts ? JSON.stringify(alerts) : '', true);
+                await adapter.setStateAsync('warning.hasWarning', warnings.length > 0 ? true : false, true);
+                await adapter.setStateAsync('warning.statepathes', warnings ? JSON.stringify(warnings) : '', true);
+                await adapter.setStateAsync('alert.hasAlert', alerts.length > 0 ? true : false, true);
+                await adapter.setStateAsync('alert.statepathes', alerts ? JSON.stringify(alerts) : '', true);
 
                 let lastRun = new Date().toUTCString();
 
-                lastRun && await adapter.setState('lastRun', lastRun, true);
+                lastRun && await adapter.setStateAsync('lastRun', lastRun, true);
                 adapter.log.debug('Pegelalarm request done');
             } else {
-                adapter.log.error(`Pegelalarm API cannot be reached at the moment. API-Statuscode: ${data.status.code}`);
+                adapter.log.error('Pegelalarm API cannot be reached at the moment');
             }
 
         } else {
             adapter.log.error('Wrong JSON returned');
         }
     } else {
-        adapter.log.error(`Pegelalarm API cannot be reached at the moment. API-Statuscode: ${available.status}`);
+        adapter.log.error('Pegelalarm API cannot be reached at the moment');
     }
-
 }
 
 function createStations(path) {
@@ -499,7 +499,7 @@ async function checkStation(currentStations) {
 
 function sleep(ms) {
     return new Promise(async (resolve) => {
-        timerRequestFinish = setTimeout(() => resolve(), ms);
+        timerRequest = setTimeout(() => resolve(), ms);
     });
 }
 
@@ -514,10 +514,10 @@ async function requestLoop(index) {
                 adapter.log.debug(`Pegelalarm request for measuring station ${num} is finish ...`);
                 if (index < 4) {
                     index++
-                    timerRequestLoop = setTimeout(function () {
-                        setImmediate(requestLoop, index);
-                        return;
-                    }, 1000);
+
+                    await sleep(1000);
+                    setImmediate(requestLoop, index);
+                    return;
                 } else {
                     adapter.log.debug('Pegelalarm Request is completed');
 
@@ -528,13 +528,14 @@ async function requestLoop(index) {
                 }
             }).catch(err => {
                 adapter.log.error(`Request is not completed: ${err}`);
+                stopAdapter();
             });
     } else if (index < 4) {
         index++
-        timerRequestLoop = setTimeout(function () {
-            setImmediate(requestLoop, index);
-            return;
-        }, 1000);
+
+        await sleep(1000);
+        setImmediate(requestLoop, index);
+        return;
     } else if (index === 4) {
         adapter.log.debug('Pegelalarm Request is completed');
 
@@ -547,11 +548,11 @@ async function requestLoop(index) {
 
 function main() {
     if (adapter.config.configurated !== 0) {
-        // start request in Loop for Measuring stations 0-4
-        requestLoop(0);
+        requestLoop(0); // start request in Loop for Measuring stations 0-4
+        timerStop = setTimeout(() => stopAdapter(), 360 * 1000); // Force Adapter stop
     } else {
         adapter.log.warn('Please configure the adapter first!');
-        setTimeout(() => stopAdapter(), 5000);
+        timerMain = setTimeout(() => stopAdapter(), 5000);
     }
 }
 
