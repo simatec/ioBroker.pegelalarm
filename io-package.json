@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "pegelalarm",
-    "version": "1.2.4",
+    "version": "1.2.5",
     "news": {
+      "1.2.5": {
+        "en": "Bugfix Adapter stop after request error\nDependencies updated\ntest and release updated",
+        "de": "Bugfix Adapterstopp nach Anforderungsfehler\nAbhängigkeiten aktualisiert\nTest und Release aktualisiert",
+        "ru": "Bugfix Остановка адаптера после ошибки запроса\nЗависимости обновлены\nтест и выпуск обновлены",
+        "pt": "Bugfix Adaptador parar após erro de solicitação\nDependências atualizadas\nteste e lançamento atualizados",
+        "nl": "Bugfix Adapter stopt na verzoekfout\nAfhankelijkheden bijgewerkt\ntest en release bijgewerkt",
+        "fr": "L'adaptateur de correction de bogue s'arrête après une erreur de demande\nDépendances mises à jour\ntest et version mis à jour",
+        "it": "Bugfix Adapter si interrompe dopo l'errore di richiesta\nDipendenze aggiornate\ntest e rilascio aggiornati",
+        "es": "Bugfix Adaptador detenido después de un error de solicitud\nDependencias actualizadas\nprueba y lanzamiento actualizado",
+        "pl": "Bugfix Adapter zatrzymuje się po błędzie żądania\nZaktualizowano zależności\nzaktualizowano test i wydanie",
+        "zh-cn": "错误修复请求错误后适配器停止\n更新了依赖项\n测试和发布更新"
+      },
       "1.2.4": {
         "en": "Dependencies updated\ntest and release updated",
         "de": "Abhängigkeiten aktualisiert\nTest und Release aktualisiert",
@@ -74,18 +86,6 @@
         "es": "Bugfix Adapter stop, Bugfix limpia estaciones viejas",
         "pl": "Zatrzymanie adaptera Bugfix, Naprawianie błędów ze starych stacji",
         "zh-cn": "Bugfix适配器停止，修正旧站的Bugfix"
-      },
-      "1.1.6": {
-        "en": "Bugfix for latest Repo",
-        "de": "Bugfix für latest Repo",
-        "ru": "Исправление для последнего репо",
-        "pt": "Correção de bug para o Repo mais recente",
-        "nl": "Bugfix voor de nieuwste repo",
-        "fr": "Correction de bug pour le dernier repo",
-        "it": "Bugfix per l'ultimo Repo",
-        "es": "Corrección de errores para el último repositorio",
-        "pl": "Poprawka błędu dla najnowszego repozytorium",
-        "zh-cn": "最新回购的错误修正"
       }
     },
     "title": "Pegelalarm",
