@@ -25,7 +25,7 @@
     "url": "https://github.com/simatec/ioBroker.pegelalarm.git"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^2.5.1",
+    "@iobroker/adapter-core": "^2.6.0",
     "axios": "^0.25.0"
   },
   "deprecated": false,
