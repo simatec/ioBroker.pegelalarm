@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "pegelalarm",
-    "version": "1.2.6",
+    "version": "1.2.7",
     "news": {
+      "1.2.7": {
+        "en": "Bugfix delete stations",
+        "de": "Bugfix Stationen löschen",
+        "ru": "Исправлено удаление станций",
+        "pt": "Bugfix excluir estações",
+        "nl": "Bugfix stations verwijderen",
+        "fr": "Correction d'un bug supprimer les stations",
+        "it": "Bugfix elimina stazioni",
+        "es": "Corrección de errores eliminar estaciones",
+        "pl": "Naprawa błędów usuwania stacji",
+        "zh-cn": "错误修复删除电台"
+      },
       "1.2.6": {
         "en": "Bugfix delete stations\nDependencies updated",
         "de": "Bugfix Stationen löschen\nAbhängigkeiten aktualisiert",
@@ -74,18 +86,6 @@
         "es": "Solicitud de API de corrección de errores, dependencias actualizadas, pequeñas correcciones de errores",
         "pl": "Bugfix API-Request, zaktualizowane zależności, małe poprawki błędów",
         "zh-cn": "错误修正 API 请求，更新依赖项，小错误修正"
-      },
-      "1.2.0": {
-        "en": "Redesign Gui",
-        "de": "Gui neu gestaltet",
-        "ru": "Редизайн графического интерфейса",
-        "pt": "Redesenhar o Gui",
-        "nl": "Herontwerp Gui",
-        "fr": "Refonte de l'interface graphique",
-        "it": "Redesign Gui",
-        "es": "Rediseñar la interfaz gráfica de usuario",
-        "pl": "Przeprojektowanie Gui",
-        "zh-cn": "重新设计桂"
       }
     },
     "title": "Pegelalarm",
