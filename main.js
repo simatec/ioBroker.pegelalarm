@@ -44,6 +44,7 @@ let adapter;
 
 let currentStations = [];
 let allStationsJSON = [];
+let deleteOldStates = true;
 
 let timerRequest, timerMain, timerStop; // timer variables
 
@@ -140,7 +141,7 @@ async function requestData(_stationname, _region, _water) {
                 for (let i = 0; i < data.payload.stations.length; i++) {
                     let station = data.payload.stations[i];
                     let path = 'stations.' + createVarName(station.stationName);
-                    //currentStations.push(createVarName(station.stationName));
+                    currentStations.push(createVarName(station.stationName));
 
                     await createStations(path);
 
@@ -231,13 +232,15 @@ async function requestData(_stationname, _region, _water) {
                 lastRun && await adapter.setStateAsync('lastRun', lastRun, true);
                 adapter.log.debug('Pegelalarm request done');
             } else {
+                deleteOldStates = false;
                 adapter.log.error('Pegelalarm API cannot be reached at the moment');
             }
-
         } else {
+            deleteOldStates = false;
             adapter.log.error('Wrong JSON returned');
         }
     } else {
+        deleteOldStates = false;
         adapter.log.error('Pegelalarm API cannot be reached at the moment');
     }
 }
@@ -440,40 +443,45 @@ async function checkStation(currentStations) {
     return new Promise(async (resolve) => {
         adapter.log.debug('Check for deleting old states is started');
 
-        try {
-            const _stationStateList = await adapter.getForeignObjectsAsync(adapter.namespace + '.stations.*', 'state');
+        if (deleteOldStates) {
+            try {
+                const _stationStateList = await adapter.getForeignObjectsAsync(adapter.namespace + '.stations.*', 'state');
 
-            for (const i in _stationStateList) {
-                const resID = _stationStateList[i]._id;
-                const objectID = resID.split('.');
-                const resultID = objectID[3];
+                for (const i in _stationStateList) {
+                    const resID = _stationStateList[i]._id;
+                    const objectID = resID.split('.');
+                    const resultID = objectID[3];
 
-                if (currentStations.indexOf(resultID) === -1) {
-                    adapter.log.debug(`DELETE: ${resID}`);
-                    await adapter.delObjectAsync(resID);
+                    if (currentStations.indexOf(resultID) === -1) {
+                        adapter.log.debug(`DELETE: ${resID}`);
+                        await adapter.delObjectAsync(resID);
+                    }
                 }
+            } catch (err) {
+                adapter.log.error(err);
             }
-        } catch (err) {
-            adapter.log.error(err);
-        }
 
-        try {
-            const _stationChannelList = await adapter.getForeignObjectsAsync(adapter.namespace + '.stations.*', 'channel');
+            try {
+                const _stationChannelList = await adapter.getForeignObjectsAsync(adapter.namespace + '.stations.*', 'channel');
 
-            for (const i in _stationChannelList) {
-                const resID = _stationChannelList[i]._id;
-                const objectID = resID.split('.');
-                const resultID = objectID[3];
+                for (const i in _stationChannelList) {
+                    const resID = _stationChannelList[i]._id;
+                    const objectID = resID.split('.');
+                    const resultID = objectID[3];
 
-                if (currentStations.indexOf(resultID) === -1) {
-                    adapter.log.debug(`DELETE: ${resID}`);
-                    await adapter.delObjectAsync(resID, { recursive: true });
+                    if (currentStations.indexOf(resultID) === -1) {
+                        adapter.log.debug(`DELETE: ${resID}`);
+                        await adapter.delObjectAsync(resID, { recursive: true });
+                    }
                 }
+            } catch (err) {
+                adapter.log.error(err);
             }
-        } catch (err) {
-            adapter.log.error(err);
+            resolve();
+        } else {
+            adapter.log.debug('Deleting old states is currently inactive');
+            resolve();
         }
-        resolve();
     });
 }
 
@@ -486,7 +494,6 @@ function sleep(ms) {
 async function requestLoop(index) {
     let num = 0;
     if (adapter.config[`stationname${index}`] || adapter.config[`region${index}`] || adapter.config[`water${index}`]) {
-        currentStations.push(adapter.config[`stationname${index}`].toLowerCase());
         num = index + 1;
         adapter.log.debug(`Pegelalarm request for measuring station ${num} is started ...`);
 
