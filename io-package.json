@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "pegelalarm",
-    "version": "1.2.5",
+    "version": "1.2.6",
     "news": {
+      "1.2.6": {
+        "en": "Bugfix delete stations\nDependencies updated",
+        "de": "Bugfix Stationen löschen\nAbhängigkeiten aktualisiert",
+        "ru": "Исправлено удаление станций\nЗависимости обновлены",
+        "pt": "Bugfix excluir estações\nDependências atualizadas",
+        "nl": "Bugfix stations verwijderen\nAfhankelijkheden bijgewerkt",
+        "fr": "Correction d'un bug supprimer les stations\nDépendances mises à jour",
+        "it": "Bugfix elimina stazioni\nDipendenze aggiornate",
+        "es": "Corrección de errores eliminar estaciones\nDependencias actualizadas",
+        "pl": "Naprawa błędów usuwania stacji\nZaktualizowano zależności",
+        "zh-cn": "错误修复删除电台\n已更新依赖项"
+      },
       "1.2.5": {
         "en": "Bugfix Adapter stop after request error\nDependencies updated\ntest and release updated",
         "de": "Bugfix Adapterstopp nach Anforderungsfehler\nAbhängigkeiten aktualisiert\nTest und Release aktualisiert",
@@ -74,18 +86,6 @@
         "es": "Rediseñar la interfaz gráfica de usuario",
         "pl": "Przeprojektowanie Gui",
         "zh-cn": "重新设计桂"
-      },
-      "1.1.7": {
-        "en": "Bugfix Adapter stop, Bugfix clean old stations",
-        "de": "Bugfix Adapter Stop, Bugfix alte Stationen bereinigen",
-        "ru": "Bugfix Остановка адаптера, исправление ошибок для очистки старых станций",
-        "pt": "Bugfix adaptador parar, Bugfix limpar estações antigas",
-        "nl": "Bugfix Adapter stop, Bugfix schone oude stations",
-        "fr": "Bugfix Adapter stop, Bugfix nettoyer les anciennes stations",
-        "it": "Bugfix Adapter stop, Bugfix pulisce vecchie stazioni",
-        "es": "Bugfix Adapter stop, Bugfix limpia estaciones viejas",
-        "pl": "Zatrzymanie adaptera Bugfix, Naprawianie błędów ze starych stacji",
-        "zh-cn": "Bugfix适配器停止，修正旧站的Bugfix"
       }
     },
     "title": "Pegelalarm",
