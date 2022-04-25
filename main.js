@@ -65,11 +65,8 @@ function startAdapter(options) {
         try {
             adapter.log.debug('cleaned everything up...');
             timerRequest && clearTimeout(timerRequest);
-            timerRequest = null;
             timerMain && clearTimeout(timerMain);
-            timerMain = null;
             timerStop && clearTimeout(timerStop);
-            timerStop = null;
             callback();
         } catch (e) {
             callback();
@@ -143,7 +140,7 @@ async function requestData(_stationname, _region, _water) {
                 for (let i = 0; i < data.payload.stations.length; i++) {
                     let station = data.payload.stations[i];
                     let path = 'stations.' + createVarName(station.stationName);
-                    currentStations.push(createVarName(station.stationName));
+                    //currentStations.push(createVarName(station.stationName));
 
                     await createStations(path);
 
@@ -246,7 +243,7 @@ async function requestData(_stationname, _region, _water) {
 }
 
 function createStations(path) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         const stationsStatesString = [
             'country',
             'name',
@@ -444,56 +441,39 @@ async function checkStation(currentStations) {
         adapter.log.debug('Check for deleting old states is started');
 
         try {
-            await adapter.getForeignObjects(adapter.namespace + '.stations.*', 'state', async (err, list) => {
-                if (err) {
-                    adapter.log.error(err);
-                } else {
-                    for (const i in list) {
-                        const resID = list[i]._id;
-                        const objectID = resID.split('.');
-                        const resultID = objectID[3];
+            const _stationStateList = await adapter.getForeignObjectsAsync(adapter.namespace + '.stations.*', 'state');
 
-                        if (currentStations.indexOf(resultID) === -1) {
-                            adapter.log.debug(`DELETE: ${resID}`);
-                            await adapter.delObject(resID, async (err) => {
-                                if (err) {
-                                    adapter.log.warn(err);
-                                }
-                            });
-                        }
-                    }
-                }
-                try {
-                    await adapter.getForeignObjects(adapter.namespace + '.stations.*', 'channel', async (err, list) => {
-                        if (err) {
-                            adapter.log.error(err);
-                        } else {
-                            for (const i in list) {
-                                const resID = list[i]._id;
-                                const objectID = resID.split('.');
-                                const resultID = objectID[3];
+            for (const i in _stationStateList) {
+                const resID = _stationStateList[i]._id;
+                const objectID = resID.split('.');
+                const resultID = objectID[3];
 
-                                if (currentStations.indexOf(resultID) === -1) {
-                                    adapter.log.debug(`DELETE: ${resID}`);
-                                    await adapter.delObject(resID, async (err) => {
-                                        if (err) {
-                                            adapter.log.warn(err);
-                                        }
-                                    });
-                                }
-                            }
-                        }
-                        resolve();
-                    });
-                } catch (err) {
-                    adapter.log.error(err);
-                    resolve();
+                if (currentStations.indexOf(resultID) === -1) {
+                    adapter.log.debug(`DELETE: ${resID}`);
+                    await adapter.delObjectAsync(resID);
                 }
-            });
+            }
         } catch (err) {
             adapter.log.error(err);
-            resolve();
         }
+
+        try {
+            const _stationChannelList = await adapter.getForeignObjectsAsync(adapter.namespace + '.stations.*', 'channel');
+
+            for (const i in _stationChannelList) {
+                const resID = _stationChannelList[i]._id;
+                const objectID = resID.split('.');
+                const resultID = objectID[3];
+
+                if (currentStations.indexOf(resultID) === -1) {
+                    adapter.log.debug(`DELETE: ${resID}`);
+                    await adapter.delObjectAsync(resID, { recursive: true });
+                }
+            }
+        } catch (err) {
+            adapter.log.error(err);
+        }
+        resolve();
     });
 }
 
@@ -506,8 +486,10 @@ function sleep(ms) {
 async function requestLoop(index) {
     let num = 0;
     if (adapter.config[`stationname${index}`] || adapter.config[`region${index}`] || adapter.config[`water${index}`]) {
+        currentStations.push(adapter.config[`stationname${index}`].toLowerCase());
         num = index + 1;
         adapter.log.debug(`Pegelalarm request for measuring station ${num} is started ...`);
+
         requestData(adapter.config[`stationname${index}`], adapter.config[`region${index}`], adapter.config[`water${index}`])
             .then(async () => {
                 num = index + 1;
@@ -520,10 +502,7 @@ async function requestLoop(index) {
                     return;
                 } else {
                     adapter.log.debug('Pegelalarm Request is completed');
-
-                    await sleep(5000);
                     await checkStation(currentStations);
-                    await sleep(5000);
                     stopAdapter();
                 }
             }).catch(err => {
@@ -538,10 +517,7 @@ async function requestLoop(index) {
         return;
     } else if (index === 4) {
         adapter.log.debug('Pegelalarm Request is completed');
-
-        await sleep(5000);
         await checkStation(currentStations);
-        await sleep(5000);
         stopAdapter();
     }
 }
