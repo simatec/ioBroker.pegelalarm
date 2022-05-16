@@ -142,6 +142,7 @@ async function requestData(_stationname, _region, _water) {
                     let station = data.payload.stations[i];
                     let path = 'stations.' + createVarName(station.stationName);
                     currentStations.push(createVarName(station.stationName));
+                    adapter.log.debug(`##### currentStations 1: ${currentStations} #####`);
 
                     await createStations(path);
 
@@ -441,6 +442,7 @@ function stopAdapter() {
 
 async function checkStation(currentStations) {
     return new Promise(async (resolve) => {
+        adapter.log.debug(`##### currentStations 2: ${currentStations} #####`);
         adapter.log.debug('Check for deleting old states is started');
 
         if (deleteOldStates) {
@@ -453,6 +455,8 @@ async function checkStation(currentStations) {
                     const resultID = objectID[3];
 
                     if (currentStations.indexOf(resultID) === -1) {
+                        adapter.log.debug(`##### currentStations 3: ${currentStations} #####`);
+                        adapter.log.debug(`##### resultID 1: ${resultID} #####`);
                         adapter.log.debug(`DELETE: ${resID}`);
                         await adapter.delObjectAsync(resID);
                     }
@@ -470,6 +474,8 @@ async function checkStation(currentStations) {
                     const resultID = objectID[3];
 
                     if (currentStations.indexOf(resultID) === -1) {
+                        adapter.log.debug(`##### currentStations 4: ${currentStations} #####`);
+                        adapter.log.debug(`##### resultID 2: ${resultID} #####`);
                         adapter.log.debug(`DELETE: ${resID}`);
                         await adapter.delObjectAsync(resID, { recursive: true });
                     }
@@ -509,6 +515,7 @@ async function requestLoop(index) {
                     return;
                 } else {
                     adapter.log.debug('Pegelalarm Request is completed');
+                    adapter.log.debug(`##### currentStations 5: ${currentStations} #####`);
                     await checkStation(currentStations);
                     stopAdapter();
                 }
@@ -524,6 +531,7 @@ async function requestLoop(index) {
         return;
     } else if (index === 4) {
         adapter.log.debug('Pegelalarm Request is completed');
+        adapter.log.debug(`##### currentStations 6: ${currentStations} #####`);
         await checkStation(currentStations);
         stopAdapter();
     }

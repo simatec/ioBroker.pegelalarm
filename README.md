@@ -35,6 +35,9 @@ When the adapter crashes or an other Code error happens, this error message that
 
 ## Changelog
 <!--### __WORK IN PROGRESS__-->
+### __WORK IN PROGRESS__
+* (simatec) Bugfix delete stations
+
 ### 1.2.7 (2022-04-25)
 * (simatec) Bugfix delete stations
 
