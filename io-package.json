@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "pegelalarm",
-    "version": "1.2.7",
+    "version": "1.2.8",
     "news": {
+      "1.2.8": {
+        "en": "Bugfix delete stations\nBugfix stations\nDependencies updated",
+        "de": "Bugfix Löschstationen\nBugfix-Stationen\nAusgaben aktualisiert",
+        "ru": "Bugfix удаленные станции\nСтанции Bugfix\nОбновленные зависимости",
+        "pt": "Estações de exclusão do Bugfix\nEstações de Bugfix\nDependências atualizadas",
+        "nl": "Bugfix delete stations\nBugfix stations\nAfhankelijkheid geüpdateerd",
+        "fr": "Bugfix supprimer les stations\nStations Bugfix\nDépendances mises à jour",
+        "it": "Bugfix cancella stazioni\nStazioni Bugfix\nDipendenze aggiornate",
+        "es": "Estaciones de eliminación de bugfix\nEstaciones de Bugfix\nActualización de las dependencias",
+        "pl": "Bugfix\nStacja Bugfix\nZależności",
+        "zh-cn": "Bugfix 删除各站\nBugfix站\nB. 更新的属地"
+      },
       "1.2.7": {
         "en": "Bugfix delete stations",
         "de": "Bugfix Stationen löschen",
@@ -74,18 +86,6 @@
         "es": "Estados de corrección de errores",
         "pl": "Stany z poprawkami błędów",
         "zh-cn": "错误修正状态"
-      },
-      "1.2.1": {
-        "en": "Bugfix API-Request, dependencies updated, small Bugfixes",
-        "de": "Bugfix API-Request, Abhängigkeiten aktualisiert, kleine Bugfixes",
-        "ru": "Bugfix API-Request, зависимости обновлены, небольшие исправления",
-        "pt": "Solicitação de API de correção de bugs, dependências atualizadas, pequenas correções de bugs",
-        "nl": "Bugfix API-verzoek, afhankelijkheden bijgewerkt, kleine bugfixes",
-        "fr": "Bugfix API-Request, dépendances mises à jour, petites corrections de bugs",
-        "it": "Bugfix API-Request, dipendenze aggiornate, piccole correzioni di bug",
-        "es": "Solicitud de API de corrección de errores, dependencias actualizadas, pequeñas correcciones de errores",
-        "pl": "Bugfix API-Request, zaktualizowane zależności, małe poprawki błędów",
-        "zh-cn": "错误修正 API 请求，更新依赖项，小错误修正"
       }
     },
     "title": "Pegelalarm",
