@@ -138,13 +138,11 @@ async function requestData(_stationname, _region, _water) {
         if (data && data.status && data.status.code && data.status.code == '200' && data.payload && data.payload.stations) {
             let warnings = [];
             let alerts = [];
-            adapter.log.debug(`##### push stations length: ${data.payload.stations.length} #####`);
 
             for (let i = 0; i < data.payload.stations.length; i++) {
                 let station = data.payload.stations[i];
                 let path = `stations.${station.stationName.toLowerCase().replace(/\s/g, '_').replace(/[^\x20\x2D0-9A-Z\x5Fa-z\xC0-\xD6\xF8-\xFF]/g, '')}`;
                 currentStations.push(station.stationName.toLowerCase().replace(/\s/g, '_').replace(/[^\x20\x2D0-9A-Z\x5Fa-z\xC0-\xD6\xF8-\xFF]/g, ''));
-                adapter.log.debug(`##### currentStations 1: ${currentStations} #####`);
 
                 await createStations(path);
 
@@ -437,7 +435,6 @@ function stopAdapter() {
 
 async function checkStation(currentStations) {
     return new Promise(async (resolve) => {
-        adapter.log.debug(`##### currentStations 2: ${currentStations} #####`);
         adapter.log.debug('Check for deleting old states is started');
 
         if (deleteOldStates) {
@@ -450,8 +447,6 @@ async function checkStation(currentStations) {
                     const resultID = objectID[3];
 
                     if (currentStations.indexOf(resultID) === -1) {
-                        adapter.log.debug(`##### currentStations 3: ${currentStations} #####`);
-                        adapter.log.debug(`##### resultID 1: ${resultID} #####`);
                         adapter.log.debug(`DELETE: ${resID}`);
                         await adapter.delObjectAsync(resID);
                     }
@@ -469,8 +464,6 @@ async function checkStation(currentStations) {
                     const resultID = objectID[3];
 
                     if (currentStations.indexOf(resultID) === -1) {
-                        adapter.log.debug(`##### currentStations 4: ${currentStations} #####`);
-                        adapter.log.debug(`##### resultID 2: ${resultID} #####`);
                         adapter.log.debug(`DELETE: ${resID}`);
                         await adapter.delObjectAsync(resID, { recursive: true });
                     }
@@ -510,7 +503,6 @@ async function requestLoop(index) {
                     return;
                 } else {
                     adapter.log.debug('Pegelalarm Request is completed');
-                    adapter.log.debug(`##### currentStations 5: ${currentStations} #####`);
                     await checkStation(currentStations);
                     stopAdapter();
                 }
@@ -526,7 +518,6 @@ async function requestLoop(index) {
         return;
     } else if (index === 4) {
         adapter.log.debug('Pegelalarm Request is completed');
-        adapter.log.debug(`##### currentStations 6: ${currentStations} #####`);
         await checkStation(currentStations);
         stopAdapter();
     }
