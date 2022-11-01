@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "pegelalarm",
-    "version": "1.2.8",
+    "version": "1.2.9",
     "news": {
+      "1.2.9": {
+        "en": "Dependencies updated",
+        "de": "Ausgaben aktualisiert",
+        "ru": "Обновленные зависимости",
+        "pt": "Dependências atualizadas",
+        "nl": "Afhankelijkheid geüpdateerd",
+        "fr": "Dépendances mises à jour",
+        "it": "Dipendenze aggiornate",
+        "es": "Actualización de las dependencias",
+        "pl": "Zależności",
+        "uk": "Залежність оновлено",
+        "zh-cn": "B. 更新的属地"
+      },
       "1.2.8": {
         "en": "Bugfix delete stations\nBugfix stations\nDependencies updated",
         "de": "Bugfix Löschstationen\nBugfix-Stationen\nAusgaben aktualisiert",
@@ -64,18 +77,6 @@
         "zh-cn": "更新了依赖项\n测试和发布更新"
       },
       "1.2.3": {
-        "en": "Bugfix States",
-        "de": "Bugfix-Zustände",
-        "ru": "Состояния исправления",
-        "pt": "Estados de correção de bugs",
-        "nl": "Bugfix-statussen",
-        "fr": "États de correction de bogues",
-        "it": "Stati bugfix",
-        "es": "Estados de corrección de errores",
-        "pl": "Stany z poprawkami błędów",
-        "zh-cn": "错误修正状态"
-      },
-      "1.2.2": {
         "en": "Bugfix States",
         "de": "Bugfix-Zustände",
         "ru": "Состояния исправления",
