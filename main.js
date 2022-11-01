@@ -38,7 +38,7 @@
 
 const utils = require('@iobroker/adapter-core');
 const adapterName = require('./package.json').name.split('.').pop();
-const axios = require('axios').default;
+const axios = require('axios');
 
 let adapter;
 
