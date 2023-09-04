@@ -101,6 +101,7 @@
       "it": "allarme livello acqua",
       "es": "alarma de nivel de agua",
       "pl": "alarm poziomu wody",
+      "uk": "Сигналізація рівня",
       "zh-cn": "水位报警"
     },
     "desc": {
@@ -113,10 +114,11 @@
       "it": "Fornisce dati da Pegelalarm-API",
       "es": "Proporciona datos de Pegelalarm-API",
       "pl": "Udostępnia dane z Pegelalarm-API",
+      "uk": "Надає дані з API сигналізації рівня",
       "zh-cn": "提供来自Pegelalarm-API的数据"
     },
     "authors": [
-      "simatec <nais@gmx.net>"
+      "simatec <pegelalarm@simateccloud.de>"
     ],
     "keywords": [
       "level alarm",
