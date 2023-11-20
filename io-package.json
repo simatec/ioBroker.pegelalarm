@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "pegelalarm",
-    "version": "1.3.1",
+    "version": "1.3.2",
     "news": {
+      "1.3.2": {
+        "en": "Dependencies updated",
+        "de": "Ausgaben aktualisiert",
+        "ru": "Обновленные зависимости",
+        "pt": "Dependências atualizadas",
+        "nl": "Afhankelijkheid geüpdateerd",
+        "fr": "Dépendances mises à jour",
+        "it": "Dipendenze aggiornate",
+        "es": "Actualización de las dependencias",
+        "pl": "Zależności",
+        "uk": "Залежність оновлено",
+        "zh-cn": "B. 更新的属地"
+      },
       "1.3.1": {
         "en": "Dependencies updated\ntest and release updated\nTranslation updated",
         "de": "Ausgaben aktualisiert\ntest und release aktualisiert\nÜbersetzung aktualisiert",
@@ -77,18 +90,6 @@
         "es": "Corrección de errores eliminar estaciones\nDependencias actualizadas",
         "pl": "Naprawa błędów usuwania stacji\nZaktualizowano zależności",
         "zh-cn": "错误修复删除电台\n已更新依赖项"
-      },
-      "1.2.5": {
-        "en": "Bugfix Adapter stop after request error\nDependencies updated\ntest and release updated",
-        "de": "Bugfix Adapterstopp nach Anforderungsfehler\nAbhängigkeiten aktualisiert\nTest und Release aktualisiert",
-        "ru": "Bugfix Остановка адаптера после ошибки запроса\nЗависимости обновлены\nтест и выпуск обновлены",
-        "pt": "Bugfix Adaptador parar após erro de solicitação\nDependências atualizadas\nteste e lançamento atualizados",
-        "nl": "Bugfix Adapter stopt na verzoekfout\nAfhankelijkheden bijgewerkt\ntest en release bijgewerkt",
-        "fr": "L'adaptateur de correction de bogue s'arrête après une erreur de demande\nDépendances mises à jour\ntest et version mis à jour",
-        "it": "Bugfix Adapter si interrompe dopo l'errore di richiesta\nDipendenze aggiornate\ntest e rilascio aggiornati",
-        "es": "Bugfix Adaptador detenido después de un error de solicitud\nDependencias actualizadas\nprueba y lanzamiento actualizado",
-        "pl": "Bugfix Adapter zatrzymuje się po błędzie żądania\nZaktualizowano zależności\nzaktualizowano test i wydanie",
-        "zh-cn": "错误修复请求错误后适配器停止\n更新了依赖项\n测试和发布更新"
       }
     },
     "title": "Pegelalarm",
