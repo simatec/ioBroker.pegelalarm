@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "pegelalarm",
-    "version": "1.3.2",
+    "version": "1.3.3",
     "news": {
+      "1.3.3": {
+        "en": "Dependencies updated\nDesign Fix\ngulp deleted\nadapter-dev added\nTranslation updated",
+        "de": "Ausgaben aktualisiert\nDesign Fix\ngulp gelöscht\nadapter-dev hinzugefügt\nÜbersetzung aktualisiert",
+        "ru": "Обновленные данные о зависимостях\nДизайн Fix\ngulp удален\nадаптер-dev добавлен\nОбновленный перевод",
+        "pt": "Dependências atualizadas\nCorreção de Design\ngulp excluído\nadaptador-dev adicionado\nTradução atualizada",
+        "nl": "Afhankelijkheden bijgewerkt\nOntwerpfix\ngulp verwijderd\nadapter-dev toegevoegd\nVertaling bijgewerkt",
+        "fr": "Dépendances actualisées\nCorrection de conception\ngulp supprimé\nadaptateur-dev ajouté\nTraduction mise à jour",
+        "it": "Dipendenze aggiornate\nDesign Fix\ngulp cancellato\nadattatore-dev aggiunto\nTraduzione aggiornata",
+        "es": "Actualización de las dependencias\nDiseño fijo\ngulp eliminado\nadaptador-dev añadido\nTraducción actualizada",
+        "pl": "Aktualizacja zależności\nPopraw projekt\ngulp usunięty\nadapter -dev dodany\nAktualizacja tłumaczeń",
+        "uk": "Залежність оновлено\nФіксація дизайну\nковпачок видалений\nадаптер-dev додано\nПереклад оновлений",
+        "zh-cn": "更新的依赖关系\n设计\n已删除\n添加适配器- dev\n翻译更新"
+      },
       "1.3.2": {
         "en": "Dependencies updated",
         "de": "Ausgaben aktualisiert",
@@ -80,19 +93,6 @@
         "pl": "Naprawa błędów usuwania stacji",
         "uk": "Bugfix delete stations",
         "zh-cn": "错误修复删除电台"
-      },
-      "1.2.6": {
-        "en": "Bugfix delete stations\nDependencies updated",
-        "de": "Bugfix Stationen löschen\nAbhängigkeiten aktualisiert",
-        "ru": "Исправлено удаление станций\nЗависимости обновлены",
-        "pt": "Bugfix excluir estações\nDependências atualizadas",
-        "nl": "Bugfix stations verwijderen\nAfhankelijkheden bijgewerkt",
-        "fr": "Correction d'un bug supprimer les stations\nDépendances mises à jour",
-        "it": "Bugfix elimina stazioni\nDipendenze aggiornate",
-        "es": "Corrección de errores eliminar estaciones\nDependencias actualizadas",
-        "pl": "Naprawa błędów usuwania stacji\nZaktualizowano zależności",
-        "uk": "Bugfix delete stations\nDependencies updated",
-        "zh-cn": "错误修复删除电台\n已更新依赖项"
       }
     },
     "titleLang": {
