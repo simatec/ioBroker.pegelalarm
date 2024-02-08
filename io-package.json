@@ -65,6 +65,7 @@
         "it": "Bugfix cancella stazioni\nStazioni Bugfix\nDipendenze aggiornate",
         "es": "Estaciones de eliminación de bugfix\nEstaciones de Bugfix\nActualización de las dependencias",
         "pl": "Bugfix\nStacja Bugfix\nZależności",
+        "uk": "Bugfix delete stations\nBugfix stations\nDependencies updated",
         "zh-cn": "Bugfix 删除各站\nBugfix站\nB. 更新的属地"
       },
       "1.2.7": {
@@ -77,6 +78,7 @@
         "it": "Bugfix elimina stazioni",
         "es": "Corrección de errores eliminar estaciones",
         "pl": "Naprawa błędów usuwania stacji",
+        "uk": "Bugfix delete stations",
         "zh-cn": "错误修复删除电台"
       },
       "1.2.6": {
@@ -89,10 +91,10 @@
         "it": "Bugfix elimina stazioni\nDipendenze aggiornate",
         "es": "Corrección de errores eliminar estaciones\nDependencias actualizadas",
         "pl": "Naprawa błędów usuwania stacji\nZaktualizowano zależności",
+        "uk": "Bugfix delete stations\nDependencies updated",
         "zh-cn": "错误修复删除电台\n已更新依赖项"
       }
     },
-    "title": "Pegelalarm",
     "titleLang": {
       "en": "water level alarm",
       "de": "Pegelalarm",
