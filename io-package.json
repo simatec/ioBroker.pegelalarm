@@ -136,9 +136,11 @@
       "wasserstand",
       "hochwasser"
     ],
-    "license": "MIT",
+    "licenseInformation": {
+      "license": "MIT",
+      "type": "free"
+    },
     "platform": "Javascript/Node.js",
-    "main": "main.js",
     "icon": "pegelalarm.png",
     "enabled": true,
     "extIcon": "https://raw.githubusercontent.com/simatec/ioBroker.pegelalarm/master/admin/pegelalarm.png",
@@ -152,17 +154,19 @@
     "type": "weather",
     "tier": 2,
     "compact": true,
-    "materialize": true,
     "dependencies": [
       {
-        "js-controller": ">=4.0.0"
+        "js-controller": ">=5.0.19"
       }
     ],
     "globalDependencies": [
       {
-        "admin": ">=5.0.0"
+        "admin": ">=6.0.0"
       }
     ],
+    "adminUI": {
+      "config": "materialize"
+    },
     "plugins": {
       "sentry": {
         "dsn": "https://0e373af128cc4c90a6c0d7833329e484@sentry.iobroker.net/123"
