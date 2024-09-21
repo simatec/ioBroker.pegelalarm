@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "pegelalarm",
-    "version": "1.3.4",
+    "version": "1.3.5",
     "news": {
+      "1.3.5": {
+        "en": "small fix",
+        "de": "kleine fix",
+        "ru": "небольшое исправление",
+        "pt": "pequena correção",
+        "nl": "kleine fix",
+        "fr": "petite fixation",
+        "it": "piccola correzione",
+        "es": "pequeño",
+        "pl": "mały fix",
+        "uk": "невелика фіксація",
+        "zh-cn": "小修补"
+      },
       "1.3.4": {
         "en": "Dependencies updated\ndev-server added\nsmall fix\nResponsive Design added",
         "de": "Ausgaben aktualisiert\ndev-server hinzugefügt\nkleine fix\nResponsive Design hinzugefügt",
@@ -80,19 +93,6 @@
         "pl": "Zależności",
         "uk": "Залежність оновлено",
         "zh-cn": "B. 更新的属地"
-      },
-      "1.2.8": {
-        "en": "Bugfix delete stations\nBugfix stations\nDependencies updated",
-        "de": "Bugfix Löschstationen\nBugfix-Stationen\nAusgaben aktualisiert",
-        "ru": "Bugfix удаленные станции\nСтанции Bugfix\nОбновленные зависимости",
-        "pt": "Estações de exclusão do Bugfix\nEstações de Bugfix\nDependências atualizadas",
-        "nl": "Bugfix delete stations\nBugfix stations\nAfhankelijkheid geüpdateerd",
-        "fr": "Bugfix supprimer les stations\nStations Bugfix\nDépendances mises à jour",
-        "it": "Bugfix cancella stazioni\nStazioni Bugfix\nDipendenze aggiornate",
-        "es": "Estaciones de eliminación de bugfix\nEstaciones de Bugfix\nActualización de las dependencias",
-        "pl": "Bugfix\nStacja Bugfix\nZależności",
-        "uk": "Bugfix delete stations\nBugfix stations\nDependencies updated",
-        "zh-cn": "Bugfix 删除各站\nBugfix站\nB. 更新的属地"
       }
     },
     "titleLang": {
