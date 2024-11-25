@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "pegelalarm",
-    "version": "1.3.5",
+    "version": "1.3.6",
     "news": {
+      "1.3.6": {
+        "en": "Dependencies updated\nIssue Action added\neslint-config added",
+        "de": "Ausgaben aktualisiert\nAusgabe Aktion hinzugefügt\neslint-config hinzugefügt",
+        "ru": "Обновленные данные о зависимостях\nДополнительные меры\nдобавлена eslint-config",
+        "pt": "Dependências atualizadas\nAção de problemas adicionada\neslint-config adicionado",
+        "nl": "Afhankelijkheden bijgewerkt\nOnderwerpactie toegevoegd\neslint-config toegevoegd",
+        "fr": "Dépendances actualisées\nMesure à prendre\neslint-config ajouté",
+        "it": "Dipendenze aggiornate\nAzione di problema aggiunto\neslint-config aggiunto",
+        "es": "Actualización de las dependencias\nTema Acción añadido\neslint-config añadido",
+        "pl": "Aktualizacja zależności\nDodano działanie\neslint- config dodany",
+        "uk": "Залежність оновлено\nДодана емісія\neslint-config додано",
+        "zh-cn": "更新的依赖关系\n添加的问题行动\n添加埃斯林特配置"
+      },
       "1.3.5": {
         "en": "small fix",
         "de": "kleine fix",
@@ -80,19 +93,6 @@
         "pl": "Zależności\nRepo updated",
         "uk": "Залежність оновлено\nRepo оновлений",
         "zh-cn": "B. 更新的属地\n更新"
-      },
-      "1.2.9": {
-        "en": "Dependencies updated",
-        "de": "Ausgaben aktualisiert",
-        "ru": "Обновленные зависимости",
-        "pt": "Dependências atualizadas",
-        "nl": "Afhankelijkheid geüpdateerd",
-        "fr": "Dépendances mises à jour",
-        "it": "Dipendenze aggiornate",
-        "es": "Actualización de las dependencias",
-        "pl": "Zależności",
-        "uk": "Залежність оновлено",
-        "zh-cn": "B. 更新的属地"
       }
     },
     "titleLang": {
