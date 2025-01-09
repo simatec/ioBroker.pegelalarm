@@ -50,6 +50,7 @@ let timerRequest, timerMain, timerStop; // timer variables
 
 /**
  * Starts the adapter instance
+ *
  * @param {Partial<ioBroker.AdapterOptions>} [options]
  */
 
@@ -146,16 +147,16 @@ async function requestData(_stationname, _region, _water) {
 
                 await createStations(path);
 
-                await adapter.setStateAsync(path + '.name', station.stationName ? station.stationName : 'none', true);
-                await adapter.setStateAsync(path + '.country', station.country ? station.country : 'none', true);
-                await adapter.setStateAsync(path + '.water', station.water ? station.water : 'none', true);
-                await adapter.setStateAsync(path + '.region', station.region ? station.region : 'none', true);
-                await adapter.setStateAsync(path + '.situation.text', station.situation ? decodeSituation(station.situation) : 'none', true);
-                await adapter.setStateAsync(path + '.situation.group', station.situation ? decodeSituation(station.situation, 'group') : 'none', true);
-                await adapter.setStateAsync(path + '.situation.code', station.situation ? station.situation : 0, true);
-                await adapter.setStateAsync(path + '.trend.text', station.trend ? decodeTrend(station.trend) : 'none', true);
-                await adapter.setStateAsync(path + '.trend.short', station.trend ? decodeTrend(station.trend, 'short') : 'none', true);
-                await adapter.setStateAsync(path + '.trend.code', station.trend ? station.trend : 0, true);
+                await adapter.setStateAsync(`${path  }.name`, station.stationName ? station.stationName : 'none', true);
+                await adapter.setStateAsync(`${path  }.country`, station.country ? station.country : 'none', true);
+                await adapter.setStateAsync(`${path  }.water`, station.water ? station.water : 'none', true);
+                await adapter.setStateAsync(`${path  }.region`, station.region ? station.region : 'none', true);
+                await adapter.setStateAsync(`${path  }.situation.text`, station.situation ? decodeSituation(station.situation) : 'none', true);
+                await adapter.setStateAsync(`${path  }.situation.group`, station.situation ? decodeSituation(station.situation, 'group') : 'none', true);
+                await adapter.setStateAsync(`${path  }.situation.code`, station.situation ? station.situation : 0, true);
+                await adapter.setStateAsync(`${path  }.trend.text`, station.trend ? decodeTrend(station.trend) : 'none', true);
+                await adapter.setStateAsync(`${path  }.trend.short`, station.trend ? decodeTrend(station.trend, 'short') : 'none', true);
+                await adapter.setStateAsync(`${path  }.trend.code`, station.trend ? station.trend : 0, true);
 
                 let stateNormal = false;
                 let stateWarning = false;
@@ -178,13 +179,13 @@ async function requestData(_stationname, _region, _water) {
                         stateUnknown = true;
                 }
 
-                await adapter.setStateAsync(path + '.state.normal', stateNormal ? stateNormal : false, true);
-                await adapter.setStateAsync(path + '.state.warning', stateWarning ? stateWarning : false, true);
-                await adapter.setStateAsync(path + '.state.alert', stateAlert ? stateAlert : false, true);
-                await adapter.setStateAsync(path + '.state.unknown', stateUnknown ? stateUnknown : false, true);
-                await adapter.setStateAsync(path + '.geo.latitude', station.latitude ? station.latitude : 0, true);
-                await adapter.setStateAsync(path + '.geo.longitude', station.longitude ? station.longitude : 0, true);
-                await adapter.setStateAsync(path + '.geo.altitude', station.altitudeM ? station.altitudeM : 0, true);
+                await adapter.setStateAsync(`${path  }.state.normal`, stateNormal ? stateNormal : false, true);
+                await adapter.setStateAsync(`${path  }.state.warning`, stateWarning ? stateWarning : false, true);
+                await adapter.setStateAsync(`${path  }.state.alert`, stateAlert ? stateAlert : false, true);
+                await adapter.setStateAsync(`${path  }.state.unknown`, stateUnknown ? stateUnknown : false, true);
+                await adapter.setStateAsync(`${path  }.geo.latitude`, station.latitude ? station.latitude : 0, true);
+                await adapter.setStateAsync(`${path  }.geo.longitude`, station.longitude ? station.longitude : 0, true);
+                await adapter.setStateAsync(`${path  }.geo.altitude`, station.altitudeM ? station.altitudeM : 0, true);
 
                 let height = 0;
 
@@ -193,31 +194,31 @@ async function requestData(_stationname, _region, _water) {
                     if (stationData.type == 'height in cm') {
                         o = station.data.length;
 
-                        await adapter.setStateAsync(path + '.height', { val: stationData.value ? stationData.value : 0, ack: true });
+                        await adapter.setStateAsync(`${path  }.height`, { val: stationData.value ? stationData.value : 0, ack: true });
                         height = stationData.value;
 
                         let sourceDate = new Date(Date.parse(stationData.sourceDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, '$3-$2-$1$4'))).toUTCString();
-                        await adapter.setStateAsync(path + '.sourceDate', sourceDate ? sourceDate : 'none', true);
+                        await adapter.setStateAsync(`${path  }.sourceDate`, sourceDate ? sourceDate : 'none', true);
 
                         let requestDate = new Date(Date.parse(stationData.requestDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, '$3-$2-$1$4'))).toUTCString();
-                        await adapter.setStateAsync(path + '.requestDate', requestDate ? requestDate : 'none', true);
+                        await adapter.setStateAsync(`${path  }.requestDate`, requestDate ? requestDate : 'none', true);
                     }
                 }
 
                 // created json
                 let json = ({
-                    "stationsname": station.stationName,
-                    "region": station.region,
-                    "country": station.country,
-                    "water": station.water,
-                    "height": height,
-                    "trend": decodeTrend(station.trend, 'short'),
-                    "warning": stateWarning,
-                    "alert": stateAlert
+                    stationsname: station.stationName,
+                    region: station.region,
+                    country: station.country,
+                    water: station.water,
+                    height: height,
+                    trend: decodeTrend(station.trend, 'short'),
+                    warning: stateWarning,
+                    alert: stateAlert
                 });
                 allStationsJSON.push(json);
 
-                await adapter.setStateAsync(path + '.json', { val: json ? JSON.stringify(json) : '', ack: true });
+                await adapter.setStateAsync(`${path  }.json`, { val: json ? JSON.stringify(json) : '', ack: true });
 
             }
 
@@ -289,7 +290,7 @@ function createStations(path) {
             native: {},
         });
         for (const j in stationsChannel) {
-            adapter.setObjectNotExists(path + '.' + stationsChannel[j], {
+            adapter.setObjectNotExists(`${path  }.${  stationsChannel[j]}`, {
                 type: 'channel',
                 common: {
                     name: stationsChannel[j],
@@ -298,7 +299,7 @@ function createStations(path) {
             });
         }
         for (const k in stationsStatesString) {
-            adapter.setObjectNotExists(path + '.' + stationsStatesString[k], {
+            adapter.setObjectNotExists(`${path  }.${  stationsStatesString[k]}`, {
                 type: 'state',
                 common: {
                     name: stationsStatesString[k],
@@ -311,7 +312,7 @@ function createStations(path) {
             });
         }
         for (const l in stationsStatesNumber) {
-            adapter.setObjectNotExists(path + '.' + stationsStatesNumber[l], {
+            adapter.setObjectNotExists(`${path  }.${  stationsStatesNumber[l]}`, {
                 type: 'state',
                 common: {
                     name: stationsStatesNumber[l],
@@ -325,7 +326,7 @@ function createStations(path) {
             });
         }
         for (const m in stationsStatesDate) {
-            adapter.setObjectNotExists(path + '.' + stationsStatesDate[m], {
+            adapter.setObjectNotExists(`${path  }.${  stationsStatesDate[m]}`, {
                 type: 'state',
                 common: {
                     name: stationsStatesDate[m],
@@ -338,7 +339,7 @@ function createStations(path) {
             });
         }
         for (const n in stationsStatesboolean) {
-            adapter.setObjectNotExists(path + '.' + stationsStatesboolean[n], {
+            adapter.setObjectNotExists(`${path  }.${  stationsStatesboolean[n]}`, {
                 type: 'state',
                 common: {
                     name: stationsStatesboolean[n],
@@ -439,7 +440,7 @@ async function checkStation(currentStations) {
 
         if (deleteOldStates) {
             try {
-                const _stationStateList = await adapter.getForeignObjectsAsync(adapter.namespace + '.stations.*', 'state');
+                const _stationStateList = await adapter.getForeignObjectsAsync(`${adapter.namespace  }.stations.*`, 'state');
 
                 for (const i in _stationStateList) {
                     const resID = _stationStateList[i]._id;
@@ -456,7 +457,7 @@ async function checkStation(currentStations) {
             }
 
             try {
-                const _stationChannelList = await adapter.getForeignObjectsAsync(adapter.namespace + '.stations.*', 'channel');
+                const _stationChannelList = await adapter.getForeignObjectsAsync(`${adapter.namespace  }.stations.*`, 'channel');
 
                 for (const i in _stationChannelList) {
                     const resID = _stationChannelList[i]._id;
