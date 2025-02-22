@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "pegelalarm",
-    "version": "1.3.7",
+    "version": "1.3.8",
     "news": {
+      "1.3.8": {
+        "en": "Dependencies updated\nsmall Fix",
+        "de": "Ausgaben aktualisiert\nkleiner Fix",
+        "ru": "Обновленные зависимости\nмаленький фикс",
+        "pt": "Dependências atualizadas\npequena fixação",
+        "nl": "Afhankelijkheden bijgewerkt\nkleine Fix",
+        "fr": "Dépendances actualisées\npetite Fix",
+        "it": "Dipendenze aggiornate\npiccolo fissaggio",
+        "es": "Actualización de las dependencias\npequeño",
+        "pl": "Aktualizacja zależności\nmały Fix",
+        "uk": "Залежність оновлено\nмали",
+        "zh-cn": "更新的依赖关系\n小修补"
+      },
       "1.3.7": {
         "en": "eslint-config fix\nDependencies updated\nUpdate License",
         "de": "eslint-config fix\nAusgaben aktualisiert\nLizenz aktualisieren",
@@ -80,19 +93,6 @@
         "pl": "Zależności",
         "uk": "Залежність оновлено",
         "zh-cn": "B. 更新的属地"
-      },
-      "1.3.1": {
-        "en": "Dependencies updated\ntest and release updated\nTranslation updated",
-        "de": "Ausgaben aktualisiert\ntest und release aktualisiert\nÜbersetzung aktualisiert",
-        "ru": "Обновленные зависимости\nтест и релиз обновлен\nПеревод обновлен",
-        "pt": "Dependências atualizadas\nteste e lançamento atualizado\nTradução atualizada",
-        "nl": "Afhankelijkheid geüpdateerd\ntest en laat updaten\nVertaling:",
-        "fr": "Dépendances mises à jour\ntest and release updated\nTraduction mise à jour",
-        "it": "Dipendenze aggiornate\ntest e rilascio aggiornato\nTraduzione aggiornata",
-        "es": "Actualización de las dependencias\ntest and release updated\nTraducción actualizada",
-        "pl": "Zależności\ntest i aktualizacja\nUaktualniać",
-        "uk": "Залежність оновлено\nтест і реліз оновлений\nПереклад оновлений",
-        "zh-cn": "B. 更新的属地\n试验和释放\n笔译更新"
       }
     },
     "titleLang": {
