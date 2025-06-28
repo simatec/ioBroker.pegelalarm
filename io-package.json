@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "pegelalarm",
-    "version": "1.3.8",
+    "version": "1.3.9",
     "news": {
+      "1.3.9": {
+        "en": "smal Code fix\nDependencies updated",
+        "de": "smal Code fix\nAusgaben aktualisiert",
+        "ru": "smal code исправить\nОбновленные зависимости",
+        "pt": "correção de código smal\nDependências atualizadas",
+        "nl": "smal Code fix\nAfhankelijkheden bijgewerkt",
+        "fr": "fixe de code smal\nDépendances actualisées",
+        "it": "smal Code fix\nDipendenze aggiornate",
+        "es": "smal Code fix\nActualización de las dependencias",
+        "pl": "smal Code fix\nAktualizacja zależności",
+        "uk": "виправлення коду\nЗалежність оновлено",
+        "zh-cn": "smal 代码修正\n更新的依赖关系"
+      },
       "1.3.8": {
         "en": "Dependencies updated\nsmall Fix",
         "de": "Ausgaben aktualisiert\nkleiner Fix",
@@ -80,19 +93,6 @@
         "pl": "Aktualizacja zależności\nPopraw projekt\ngulp usunięty\nadapter -dev dodany\nAktualizacja tłumaczeń",
         "uk": "Залежність оновлено\nФіксація дизайну\nковпачок видалений\nадаптер-dev додано\nПереклад оновлений",
         "zh-cn": "更新的依赖关系\n设计\n已删除\n添加适配器- dev\n翻译更新"
-      },
-      "1.3.2": {
-        "en": "Dependencies updated",
-        "de": "Ausgaben aktualisiert",
-        "ru": "Обновленные зависимости",
-        "pt": "Dependências atualizadas",
-        "nl": "Afhankelijkheid geüpdateerd",
-        "fr": "Dépendances mises à jour",
-        "it": "Dipendenze aggiornate",
-        "es": "Actualización de las dependencias",
-        "pl": "Zależności",
-        "uk": "Залежність оновлено",
-        "zh-cn": "B. 更新的属地"
       }
     },
     "titleLang": {
