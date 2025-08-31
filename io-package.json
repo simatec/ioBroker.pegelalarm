@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "pegelalarm",
-    "version": "1.3.9",
+    "version": "1.3.10",
     "news": {
+      "1.3.10": {
+        "en": "Dependencies updated",
+        "de": "Ausgaben aktualisiert",
+        "ru": "Обновленные зависимости",
+        "pt": "Dependências atualizadas",
+        "nl": "Afhankelijkheden bijgewerkt",
+        "fr": "Dépendances actualisées",
+        "it": "Dipendenze aggiornate",
+        "es": "Actualización de las dependencias",
+        "pl": "Aktualizacja zależności",
+        "uk": "Залежність оновлено",
+        "zh-cn": "更新的依赖关系"
+      },
       "1.3.9": {
         "en": "smal Code fix\nDependencies updated",
         "de": "smal Code fix\nAusgaben aktualisiert",
@@ -80,19 +93,6 @@
         "pl": "Aktualizacja zależności\ndev- server dodany\nmały fix\nDodano projekt odpowiedzialny",
         "uk": "Залежність оновлено\nдодано dev-server\nневелика фіксація\nДодано адаптивний дизайн",
         "zh-cn": "更新的依赖关系\n添加了 dev 服务器\n小修补\n添加响应设计"
-      },
-      "1.3.3": {
-        "en": "Dependencies updated\nDesign Fix\ngulp deleted\nadapter-dev added\nTranslation updated",
-        "de": "Ausgaben aktualisiert\nDesign Fix\ngulp gelöscht\nadapter-dev hinzugefügt\nÜbersetzung aktualisiert",
-        "ru": "Обновленные данные о зависимостях\nДизайн Fix\ngulp удален\nадаптер-dev добавлен\nОбновленный перевод",
-        "pt": "Dependências atualizadas\nCorreção de Design\ngulp excluído\nadaptador-dev adicionado\nTradução atualizada",
-        "nl": "Afhankelijkheden bijgewerkt\nOntwerpfix\ngulp verwijderd\nadapter-dev toegevoegd\nVertaling bijgewerkt",
-        "fr": "Dépendances actualisées\nCorrection de conception\ngulp supprimé\nadaptateur-dev ajouté\nTraduction mise à jour",
-        "it": "Dipendenze aggiornate\nDesign Fix\ngulp cancellato\nadattatore-dev aggiunto\nTraduzione aggiornata",
-        "es": "Actualización de las dependencias\nDiseño fijo\ngulp eliminado\nadaptador-dev añadido\nTraducción actualizada",
-        "pl": "Aktualizacja zależności\nPopraw projekt\ngulp usunięty\nadapter -dev dodany\nAktualizacja tłumaczeń",
-        "uk": "Залежність оновлено\nФіксація дизайну\nковпачок видалений\nадаптер-dev додано\nПереклад оновлений",
-        "zh-cn": "更新的依赖关系\n设计\n已删除\n添加适配器- dev\n翻译更新"
       }
     },
     "titleLang": {
