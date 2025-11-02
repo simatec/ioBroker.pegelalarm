@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "pegelalarm",
-    "version": "1.3.10",
+    "version": "1.3.11",
     "news": {
+      "1.3.11": {
+        "en": "dependencies updated\nFix npm publish",
+        "de": "aktualisierte abhängigkeiten\nNpm veröffentlichen",
+        "ru": "обновленные зависимости\nИздательство Fix npm",
+        "pt": "dependências atualizadas\nCorrigir a publicação do npm",
+        "nl": "afhankelijkheden bijgewerkt\nFix npm publiceren",
+        "fr": "dépendances mises à jour\nCorrection de npm publier",
+        "it": "dipendenze aggiornate\nFisso npm pubblicazione",
+        "es": "dependencias actualizadas\nCorrección npm publicar",
+        "pl": "zaktualizowane zależności\nNapraw publikację npm",
+        "uk": "оновлені залежності\nВиправлення npm опублікування",
+        "zh-cn": "更新依赖关系\n修复 npm 发布"
+      },
       "1.3.10": {
         "en": "Dependencies updated",
         "de": "Ausgaben aktualisiert",
@@ -80,19 +93,6 @@
         "pl": "mały fix",
         "uk": "невелика фіксація",
         "zh-cn": "小修补"
-      },
-      "1.3.4": {
-        "en": "Dependencies updated\ndev-server added\nsmall fix\nResponsive Design added",
-        "de": "Ausgaben aktualisiert\ndev-server hinzugefügt\nkleine fix\nResponsive Design hinzugefügt",
-        "ru": "Обновленные данные о зависимостях\nдобавлено dev-server\nнебольшое исправление\nResponsive Design",
-        "pt": "Dependências atualizadas\ndev-server adicionado\npequena correção\nDesign responsivo adicionado",
-        "nl": "Afhankelijkheden bijgewerkt\ndev-server toegevoegd\nkleine fix\nResponsive Design toegevoegd",
-        "fr": "Dépendances actualisées\ndev-server ajouté\npetite fixation\nDesign sensible ajouté",
-        "it": "Dipendenze aggiornate\naggiunto\npiccola correzione\nResponsive Design aggiunto",
-        "es": "Actualización de las dependencias\ndev-server añadido\npequeño\nDiseño responsable añadido",
-        "pl": "Aktualizacja zależności\ndev- server dodany\nmały fix\nDodano projekt odpowiedzialny",
-        "uk": "Залежність оновлено\nдодано dev-server\nневелика фіксація\nДодано адаптивний дизайн",
-        "zh-cn": "更新的依赖关系\n添加了 dev 服务器\n小修补\n添加响应设计"
       }
     },
     "titleLang": {
