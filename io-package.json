@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "pegelalarm",
-    "version": "1.3.13",
+    "version": "1.4.0",
     "news": {
+      "1.4.0": {
+        "en": "dependencies updated\nRequest Fix\nTimeout Fix\nSource code rewritten,\nSource code improved\nStation names fixed\nHeader added",
+        "de": "aktualisierte abhängigkeiten\nAnfrage anfordern\nTimeout Fix\nQuellcode neu geschrieben,\nQuellcode verbessert\nNamen der Station\nHeader hinzugefügt",
+        "ru": "обновленные зависимости\nЗапросить исправление\nТайм-аут фикс\nИсходный код переписан,\nИсходный код улучшен\nНазвания станций фиксированные\nЗаголовок добавлен",
+        "pt": "dependências atualizadas\nSolicitar correção\nCorrecção do Tempo- limite\nCódigo-fonte reescrito,\nCódigo-fonte melhorado\nNomes de estações corrigidos\nCabeçalho adicionado",
+        "nl": "afhankelijkheden bijgewerkt\nFix aanvragen\nTimeout Fix\nBroncode herschreven,\nBroncode verbeterd\nStationnamen hersteld\nHeader toegevoegd",
+        "fr": "dépendances mises à jour\nCorrection de la requête\nCorrection du délai\nCode source réécrit,\nCode source amélioré\nNoms de stations fixés\nEn-tête ajouté",
+        "it": "dipendenze aggiornate\nRichiesta\nCorrezione di tempo\nCodice sorgente riscritto,\nCodice sorgente migliorato\nNome della stazione fisso\nIntestazione aggiunto",
+        "es": "dependencias actualizadas\nSolicitud de reparación\nTimeout Fix\nCódigo fuente reescrito,\nMejoramiento del código fuente\nNombres fijos\nHeader añadido",
+        "pl": "zaktualizowane zależności\nProśba o naprawienie\nTimeout Fix\nKod źródłowy przepisywany,\nPoprawiony kod źródłowy\nNazwy programów stałych\nNagłówek dodany",
+        "uk": "оновлені залежності\nЗапит\nВиправити\nКод джерела повторюється,\nКод джерела покращений\nНазва станції фіксована\nЗаголовок додано",
+        "zh-cn": "更新依赖关系\n请求修正\n超时修正\n源代码重写,\n源代码改进\n固定站名\n已添加页眉"
+      },
       "1.3.13": {
         "en": "Fix License\ndependencies updated",
         "de": "Lizenzierung aktivieren\naktualisierte abhängigkeiten",
@@ -80,19 +93,6 @@
         "pl": "Aktualizacja zależności\nmały Fix",
         "uk": "Залежність оновлено\nмали",
         "zh-cn": "更新的依赖关系\n小修补"
-      },
-      "1.3.7": {
-        "en": "eslint-config fix\nDependencies updated\nUpdate License",
-        "de": "eslint-config fix\nAusgaben aktualisiert\nLizenz aktualisieren",
-        "ru": "eslint-конфигурация\nОбновленные данные о зависимостях\nЛицензия обновления",
-        "pt": "eslint-config fix\nDependências atualizadas\nLicença de atualização",
-        "nl": "eslint-config fix\nAfhankelijkheden bijgewerkt\nLicentie bijwerken",
-        "fr": "fixateur eslint-config\nDépendances actualisées\nMettre à jour la licence",
-        "it": "eslint-config fix\nDipendenze aggiornate\nLicenza di aggiornamento",
-        "es": "eslint-config fix\nActualización de las dependencias\nActualizar Licencia",
-        "pl": "fix eslint- config\nAktualizacja zależności\nUaktualnij licencję",
-        "uk": "eslint-config виправити\nЗалежність оновлено\nОновлення ліцензії",
-        "zh-cn": "埃斯林特配置修复\n更新的依赖关系\n更新许可证"
       }
     },
     "titleLang": {
