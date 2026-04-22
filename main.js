@@ -27,9 +27,9 @@
 // -------------------------------------------------------------------------------
 // | 30   | The water level has reached the warning limit     | warning | yellow |
 // -------------------------------------------------------------------------------
-// | 40   | The water level causes a regional flood | alert             | red    |
+// | 40   | The water level causes a regional flood           | alert   | red    |
 // -------------------------------------------------------------------------------
-// | 50   | Water level causes a national flood | alert                 | red    |
+// | 50   | Water level causes a national flood               | alert   | red    |
 // -------------------------------------------------------------------------------
 // | 100  | Unknown situation                                 | unknown | blue   |
 // -------------------------------------------------------------------------------
@@ -46,18 +46,16 @@ let currentStations = [];
 let allStationsJSON = [];
 let deleteOldStates = true;
 
-let timerMain, timerStop; // timer variables
+let timerMain, timerStop, ioBrokerVersion;
 
 /**
- * Starts the adapter instance
+ * Starts the adapter instance.
  *
- * @param {Partial<ioBroker.AdapterOptions>} [options]
+ * @param {Partial<ioBroker.AdapterOptions>} [options] - Adapter options
  */
-
 function startAdapter(options) {
-
     options = options || {};
-    Object.assign(options, { name: adapterName, useFormatDate: true, });
+    Object.assign(options, { name: adapterName, useFormatDate: true });
 
     adapter = new utils.Adapter(options);
 
@@ -69,7 +67,7 @@ function startAdapter(options) {
             timerMain && clearTimeout(timerMain);
             timerStop && clearTimeout(timerStop);
             callback();
-        } catch (e) {
+        } catch {
             callback();
         }
     });
@@ -77,34 +75,74 @@ function startAdapter(options) {
     return adapter;
 }
 
-// Request Data from API
+/**
+ * Parses and normalizes a date string from DD.MM.YYYY HH:MM:SS format to UTC string.
+ *
+ * @param {string} dateStr - Date string in DD.MM.YYYY format
+ * @returns {string} UTC date string
+ */
+function parseStationDate(dateStr) {
+    const normalized = dateStr.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/, '$3-$2-$1$4');
+    return new Date(Date.parse(normalized)).toUTCString();
+}
+
+/**
+ * Sanitizes a station name for use as an ioBroker state path segment.
+ * Transliterates umlauts and special characters before stripping remaining invalid characters.
+ *
+ * @param {string} name - Raw station name from the API
+ * @returns {string} Sanitized station name safe for use in state paths
+ */
+function sanitizeStationName(name) {
+    const umlautMap = {
+        ä: 'ae', ö: 'oe', ü: 'ue',
+        Ä: 'Ae', Ö: 'Oe', Ü: 'Ue',
+        ß: 'ss',
+        à: 'a', á: 'a', â: 'a', ã: 'a',
+        è: 'e', é: 'e', ê: 'e', ë: 'e',
+        ì: 'i', í: 'i', î: 'i', ï: 'i',
+        ò: 'o', ó: 'o', ô: 'o', õ: 'o',
+        ù: 'u', ú: 'u', û: 'u',
+        ý: 'y', ÿ: 'y',
+        ñ: 'n', ç: 'c',
+    };
+    return name
+        .replace(/[äöüÄÖÜßàáâãèéêëìíîïòóôõùúûýÿñç]/g, ch => umlautMap[ch] ?? ch)
+        .toLowerCase()
+        .replace(/\s/g, '_')
+        .replace(/[^a-z0-9_\\-]/g, '');
+}
+
+/**
+ * Requests data from the Pegelalarm API and writes results to ioBroker states.
+ *
+ * @param {string} _stationname - Name of the measuring station (empty string = no filter)
+ * @param {string} _region - Region filter (empty string = no filter)
+ * @param {string} _water - Water body filter (empty string = no filter)
+ */
 async function requestData(_stationname, _region, _water) {
     let dataUrl = `https://api.pegelalarm.at/api/station/1.0/list?countryCode=${adapter.config.country}`;
 
-    if (_region.trim().length) {
-        dataUrl += `&qRegion=${_region}`;
-    }
-    if (_water.trim().length) {
-        dataUrl += `&qWater=${_water}`;
-    }
-    if (_stationname.trim().length) {
-        dataUrl += `&qStationName=${_stationname}`;
-    }
-    const url = encodeURI(dataUrl);
+    if (_region.trim().length) dataUrl += `&qRegion=${_region}`;
+    if (_water.trim().length) dataUrl += `&qWater=${_water}`;
+    if (_stationname.trim().length) dataUrl += `&qStationName=${_stationname}`;
 
+    const url = encodeURI(dataUrl);
     adapter.log.debug(url);
 
-    let data = [];
+    let data;
     try {
         const response = await axios({
             method: 'get',
             timeout: 5000,
-            url: url,
+            url,
             responseType: 'json',
             validateStatus: () => true,
             headers: {
-                'User-Agent': 'ioBroker Pegelalarm Adapter'
-            }
+                'User-Agent': `ioBroker v${ioBrokerVersion}`,
+                'X-App-Name': `simatec/ioBroker.pegelalarm v${adapter.version}`,
+                'X-Contact-Email': require('./package.json').author.email,
+            },
         });
 
         if (response?.data && response?.status === 200) {
@@ -112,7 +150,7 @@ async function requestData(_stationname, _region, _water) {
             data = response.data;
         } else {
             deleteOldStates = false;
-            adapter.log.error(`Unexpected API response. Status: ${response ? response.status : 'unknown'}`);
+            adapter.log.error(`Unexpected API response. Status: ${response?.status ?? 'unknown'}`);
             adapter.log.error('Pegelalarm API cannot be reached at the moment');
             return;
         }
@@ -123,403 +161,292 @@ async function requestData(_stationname, _region, _water) {
         return;
     }
 
-    if (_stationname !== '' && data?.payload['stations'].length > 1) {
-        try {
-            for (let d = 0; d < data.payload['stations'].length; d++) {
-                if (data.payload.stations[d].stationName !== _stationname) {
-                    data.payload.stations.splice(d, 1);
-                    d--;
-                }
-            }
-        } catch (err) {
-            adapter.log.warn('cannot filter stations');
-        }
+    // Filter to exact station name match if multiple results are returned
+    if (_stationname !== '' && data?.payload?.stations?.length > 1) {
+        data.payload.stations = data.payload.stations.filter(s => s.stationName === _stationname);
     }
 
-    if (data?.status.code == '200' && data?.payload.stations) {
-        let warnings = [];
-        let alerts = [];
-
-        for (let i = 0; i < data.payload.stations.length; i++) {
-            let station = data.payload.stations[i];
-            let path = `stations.${station.stationName.toLowerCase().replace(/\s/g, '_').replace(/[^\x20\x2D0-9A-Z\x5Fa-z\xC0-\xD6\xF8-\xFF]/g, '')}`;
-            currentStations.push(station.stationName.toLowerCase().replace(/\s/g, '_').replace(/[^\x20\x2D0-9A-Z\x5Fa-z\xC0-\xD6\xF8-\xFF]/g, ''));
-
-            await createStations(path);
-
-            await adapter.setStateAsync(`${path}.name`, station.stationName ? station.stationName : 'none', true);
-            await adapter.setStateAsync(`${path}.country`, station.country ? station.country : 'none', true);
-            await adapter.setStateAsync(`${path}.water`, station.water ? station.water : 'none', true);
-            await adapter.setStateAsync(`${path}.region`, station.region ? station.region : 'none', true);
-            await adapter.setStateAsync(`${path}.situation.text`, station.situation ? decodeSituation(station.situation) : 'none', true);
-            await adapter.setStateAsync(`${path}.situation.group`, station.situation ? decodeSituation(station.situation, 'group') : 'none', true);
-            await adapter.setStateAsync(`${path}.situation.code`, station.situation ? station.situation : 0, true);
-            await adapter.setStateAsync(`${path}.trend.text`, station.trend ? decodeTrend(station.trend) : 'none', true);
-            await adapter.setStateAsync(`${path}.trend.short`, station.trend ? decodeTrend(station.trend, 'short') : 'none', true);
-            await adapter.setStateAsync(`${path}.trend.code`, station.trend ? station.trend : 0, true);
-
-            let stateNormal = false;
-            let stateWarning = false;
-            let stateAlert = false;
-            let stateUnknown = false;
-
-            switch (decodeSituation(station.situation, 'group')) {
-                case 'normal':
-                    stateNormal = true;
-                    break;
-                case 'warning':
-                    stateWarning = true;
-                    warnings.push(path);
-                    break;
-                case 'alert':
-                    stateAlert = true;
-                    alerts.push(path);
-                    break;
-                default:
-                    stateUnknown = true;
-            }
-
-            await adapter.setStateAsync(`${path}.state.normal`, stateNormal ? stateNormal : false, true);
-            await adapter.setStateAsync(`${path}.state.warning`, stateWarning ? stateWarning : false, true);
-            await adapter.setStateAsync(`${path}.state.alert`, stateAlert ? stateAlert : false, true);
-            await adapter.setStateAsync(`${path}.state.unknown`, stateUnknown ? stateUnknown : false, true);
-            await adapter.setStateAsync(`${path}.geo.latitude`, station.latitude ? station.latitude : 0, true);
-            await adapter.setStateAsync(`${path}.geo.longitude`, station.longitude ? station.longitude : 0, true);
-            await adapter.setStateAsync(`${path}.geo.altitude`, station.altitudeM ? station.altitudeM : 0, true);
-
-            let height = 0;
-
-            for (let o = 0; o < station.data.length; o++) {
-                let stationData = station.data[o];
-                if (stationData.type == 'height in cm') {
-                    o = station.data.length;
-
-                    await adapter.setStateAsync(`${path}.height`, { val: stationData.value ? stationData.value : 0, ack: true });
-                    height = stationData.value;
-
-                    let sourceDate = new Date(Date.parse(stationData.sourceDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, '$3-$2-$1$4'))).toUTCString();
-                    await adapter.setStateAsync(`${path}.sourceDate`, sourceDate ? sourceDate : 'none', true);
-
-                    let requestDate = new Date(Date.parse(stationData.requestDate.replace(/([0-9]{2})\.([0-9]{2})\.([0-9]{4})(.*)$/g, '$3-$2-$1$4'))).toUTCString();
-                    await adapter.setStateAsync(`${path}.requestDate`, requestDate ? requestDate : 'none', true);
-                }
-            }
-
-            // created json
-            let json = ({
-                stationsname: station.stationName,
-                region: station.region,
-                country: station.country,
-                water: station.water,
-                height: height,
-                trend: decodeTrend(station.trend, 'short'),
-                warning: stateWarning,
-                alert: stateAlert
-            });
-            allStationsJSON.push(json);
-
-            await adapter.setStateAsync(`${path}.json`, { val: json ? JSON.stringify(json) : '', ack: true });
-
-        }
-
-        await adapter.setStateAsync('allStationsJSON', { val: allStationsJSON ? JSON.stringify(allStationsJSON) : '', ack: true });
-
-        await adapter.setStateAsync('warning.hasWarning', warnings.length > 0 ? true : false, true);
-        await adapter.setStateAsync('warning.statepathes', warnings ? JSON.stringify(warnings) : '', true);
-        await adapter.setStateAsync('alert.hasAlert', alerts.length > 0 ? true : false, true);
-        await adapter.setStateAsync('alert.statepathes', alerts ? JSON.stringify(alerts) : '', true);
-
-        let lastRun = new Date().toUTCString();
-
-        lastRun && await adapter.setStateAsync('lastRun', lastRun, true);
-        adapter.log.debug('Pegelalarm request done');
-    } else {
+    if (!data?.payload?.stations) {
         deleteOldStates = false;
         adapter.log.error('Wrong JSON returned');
         adapter.log.error('Pegelalarm API cannot be reached at the moment');
+        return;
     }
+
+    const warnings = [];
+    const alerts = [];
+
+    for (const station of data.payload.stations) {
+        const sanitizedName = sanitizeStationName(station.stationName);
+        const path = `stations.${sanitizedName}`;
+        currentStations.push(sanitizedName);
+
+        await createStations(path);
+
+        await adapter.setStateAsync(`${path}.name`, station.stationName ?? 'none', true);
+        await adapter.setStateAsync(`${path}.country`, station.country ?? 'none', true);
+        await adapter.setStateAsync(`${path}.water`, station.water ?? 'none', true);
+        await adapter.setStateAsync(`${path}.region`, station.region ?? 'none', true);
+        await adapter.setStateAsync(`${path}.situation.text`, decodeSituation(station.situation), true);
+        await adapter.setStateAsync(`${path}.situation.group`, decodeSituation(station.situation, 'group'), true);
+        await adapter.setStateAsync(`${path}.situation.code`, station.situation ?? 0, true);
+        await adapter.setStateAsync(`${path}.trend.text`, decodeTrend(station.trend), true);
+        await adapter.setStateAsync(`${path}.trend.short`, decodeTrend(station.trend, 'short'), true);
+        await adapter.setStateAsync(`${path}.trend.code`, station.trend ?? 0, true);
+
+        const situationGroup = decodeSituation(station.situation, 'group');
+        const stateNormal = situationGroup === 'normal';
+        const stateWarning = situationGroup === 'warning';
+        const stateAlert = situationGroup === 'alert';
+        const stateUnknown = situationGroup === 'unknown';
+
+        if (stateWarning) warnings.push(path);
+        if (stateAlert) alerts.push(path);
+
+        await adapter.setStateAsync(`${path}.state.normal`, stateNormal, true);
+        await adapter.setStateAsync(`${path}.state.warning`, stateWarning, true);
+        await adapter.setStateAsync(`${path}.state.alert`, stateAlert, true);
+        await adapter.setStateAsync(`${path}.state.unknown`, stateUnknown, true);
+        await adapter.setStateAsync(`${path}.geo.latitude`, station.latitude ?? 0, true);
+        await adapter.setStateAsync(`${path}.geo.longitude`, station.longitude ?? 0, true);
+        await adapter.setStateAsync(`${path}.geo.altitude`, station.altitudeM ?? 0, true);
+
+        let height = 0;
+        const heightData = station.data.find(d => d.type === 'height in cm');
+        if (heightData) {
+            height = heightData.value ?? 0;
+            await adapter.setStateAsync(`${path}.height`, { val: height, ack: true });
+            await adapter.setStateAsync(`${path}.sourceDate`, parseStationDate(heightData.sourceDate), true);
+            await adapter.setStateAsync(`${path}.requestDate`, parseStationDate(heightData.requestDate), true);
+        }
+
+        const json = {
+            stationsname: station.stationName,
+            region: station.region,
+            country: station.country,
+            water: station.water,
+            height,
+            trend: decodeTrend(station.trend, 'short'),
+            warning: stateWarning,
+            alert: stateAlert,
+        };
+        allStationsJSON.push(json);
+
+        await adapter.setStateAsync(`${path}.json`, { val: JSON.stringify(json), ack: true });
+    }
+
+    await adapter.setStateAsync('allStationsJSON', { val: JSON.stringify(allStationsJSON), ack: true });
+    await adapter.setStateAsync('warning.hasWarning', warnings.length > 0, true);
+    await adapter.setStateAsync('warning.statepathes', JSON.stringify(warnings), true);
+    await adapter.setStateAsync('alert.hasAlert', alerts.length > 0, true);
+    await adapter.setStateAsync('alert.statepathes', JSON.stringify(alerts), true);
+    await adapter.setStateAsync('lastRun', new Date().toUTCString(), true);
+
+    adapter.log.debug('Pegelalarm request done');
 }
 
-function createStations(path) {
-    return new Promise((resolve) => {
-        const stationsStatesString = [
-            'country',
-            'name',
-            'region',
-            'water',
-            'json',
-            'situation.group',
-            'situation.text',
-            'trend.short',
-            'trend.text'
-        ];
-        const stationsStatesNumber = [
-            'height',
-            'geo.altitude',
-            'geo.latitude',
-            'geo.longitude',
-            'situation.code',
-            'trend.code',
-        ];
-        const stationsStatesDate = [
-            'requestDate',
-            'sourceDate'
-        ]
-        const stationsStatesboolean = [
-            'state.alert',
-            'state.normal',
-            'state.unknown',
-            'state.warning',
-        ];
-        const stationsChannel = [
-            'state',
-            'geo',
-            'situation',
-            'trend',
-        ];
+/**
+ * Creates all required ioBroker objects (channels + states) for a station path.
+ *
+ * @param {string} path - ioBroker state path for the station (e.g. 'stations.musterstation')
+ */
+async function createStations(path) {
+    const statesString = [
+        'country', 'name', 'region', 'water', 'json',
+        'situation.group', 'situation.text', 'trend.short', 'trend.text',
+    ];
+    const statesNumber = [
+        'height', 'geo.altitude', 'geo.latitude', 'geo.longitude',
+        'situation.code', 'trend.code',
+    ];
+    const statesDate = ['requestDate', 'sourceDate'];
+    const statesBoolean = ['state.alert', 'state.normal', 'state.unknown', 'state.warning'];
+    const channels = ['state', 'geo', 'situation', 'trend'];
 
-        adapter.setObjectNotExists('stations', {
+    adapter.setObjectNotExists('stations', {
+        type: 'channel',
+        common: { name: 'stations' },
+        native: {},
+    });
+
+    for (const ch of channels) {
+        adapter.setObjectNotExists(`${path}.${ch}`, {
             type: 'channel',
-            common: {
-                name: 'stations',
-            },
+            common: { name: ch },
             native: {},
         });
-        for (const j in stationsChannel) {
-            adapter.setObjectNotExists(`${path}.${stationsChannel[j]}`, {
-                type: 'channel',
-                common: {
-                    name: stationsChannel[j],
-                },
-                native: {},
-            });
-        }
-        for (const k in stationsStatesString) {
-            adapter.setObjectNotExists(`${path}.${stationsStatesString[k]}`, {
-                type: 'state',
-                common: {
-                    name: stationsStatesString[k],
-                    type: 'string',
-                    role: stationsStatesString[k] == 'json' ? 'json' : 'text',
-                    read: true,
-                    write: false,
-                },
-                native: {},
-            });
-        }
-        for (const l in stationsStatesNumber) {
-            adapter.setObjectNotExists(`${path}.${stationsStatesNumber[l]}`, {
-                type: 'state',
-                common: {
-                    name: stationsStatesNumber[l],
-                    type: 'number',
-                    role: 'value',
-                    unit: stationsStatesNumber[l] == 'height' ? 'cm' : '',
-                    read: true,
-                    write: false,
-                },
-                native: {},
-            });
-        }
-        for (const m in stationsStatesDate) {
-            adapter.setObjectNotExists(`${path}.${stationsStatesDate[m]}`, {
-                type: 'state',
-                common: {
-                    name: stationsStatesDate[m],
-                    type: 'string',
-                    role: 'date',
-                    read: true,
-                    write: false,
-                },
-                native: {},
-            });
-        }
-        for (const n in stationsStatesboolean) {
-            adapter.setObjectNotExists(`${path}.${stationsStatesboolean[n]}`, {
-                type: 'state',
-                common: {
-                    name: stationsStatesboolean[n],
-                    type: 'boolean',
-                    role: 'indicator',
-                    read: true,
-                    write: false,
-                },
-                native: {},
-            });
-        }
-        const timer = setTimeout(() => {
-            resolve();
-            clearTimeout(timer);
-        }, 2000);
-    });
+    }
+    for (const key of statesString) {
+        adapter.setObjectNotExists(`${path}.${key}`, {
+            type: 'state',
+            common: { name: key, type: 'string', role: key === 'json' ? 'json' : 'text', read: true, write: false },
+            native: {},
+        });
+    }
+    for (const key of statesNumber) {
+        adapter.setObjectNotExists(`${path}.${key}`, {
+            type: 'state',
+            common: { name: key, type: 'number', role: 'value', unit: key === 'height' ? 'cm' : '', read: true, write: false },
+            native: {},
+        });
+    }
+    for (const key of statesDate) {
+        adapter.setObjectNotExists(`${path}.${key}`, {
+            type: 'state',
+            common: { name: key, type: 'string', role: 'date', read: true, write: false },
+            native: {},
+        });
+    }
+    for (const key of statesBoolean) {
+        adapter.setObjectNotExists(`${path}.${key}`, {
+            type: 'state',
+            common: { name: key, type: 'boolean', role: 'indicator', read: true, write: false },
+            native: {},
+        });
+    }
+
+    // Allow object creation calls to settle before writing states
+    await adapter.delay(500);
 }
 
+/**
+ * Decodes a trend code into a human-readable string.
+ *
+ * @param {number} code - Trend code from the Pegelalarm API (-10, 0, 10)
+ * @param {'short'|''} [type] - Return type: 'short' for short text, '' for full text
+ * @returns {string} Human-readable trend description
+ */
 function decodeTrend(code, type = '') {
-    let text = 'Unknown water level';
-    let shortText = 'unknown';
-
-    switch (code) {
-        case -10:
-            text = 'Falling water level';
-            shortText = 'falling';
-            break;
-        case 0:
-            text = 'Constant water height';
-            shortText = 'constant';
-            break;
-        case 10:
-            text = 'Rising water level';
-            shortText = 'rising';
-            break;
-        default:
-            text = 'Unknown water level';
-            shortText = 'unknown';
-    }
-
-    if (type.length && type == 'short') {
-        return shortText;
-    }
-
-    return text;
+    const trends = {
+        '-10': { text: 'Falling water level', short: 'falling' },
+        0: { text: 'Constant water height', short: 'constant' },
+        10: { text: 'Rising water level', short: 'rising' },
+    };
+    const entry = trends[String(code)];
+    if (!entry) return type === 'short' ? 'unknown' : 'Unknown water level';
+    return type === 'short' ? entry.short : entry.text;
 }
 
+/**
+ * Decodes a situation code into a human-readable string or group name.
+ *
+ * @param {number} code - Situation code from the Pegelalarm API (-10, 10, 20, 30, 40, 50)
+ * @param {'group'|''} [type] - Return type: 'group' for group name, '' for full text
+ * @returns {string} Human-readable situation description or group name
+ */
 function decodeSituation(code, type = '') {
-    let text = 'Unknown water level';
-    let group = 'unknown';
-
-    switch (code) {
-        case -10:
-            text = 'Under or normal water level';
-            group = 'normal';
-            break;
-        case 10:
-            text = 'Normal or slightly elevated water level';
-            group = 'normal';
-            break;
-        case 20:
-            text = 'Increased water level';
-            group = 'normal';
-            break;
-        case 30:
-            text = 'The water level has reached the warning limit';
-            group = 'warning';
-            break;
-        case 40:
-            text = 'The water level causes a regional flood';
-            group = 'alert';
-            break;
-        case 50:
-            text = 'Water level causes a national flood';
-            group = 'alert';
-            break;
-        default:
-            text = 'Unknown situation';
-            group = 'unknown';
-    }
-
-    if (type.length && type == 'group') {
-        return group;
-    }
-
-    return text;
+    const situations = {
+        '-10': { text: 'Under or normal water level', group: 'normal' },
+        10: { text: 'Normal or slightly elevated water level', group: 'normal' },
+        20: { text: 'Increased water level', group: 'normal' },
+        30: { text: 'The water level has reached the warning limit', group: 'warning' },
+        40: { text: 'The water level causes a regional flood', group: 'alert' },
+        50: { text: 'Water level causes a national flood', group: 'alert' },
+    };
+    const entry = situations[String(code)];
+    if (!entry) return type === 'group' ? 'unknown' : 'Unknown situation';
+    return type === 'group' ? entry.group : entry.text;
 }
 
+/**
+ * Stops the adapter instance gracefully.
+ */
 function stopAdapter() {
     setImmediate(() => {
         adapter.stop ? adapter.stop() : adapter.terminate();
     });
 }
 
-async function checkStation(currentStations) {
-    return new Promise(async (resolve) => {
-        adapter.log.debug('Check for deleting old states is started');
-
-        if (deleteOldStates) {
-            try {
-                const _stationStateList = await adapter.getForeignObjectsAsync(`${adapter.namespace}.stations.*`, 'state');
-
-                for (const i in _stationStateList) {
-                    const resID = _stationStateList[i]._id;
-                    const objectID = resID.split('.');
-                    const resultID = objectID[3];
-
-                    if (currentStations.indexOf(resultID) === -1) {
-                        adapter.log.debug(`DELETE: ${resID}`);
-                        await adapter.delObjectAsync(resID);
-                    }
-                }
-            } catch (err) {
-                adapter.log.error(err);
-            }
-
-            try {
-                const _stationChannelList = await adapter.getForeignObjectsAsync(`${adapter.namespace}.stations.*`, 'channel');
-
-                for (const i in _stationChannelList) {
-                    const resID = _stationChannelList[i]._id;
-                    const objectID = resID.split('.');
-                    const resultID = objectID[3];
-
-                    if (currentStations.indexOf(resultID) === -1) {
-                        adapter.log.debug(`DELETE: ${resID}`);
-                        await adapter.delObjectAsync(resID, { recursive: true });
-                    }
-                }
-            } catch (err) {
-                adapter.log.error(err);
-            }
-            resolve();
-        } else {
-            adapter.log.debug('Deleting old states is currently inactive');
-            resolve();
-        }
-    });
-}
-
-async function requestLoop(index) {
-    let num = 0;
-    if (adapter.config[`stationname${index}`] || adapter.config[`region${index}`] || adapter.config[`water${index}`]) {
-        num = index + 1;
-        adapter.log.debug(`Pegelalarm request for measuring station ${num} is started ...`);
-
-        requestData(adapter.config[`stationname${index}`], adapter.config[`region${index}`], adapter.config[`water${index}`])
-            .then(async () => {
-                num = index + 1;
-                adapter.log.debug(`Pegelalarm request for measuring station ${num} is finish ...`);
-                if (index < 4) {
-                    index++
-
-                    await adapter.delay(5000);
-                    setImmediate(requestLoop, index);
-                    return;
-                } else {
-                    adapter.log.debug('Pegelalarm Request is completed');
-                    await checkStation(currentStations);
-                    stopAdapter();
-                }
-            }).catch(err => {
-                adapter.log.error(`Request is not completed: ${err}`);
-                stopAdapter();
-            });
-    } else if (index < 4) {
-        index++
-
-        await adapter.delay(5000);
-        setImmediate(requestLoop, index);
+/**
+ * Deletes ioBroker objects for stations that are no longer returned by the API.
+ *
+ * @param {string[]} activeStations - List of currently active sanitized station names
+ */
+async function checkStation(activeStations) {
+    if (!deleteOldStates) {
+        adapter.log.debug('Deleting old states is currently inactive');
         return;
-    } else if (index === 4) {
-        adapter.log.debug('Pegelalarm Request is completed');
-        await checkStation(currentStations);
-        stopAdapter();
+    }
+
+    adapter.log.debug('Check for deleting old states is started');
+
+    try {
+        const stateList = await adapter.getForeignObjectsAsync(`${adapter.namespace}.stations.*`, 'state');
+        for (const id of Object.keys(stateList)) {
+            const stationSegment = id.split('.')[3];
+            if (!activeStations.includes(stationSegment)) {
+                adapter.log.debug(`DELETE state: ${id}`);
+                await adapter.delObjectAsync(id);
+            }
+        }
+    } catch (err) {
+        adapter.log.error(err);
+    }
+
+    try {
+        const channelList = await adapter.getForeignObjectsAsync(`${adapter.namespace}.stations.*`, 'channel');
+        for (const id of Object.keys(channelList)) {
+            const stationSegment = id.split('.')[3];
+            if (!activeStations.includes(stationSegment)) {
+                adapter.log.debug(`DELETE channel: ${id}`);
+                await adapter.delObjectAsync(id, { recursive: true });
+            }
+        }
+    } catch (err) {
+        adapter.log.error(err);
     }
 }
 
-function main() {
+/**
+ * Iterates through the configured measuring stations (indices 0–4) and requests data for each.
+ *
+ * @param {number} index - Current station index (0–4)
+ */
+async function requestLoop(index) {
+    const stationname = adapter.config[`stationname${index}`];
+    const region = adapter.config[`region${index}`];
+    const water = adapter.config[`water${index}`];
+
+    if (stationname || region || water) {
+        adapter.log.debug(`Pegelalarm request for measuring station ${index + 1} is started ...`);
+        try {
+            await requestData(stationname, region, water);
+            adapter.log.debug(`Pegelalarm request for measuring station ${index + 1} finished`);
+        } catch (err) {
+            adapter.log.error(`Request failed for station ${index + 1}: ${err}`);
+            stopAdapter();
+            return;
+        }
+    }
+
+    if (index < 4) {
+        await adapter.delay(5000);
+        return requestLoop(index + 1);
+    }
+
+    adapter.log.debug('Pegelalarm Request is completed');
+    await checkStation(currentStations);
+    stopAdapter();
+}
+
+/**
+ * Main entry point called when the adapter is ready.
+ */
+async function main() {
     currentStations = [];
     allStationsJSON = [];
+
     if (adapter.config.configurated !== 0) {
-        requestLoop(0); // start request in Loop for Measuring stations 0-4
-        timerStop = setTimeout(() => stopAdapter(), 360 * 1000); // Force Adapter stop
+        try {
+            const hostObj = await adapter.getForeignObjectAsync(`system.host.${adapter.host}`);
+            ioBrokerVersion = hostObj?.common?.installedVersion ?? 'unknown';
+        } catch {
+            adapter.log.warn('Could not read ioBroker host version');
+            ioBrokerVersion = 'unknown';
+        }
+
+        requestLoop(0);
+        timerStop = setTimeout(() => stopAdapter(), 360 * 1000); // Force stop after 6 min
     } else {
         adapter.log.warn('Please configure the adapter first!');
         timerMain = setTimeout(() => stopAdapter(), 5000);
@@ -530,6 +457,5 @@ function main() {
 if (module && module.parent) {
     module.exports = startAdapter;
 } else {
-    // or start the instance directly
     startAdapter();
 }

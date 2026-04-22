@@ -40,6 +40,10 @@ When the adapter crashes or an other Code error happens, this error message that
 * (simatec) dependencies updated
 * (simatec) Request Fix
 * (simatec) Timeout Fix
+* (simatec) Source code rewritten,
+* (simatec) Source code improved
+* (simatec) Station names fixed
+* (simatec) Header added
 
 ### 1.3.13 (2026-03-29)
 * (simatec) Fix License
