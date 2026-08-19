@@ -199,6 +199,8 @@ When the adapter crashes or an other Code error happens, this error message that
 ### 0.0.1-0 (2020-08-10)
 * (bazidibavaria) prerelease
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 MIT License
 
