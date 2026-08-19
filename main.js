@@ -446,10 +446,10 @@ async function main() {
         }
 
         requestLoop(0);
-        timerStop = setTimeout(() => stopAdapter(), 360 * 1000); // Force stop after 6 min
+        timerStop = adapter.setTimeout(() => stopAdapter(), 360 * 1000); // Force stop after 6 min
     } else {
         adapter.log.warn('Please configure the adapter first!');
-        timerMain = setTimeout(() => stopAdapter(), 5000);
+        timerMain = adapter.setTimeout(() => stopAdapter(), 5000);
     }
 }
 

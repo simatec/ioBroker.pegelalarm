@@ -35,7 +35,9 @@ When the adapter crashes or an other Code error happens, this error message that
 ## Changelog
 <!--### __WORK IN PROGRESS__-->
 ### **WORK IN PROGRESS**
-- (copilot) Adapter requires node.js >= 22 now
+* (copilot) Adapter requires node.js >= 22 now
+* (simatec) dependencies updated
+* (simatec) Fix setTimeout
 
 ### 1.4.0 (2026-04-22)
 * (simatec) dependencies updated
@@ -189,15 +191,6 @@ When the adapter crashes or an other Code error happens, this error message that
 ### 0.0.1 (2020-08-27)
 * (bazidibavaria) released
 
-### 0.0.1-2 (2020-08-10)
-* (bazidibavaria) fix api-count in index_m.html
-
-### 0.0.1-1 (2020-08-10)
-* (bazidibavaria) added travis support
-* (bazidibavaria) add images to readme
-
-### 0.0.1-0 (2020-08-10)
-* (bazidibavaria) prerelease
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 
